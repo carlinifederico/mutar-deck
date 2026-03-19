@@ -226,6 +226,46 @@ body {
   text-align: center;
 }
 
+.slide-cover .slide-content {
+  max-width: none;
+}
+
+.slide-cover .title-hero {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* ===== SLIDE IMAGES ===== */
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.slide-img {
+  position: absolute;
+  z-index: 1;
+  max-height: 70vh;
+  max-width: 35vw;
+  object-fit: contain;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.slide-img-right {
+  right: 2rem;
+  bottom: 15vh;
+}
+
+.slide-img-left {
+  left: 2rem;
+  bottom: 15vh;
+}
+
 /* ===== SLIDE: QUESTION ===== */
 .slide-question {
   text-align: center;
@@ -543,6 +583,12 @@ body {
 
   .deco {
     filter: blur(60px);
+    opacity: 0.15;
+  }
+
+  .slide-img {
+    max-width: 50vw;
+    max-height: 40vh;
     opacity: 0.15;
   }
 }
