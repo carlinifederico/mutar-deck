@@ -242,7 +242,7 @@ body {
   max-height: 70vh;
   max-width: 35vw;
   object-fit: contain;
-  opacity: 0.25;
+  opacity: 0.3;
   pointer-events: none;
 }
 
