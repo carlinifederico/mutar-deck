@@ -256,6 +256,12 @@ body {
   bottom: 15vh;
 }
 
+.slide-img-featured {
+  opacity: 0.45;
+  max-height: 80vh;
+  max-width: 45vw;
+}
+
 /* ===== SLIDE: QUESTION ===== */
 .slide-question {
   text-align: center;
@@ -581,11 +587,19 @@ body {
     max-height: 40vh;
     opacity: 0.15;
   }
+
+  .slide-img-featured {
+    opacity: 0.25;
+    max-width: 60vw;
+    max-height: 50vh;
+  }
 }
 
 @media (max-width: 480px) {
   .title-hero {
-    font-size: clamp(3.5rem, 20vw, 6rem);
+    font-size: clamp(3rem, 17vw, 5rem);
+    line-height: 1;
+    padding: 0.05em 0;
   }
 
   .cities-grid {
