@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MUTAR — Immersive Collab Experience</title>
+<meta name="description" content="MUTAR turns personal clutter into public, collaborative art.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&amp;family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&amp;family=DM+Mono:wght@300;400;500&amp;family=Rubik+Bubbles&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/frames.css">
+</head>
+<body data-ground="bone" data-accent="pink">
+
+<!-- Filtro goo para el blob field -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="b"/>
+    <feColorMatrix in="b" mode="matrix"
+      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12" result="g"/>
+    <feBlend in="SourceGraphic" in2="g"/>
+  </filter>
+</svg>
+
+<div class="blob-field" aria-hidden="true"></div>
+<div class="cursor-blob" aria-hidden="true"></div>
+
+<!-- Rail de progreso por acto -->
+<nav class="rail" aria-label="Deck navigation">
+  <button class="rail__act" data-act="0" type="button"><span class="rail__label" data-en="Entry"      data-es="Entrada"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="1" type="button"><span class="rail__label" data-en="The Question" data-es="La Pregunta"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="2" type="button"><span class="rail__label" data-en="The Idea"   data-es="La Idea"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="3" type="button"><span class="rail__label" data-en="The Journey" data-es="El Recorrido"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="4" type="button"><span class="rail__label" data-en="The Experience" data-es="La Experiencia"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="5" type="button"><span class="rail__label" data-en="Scale"      data-es="Escala"></span><span class="rail__pip"></span></button>
+  <button class="rail__act" data-act="6" type="button"><span class="rail__label" data-en="Closing"    data-es="Cierre"></span><span class="rail__pip"></span></button>
+</nav>
+
+<!-- Chrome -->
+<div class="chrome chrome--tr">
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="es">ES</button>
+  </div>
+</div>
+<div class="chrome chrome--bl">
+  <span class="counter"><b data-counter-now>01</b> / <span data-counter-total>20</span></span>
+</div>
+<div class="chrome chrome--br">
+  <span class="scroll-hint" data-en="Scroll" data-es="Scrolleá"></span>
+</div>
+
+<main class="deck">
+
+<!-- ══════════════════════════ ACTO 0 · ENTRADA ══════════════════════════ -->
+
+<!-- 01 · COVER -->
+<section class="frame frame--cover" data-frame="1" data-act="0" data-ground="bone" data-accent="pink">
+  <div class="frame__inner">
+    <h1 class="t-mega inflate cover__word">MUTAR</h1>
+    <p class="cover__sub t-meta reveal" style="--d:.5s">
+      <span data-en="Immersive Collab Experience" data-es="Experiencia Inmersiva y Colaborativa"></span>
+      <span data-en="Mixed Reality" data-es="Realidad Mixta"></span>
+      <span data-en="Collective Sculpture" data-es="Escultura Colectiva"></span>
+      <span data-en="Public Art" data-es="Arte Público"></span>
+    </p>
+    <div class="cover__rule t-meta reveal" style="--d:.7s">
+      <span data-en="Treatment deck — v2" data-es="Deck de tratamiento — v2"></span>
+      <span class="ticks" aria-hidden="true"></span>
+      <span>2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTERLUDIO A · marquee de objetos -->
+<section class="interlude interlude--marquee" aria-hidden="true">
+  <div class="marquee">
+    <div class="marquee__row" data-speed="-0.35">
+      <span data-en="walkman"        data-es="walkman"></span>
+      <span data-en="bicycle wheel"  data-es="rueda de bici"></span>
+      <span data-en="toaster"        data-es="tostadora"></span>
+      <span data-en="folding chair"  data-es="silla plegable"></span>
+      <span data-en="broken drill"   data-es="taladro roto"></span>
+      <span data-en="tube monitor"   data-es="monitor de tubo"></span>
+    </div>
+    <div class="marquee__row" data-speed="0.5">
+      <span data-en="desk lamp"      data-es="velador"></span>
+      <span data-en="suitcase"       data-es="valija"></span>
+      <span data-en="typewriter"     data-es="máquina de escribir"></span>
+      <span data-en="speaker"        data-es="parlante"></span>
+      <span data-en="kettle"         data-es="pava"></span>
+      <span data-en="helmet"         data-es="casco"></span>
+    </div>
+    <div class="marquee__row" data-speed="-0.6">
+      <span data-en="ladder"         data-es="escalera"></span>
+      <span data-en="fan"            data-es="ventilador"></span>
+      <span data-en="toy car"        data-es="autito"></span>
+      <span data-en="metal tank"     data-es="tanque metálico"></span>
+      <span data-en="stereo"         data-es="equipo de música"></span>
+      <span data-en="gear"           data-es="engranaje"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ACTO 1 · LA PREGUNTA ═══════════════════════ -->
+
+<!-- 02 · PREGUNTA 1 -->
+<section class="frame frame--question frame--q1" data-frame="2" data-act="1" data-ground="ink" data-accent="lime">
+  <div class="frame__tag"><b>02</b><span data-en="The Question" data-es="La Pregunta"></span></div>
+  <div class="frame__inner">
+    <h2 class="q split" data-en="How many things do you keep without knowing why?" data-es="¿Cuántas cosas guardás sin saber por qué?"></h2>
+    <p class="q__foot t-meta reveal" style="--d:.6s" data-en="Accumulation happens quietly" data-es="La acumulación sucede en silencio"></p>
+  </div>
+</section>
+
+<!-- 03 · PREGUNTA 2 -->
+<section class="frame frame--question frame--q2" data-frame="3" data-act="1" data-ground="ink" data-accent="lime">
+  <div class="frame__tag"><b>03</b><span data-en="The Question" data-es="La Pregunta"></span></div>
+  <div class="frame__inner">
+    <h2 class="q split" data-en="What if letting go was the beginning of something new?" data-es="¿Y si soltar fuera el comienzo de algo nuevo?"></h2>
+  </div>
+</section>
+
+<!-- 04 · PREGUNTA 3 -->
+<section class="frame frame--question frame--q3" data-frame="4" data-act="1" data-ground="ink" data-accent="lime">
+  <div class="frame__tag"><b>04</b><span data-en="The Question" data-es="La Pregunta"></span></div>
+  <div class="frame__inner">
+    <h2 class="q split" data-en="And what if that new thing needed another letting go too?" data-es="¿Y si eso nuevo necesitara otro desapego más?"></h2>
+  </div>
+</section>
+
+<!-- INTERLUDIO B · la pila -->
+<section class="interlude interlude--pile">
+  <div class="pile">
+    <div class="pile__items" aria-hidden="true">
+      <span data-en="a cable you never identified" data-es="un cable que nunca identificaste"></span>
+      <span data-en="the box of the phone"         data-es="la caja del teléfono"></span>
+      <span data-en="three remotes"                data-es="tres controles remotos"></span>
+      <span data-en="a chair with one leg"         data-es="una silla con una pata"></span>
+      <span data-en="8.400 photos"                 data-es="8.400 fotos"></span>
+      <span data-en="a drawer of chargers"         data-es="un cajón de cargadores"></span>
+      <span data-en="the guitar you never played"  data-es="la guitarra que nunca tocaste"></span>
+      <span data-en="a screen that still works"    data-es="una pantalla que todavía anda"></span>
+      <span data-en="your grandfather's tools"     data-es="las herramientas del abuelo"></span>
+      <span data-en="something you cannot name"    data-es="algo que no sabés nombrar"></span>
+    </div>
+    <p class="pile__punch split" data-en="There is so much that it feels like nothing." data-es="Es tanto que parece poco."></p>
+  </div>
+</section>
+
+<!-- ════════════════════════ ACTO 2 · LA IDEA ════════════════════════ -->
+
+<!-- 05 · TESIS -->
+<section class="frame frame--thesis" data-frame="5" data-act="2" data-ground="bone" data-accent="yellow">
+  <div class="frame__tag"><b>05</b><span data-en="The Idea" data-es="La Idea"></span></div>
+  <div class="frame__inner">
+    <h2 class="thesis split"
+        data-en="MUTAR turns personal clutter into public, collaborative art."
+        data-es="MUTAR convierte el desorden personal en arte público y colaborativo."></h2>
+    <p class="t-meta reveal" style="--d:.8s; margin-top:clamp(1.5rem,4vh,3rem)"
+       data-en="Object · Letting go · Digitisation · Collective creation · Physical sculpture"
+       data-es="Objeto · Desapego · Digitalización · Creación colectiva · Escultura física"></p>
+  </div>
+</section>
+
+<!-- 06 · CONCEPTO -->
+<section class="frame frame--concept" data-frame="6" data-act="2" data-ground="bone" data-accent="yellow">
+  <div class="frame__tag"><b>06</b><span data-en="Concept" data-es="Concepto"></span></div>
+  <div class="frame__inner editorial">
+    <h2 class="t-xl editorial__lead split reveal"
+        data-en="Accumulation as a contemporary burden."
+        data-es="La acumulación como carga contemporánea."></h2>
+    <div class="cols reveal" style="--d:.25s">
+      <p class="t-body"
+         data-en="We live surrounded by objects we no longer use. We keep them not because they serve a purpose, but because letting go is difficult."
+         data-es="Vivimos rodeados de objetos que ya no usamos. Los guardamos no porque sirvan, sino porque desprenderse es difícil."></p>
+      <p class="t-body"
+         data-en="With humour and subtle satire, MUTAR reflects our behaviour back to us, revealing the fragile line between usefulness and excess."
+         data-es="Con humor y una sátira sutil, MUTAR nos devuelve nuestra propia conducta y revela la línea frágil entre lo útil y lo excesivo."></p>
+    </div>
+    <div class="stack reveal" style="--d:.4s">
+      <blockquote class="pull"
+         data-en="&ldquo;What exists but is not used will destroy us.&rdquo;"
+         data-es="&ldquo;Lo que está y no se usa nos fulminará.&rdquo;"></blockquote>
+      <p class="t-meta dim">— LAS</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · WHAT IS MUTAR -->
+<section class="frame frame--whatis" data-frame="7" data-act="2" data-ground="bone" data-accent="yellow">
+  <div class="frame__tag"><b>07</b><span data-en="The Idea" data-es="La Idea"></span></div>
+  <div class="frame__inner stack">
+    <h2 class="t-xl split" data-en="What is MUTAR?" data-es="¿Qué es MUTAR?"></h2>
+    <div class="defn">
+      <div class="defn__card reveal">
+        <p class="t-meta" data-en="Definition" data-es="Definición"></p>
+        <p class="t-lg" style="margin-top:.6rem"
+           data-en="A multiplayer mixed-reality experience where donated objects become collective sculptures — and one of them gets built for real."
+           data-es="Una experiencia multiplayer en realidad mixta donde objetos donados se vuelven esculturas colectivas, y una de ellas se construye de verdad."></p>
+      </div>
+      <div class="defn__card reveal" style="--d:.15s">
+        <p class="t-meta dim" data-en="Not about the headset" data-es="No se trata del visor"></p>
+        <p class="t-body" style="margin-top:.6rem"
+           data-en="This project is not about VR. It is about the emotional difficulty of detaching from material things."
+           data-es="Este proyecto no trata de VR. Trata de la dificultad emocional de desprenderse de lo material."></p>
+        <p class="pull" style="margin-top:1.25rem"
+           data-en="&ldquo;A collective transformation from virtual to real.&rdquo;"
+           data-es="&ldquo;Una transformación colectiva de lo virtual a lo real.&rdquo;"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ACTO 3 · EL RECORRIDO ═══════════════════════ -->
+
+<!-- 08 · DIVISOR -->
+<section class="frame frame--divider" data-frame="8" data-act="3" data-ground="ink" data-accent="cyan">
+  <div class="frame__tag"><b>08</b><span data-en="The Journey" data-es="El Recorrido"></span></div>
+  <div class="frame__inner">
+    <p class="div__word inflate" data-en="HOW THE MUTATION" data-es="CÓMO SUCEDE LA"></p>
+    <p class="div__word inflate" style="--d:.18s" data-en="HAPPENS" data-es="MUTACIÓN"></p>
+  </div>
+</section>
+
+<!-- 09 · TRACK HORIZONTAL · 5 movimientos -->
+<section class="frame frame--track" data-frame="9" data-act="3" data-ground="ink" data-accent="cyan">
+  <div class="track__viewport">
+    <div class="frame__tag"><b>09</b><span data-en="Five movements" data-es="Cinco movimientos"></span></div>
+    <div class="track__rail">
+      <article class="step" style="--step:var(--pink)">
+        <p class="step__n">1</p>
+        <h3 class="step__title" data-en="Let Go" data-es="Soltar"></h3>
+        <p class="step__quote" data-en="&ldquo;You choose what no longer serves you.&rdquo;" data-es="&ldquo;Elegís lo que ya no te sirve.&rdquo;"></p>
+        <p class="step__desc" data-en="Broken, obsolete or emotionally charged objects. Scanning becomes an intentional act of release." data-es="Objetos rotos, obsoletos o cargados de afecto. Escanear se vuelve un acto intencional de desprendimiento."></p>
+      </article>
+      <article class="step" style="--step:var(--lime)">
+        <p class="step__n">2</p>
+        <h3 class="step__title" data-en="Share" data-es="Compartir"></h3>
+        <p class="step__quote" data-en="&ldquo;Your object stops being yours.&rdquo;" data-es="&ldquo;Tu objeto deja de ser tuyo.&rdquo;"></p>
+        <p class="step__desc" data-en="It enters a common library and mixes with the others. Rarity appears only when people truly let go." data-es="Entra a una biblioteca común y se mezcla con los demás. La rareza aparece solo cuando la gente suelta de verdad."></p>
+      </article>
+      <article class="step" style="--step:var(--yellow)">
+        <p class="step__n">3</p>
+        <h3 class="step__title" data-en="Craft &amp; Play" data-es="Crear y Jugar"></h3>
+        <p class="step__quote" data-en="&ldquo;Build together without ownership.&rdquo;" data-es="&ldquo;Construir juntos sin dueño.&rdquo;"></p>
+        <p class="step__desc" data-en="Multiplayer sessions at real scale, no resizing. Playful, almost absurd tools to bind, fill and paint." data-es="Sesiones multiplayer a escala real, sin redimensionar. Herramientas lúdicas, casi absurdas, para unir, rellenar y pintar."></p>
+      </article>
+      <article class="step" style="--step:var(--cyan)">
+        <p class="step__n">4</p>
+        <h3 class="step__title" data-en="Vote" data-es="Votar"></h3>
+        <p class="step__quote" data-en="&ldquo;The community decides what exists.&rdquo;" data-es="&ldquo;La comunidad decide qué existe.&rdquo;"></p>
+        <p class="step__desc" data-en="Every sculpture is published online. Visitors and participants choose. A virtual choice becomes a real outcome." data-es="Cada escultura se publica online. Visitantes y participantes eligen. Una elección virtual se vuelve un resultado real."></p>
+      </article>
+      <article class="step" style="--step:var(--orange)">
+        <p class="step__n">5</p>
+        <h3 class="step__title" data-en="Build" data-es="Construir"></h3>
+        <p class="step__quote" data-en="&ldquo;What was virtual becomes physical.&rdquo;" data-es="&ldquo;Lo virtual se vuelve físico.&rdquo;"></p>
+        <p class="step__desc" data-en="The winning artwork is built with the real objects and installed in a museum or a public space." data-es="La obra ganadora se construye con los objetos reales y se instala en un museo o en el espacio público."></p>
+      </article>
+    </div>
+    <div class="track__progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<!-- 10 · PIPELINE -->
+<section class="frame frame--pipeline" data-frame="10" data-act="3" data-ground="ink" data-accent="cyan">
+  <div class="frame__tag"><b>10</b><span data-en="The Journey" data-es="El Recorrido"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-lg reveal" data-en="Ten stages, one cycle" data-es="Diez etapas, un ciclo"></h2>
+    <div class="ladder">
+      <div class="ladder__row reveal" style="--i:0;--d:.05s"><span class="ladder__n">01</span><span class="ladder__name" data-en="Open call"       data-es="Convocatoria"></span><span class="ladder__note" data-en="Objects and their stories"        data-es="Objetos y sus historias"></span></div>
+      <div class="ladder__row reveal" style="--i:1;--d:.1s"><span class="ladder__n">02</span><span class="ladder__name" data-en="Curation"        data-es="Curaduría"></span><span class="ladder__note" data-en="20 to 30 objects selected"        data-es="Se seleccionan 20 a 30 objetos"></span></div>
+      <div class="ladder__row reveal" style="--i:2;--d:.15s"><span class="ladder__n">03</span><span class="ladder__name" data-en="Collection"      data-es="Recolección"></span><span class="ladder__note" data-en="Objects arrive at the venue"      data-es="Los objetos llegan al espacio"></span></div>
+      <div class="ladder__row reveal" style="--i:3;--d:.2s"><span class="ladder__n">04</span><span class="ladder__name" data-en="Scanning"        data-es="Escaneo"></span><span class="ladder__note" data-en="Photogrammetry, 3D scan, 360"     data-es="Fotogrametría, escáner 3D, 360"></span></div>
+      <div class="ladder__row reveal" style="--i:4;--d:.25s"><span class="ladder__n">05</span><span class="ladder__name" data-en="Digital library" data-es="Biblioteca digital"></span><span class="ladder__note" data-en="Each object keeps its story"      data-es="Cada objeto conserva su historia"></span></div>
+      <div class="ladder__row reveal" style="--i:5;--d:.3s"><span class="ladder__n">06</span><span class="ladder__name" data-en="Happening"       data-es="Happening"></span><span class="ladder__note" data-en="Groups of 10 to 15 in mixed reality" data-es="Grupos de 10 a 15 en realidad mixta"></span></div>
+      <div class="ladder__row reveal" style="--i:6;--d:.35s"><span class="ladder__n">07</span><span class="ladder__name" data-en="Repetition"      data-es="Repetición"></span><span class="ladder__note" data-en="Weeks of sessions, same materials" data-es="Semanas de sesiones, mismos materiales"></span></div>
+      <div class="ladder__row reveal" style="--i:7;--d:.4s"><span class="ladder__n">08</span><span class="ladder__name" data-en="Public vote"     data-es="Votación pública"></span><span class="ladder__note" data-en="Open, online, plus a technical check" data-es="Abierta, online, más revisión técnica"></span></div>
+      <div class="ladder__row reveal" style="--i:8;--d:.45s"><span class="ladder__n">09</span><span class="ladder__name" data-en="Construction"    data-es="Construcción"></span><span class="ladder__note" data-en="Real objects, real welds"         data-es="Objetos reales, soldaduras reales"></span></div>
+      <div class="ladder__row reveal" style="--i:9;--d:.5s"><span class="ladder__n">10</span><span class="ladder__name" data-en="Opening"         data-es="Inauguración"></span><span class="ladder__note" data-en="Permanent or temporary"           data-es="Permanente o temporal"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ ACTO 4 · LA EXPERIENCIA ══════════════════════ -->
+
+<!-- 11 · EL HAPPENING -->
+<section class="frame frame--happening" data-frame="11" data-act="4" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>11</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="Inside the happening" data-es="Dentro del happening"></h2>
+    <div class="figures">
+      <div class="reveal"><p class="figure__n">10–15</p><p class="figure__label t-meta" data-en="people per group"        data-es="personas por grupo"></p></div>
+      <div class="reveal" style="--d:.1s"><p class="figure__n">1:1</p><p class="figure__label t-meta" data-en="real scale, no resizing" data-es="escala real, sin redimensionar"></p></div>
+      <div class="reveal" style="--d:.2s"><p class="figure__n">0</p><p class="figure__label t-meta" data-en="controllers — hands only" data-es="controles — solo manos"></p></div>
+      <div class="reveal" style="--d:.3s"><p class="figure__n">20–30</p><p class="figure__label t-meta" data-en="objects in the library"  data-es="objetos en la biblioteca"></p></div>
+    </div>
+    <p class="hero-fact reveal" style="--d:.4s"
+       data-en="A metal tank needs four people moving at the same time. Collaboration is physical, not narrative."
+       data-es="Un tanque metálico necesita cuatro personas moviéndose a la vez. La colaboración es física, no narrativa."></p>
+  </div>
+</section>
+
+<!-- 12 · CINTURON DE HERRAMIENTAS -->
+<section class="frame frame--tools" data-frame="12" data-act="4" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>12</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="The toolbelt" data-es="El cinturón"></h2>
+    <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
+       data-en="Playful, almost absurd tools. Try fast with tape, commit with the welder."
+       data-es="Herramientas lúdicas, casi absurdas. Probás rápido con cinta, te comprometés con la soldadora."></p>
+    <div class="chips reveal" style="--d:.3s">
+      <span class="chip"><span data-en="Tape"      data-es="Cinta"></span><small data-en="temporary"        data-es="provisorio"></small></span>
+      <span class="chip"><span data-en="Welder"    data-es="Soldadora"></span><small data-en="definitive"   data-es="definitivo"></small></span>
+      <span class="chip"><span data-en="Filler"    data-es="Relleno"></span><small data-en="empty spaces"   data-es="espacios vacíos"></small></span>
+      <span class="chip"><span data-en="Spray"     data-es="Aerosol"></span><small data-en="city palette"   data-es="paleta de ciudad"></small></span>
+      <span class="chip"><span data-en="Signature" data-es="Firma"></span><small data-en="the group signs"  data-es="el grupo firma"></small></span>
+    </div>
+    <div class="slot reveal" style="--d:.45s; margin-top:clamp(1.5rem,4vh,3rem)"
+         data-en="[ img — toolbelt seen from inside the headset ]"
+         data-es="[ img — cinturón visto desde dentro del casco ]"></div>
+  </div>
+</section>
+
+<!-- 13 · MISMOS OBJETOS, 30 RESULTADOS -->
+<section class="frame frame--outcomes" data-frame="13" data-act="4" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>13</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="Same objects. Thirty outcomes." data-es="Los mismos objetos. Treinta resultados."></h2>
+    <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
+       data-en="Every group starts from the same library and the same physical limits. No two sculptures are alike."
+       data-es="Cada grupo parte de la misma biblioteca y los mismos límites físicos. No hay dos esculturas iguales."></p>
+    <div class="tiles" data-tiles="30" data-winner="17"></div>
+  </div>
+</section>
+
+<!-- 14 · VOTACION -->
+<section class="frame frame--vote" data-frame="14" data-act="4" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>14</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__inner vote">
+    <div class="stack">
+      <h2 class="t-xl split" data-en="The community decides what exists." data-es="La comunidad decide qué existe."></h2>
+      <p class="t-body reveal" style="--d:.2s"
+         data-en="Popular vote plus a technical committee that checks the piece can actually stand."
+         data-es="Voto popular más un comité técnico que verifica que la pieza realmente se pueda parar."></p>
+    </div>
+    <div class="bars reveal" style="--d:.3s">
+      <div class="bar"><span>S-17</span><i style="--v:.94;--d:.35s"></i></div>
+      <div class="bar"><span>S-04</span><i style="--v:.71;--d:.45s"></i></div>
+      <div class="bar"><span>S-23</span><i style="--v:.58;--d:.55s"></i></div>
+      <div class="bar"><span>S-11</span><i style="--v:.4;--d:.65s"></i></div>
+      <p class="t-meta dim" data-en="[ placeholder data — voting UI to define ]" data-es="[ datos de ejemplo — UI de votación a definir ]"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · CONSTRUCCION FISICA -->
+<section class="frame frame--build" data-frame="15" data-act="4" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>15</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__inner">
+    <p class="build__line build__line--fade split" data-en="The technology disappears." data-es="La tecnología desaparece."></p>
+    <p class="build__line split" style="--d:.3s" data-en="Only the work remains." data-es="Lo único que permanece es la obra."></p>
+    <p class="t-meta reveal" style="--d:.8s; margin-top:clamp(1.5rem,4vh,3rem)"
+       data-en="The digital model becomes a construction blueprint."
+       data-es="El modelo virtual funciona como plano de construcción."></p>
+  </div>
+</section>
+
+<!-- INTERLUDIO C · la banda del recorrido -->
+<section class="interlude interlude--band" aria-hidden="true">
+  <div class="band">
+    <div class="band__row" data-speed="-0.4">
+      <span data-en="object"              data-es="objeto"></span><i>→</i>
+      <span data-en="letting go"          data-es="desapego"></span><i>→</i>
+      <span data-en="digitisation"        data-es="digitalización"></span><i>→</i>
+      <span data-en="collective creation" data-es="creación colectiva"></span><i>→</i>
+      <span data-en="physical sculpture"  data-es="escultura física"></span><i>→</i>
+      <span data-en="shared heritage"     data-es="patrimonio compartido"></span><i>→</i>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ACTO 5 · ESCALA ═══════════════════════════ -->
+
+<!-- 16 · CIUDADES -->
+<section class="frame frame--cities" data-frame="16" data-act="5" data-ground="bone" data-accent="orange">
+  <div class="frame__tag"><b>16</b><span data-en="Scale" data-es="Escala"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="Every city mutates differently." data-es="Cada ciudad muta distinto."></h2>
+    <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
+       data-en="Culture, colours and language shape the form, the colour and the message."
+       data-es="La cultura, los colores y el lenguaje construyen la forma, el color y el mensaje."></p>
+    <div class="cities">
+      <div class="city reveal" style="--city:var(--pink);--d:.05s">
+        <span class="city__name">Montreal</span>
+        <span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span>
+      </div>
+      <div class="city reveal" style="--city:var(--lime);--d:.1s">
+        <span class="city__name">Barcelona</span>
+        <span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span>
+      </div>
+      <div class="city reveal" style="--city:var(--yellow);--d:.15s">
+        <span class="city__name" data-en="Paris" data-es="París"></span>
+        <span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span>
+      </div>
+      <div class="city reveal" style="--city:var(--cyan);--d:.2s">
+        <span class="city__name" data-en="Taiwan" data-es="Taiwán"></span>
+        <span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span>
+      </div>
+      <div class="city reveal" style="--city:var(--violet);--d:.25s">
+        <span class="city__name" data-en="Tokyo" data-es="Tokio"></span>
+        <span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · ESCALABILIDAD -->
+<section class="frame frame--scale" data-frame="17" data-act="5" data-ground="bone" data-accent="orange">
+  <div class="frame__tag"><b>17</b><span data-en="Scale" data-es="Escala"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="One method. Any scale." data-es="Un método. Cualquier escala."></h2>
+    <div class="scale-line reveal" style="--d:.2s">
+      <span style="--s:0" data-en="Neighbourhood" data-es="Barrio"></span><b>→</b>
+      <span style="--s:1" data-en="Municipality"  data-es="Municipio"></span><b>→</b>
+      <span style="--s:2" data-en="City"          data-es="Ciudad"></span><b>→</b>
+      <span style="--s:3" data-en="Region"        data-es="Provincia"></span><b>→</b>
+      <span style="--s:4" data-en="Country"       data-es="País"></span><b>→</b>
+      <span style="--s:5" data-en="Biennial"      data-es="Bienal"></span>
+    </div>
+    <div class="uses reveal" style="--d:.35s">
+      <div class="use"><h3 data-en="Museums"       data-es="Museos"></h3><p data-en="Participatory experience tied to an exhibition" data-es="Experiencia participativa ligada a una muestra"></p></div>
+      <div class="use"><h3 data-en="Biennials"     data-es="Bienales"></h3><p data-en="Permanent or temporary sculptures" data-es="Esculturas permanentes o temporales"></p></div>
+      <div class="use"><h3 data-en="Festivals"     data-es="Festivales"></h3><p data-en="Central activity open to the public" data-es="Actividad central abierta al público"></p></div>
+      <div class="use"><h3 data-en="Public space"  data-es="Espacio público"></h3><p data-en="Urban interventions that stay installed" data-es="Intervenciones urbanas que quedan instaladas"></p></div>
+      <div class="use"><h3 data-en="Education"     data-es="Educación"></h3><p data-en="Art, design and technology programmes" data-es="Programas de arte, diseño y tecnología"></p></div>
+      <div class="use"><h3 data-en="Guest artists" data-es="Artistas invitados"></h3><p data-en="Each edition can orbit one visual universe" data-es="Cada edición puede orbitar un universo visual"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 · IMPACTO -->
+<section class="frame frame--impact" data-frame="18" data-act="5" data-ground="bone" data-accent="orange">
+  <div class="frame__tag"><b>18</b><span data-en="Scale" data-es="Escala"></span></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="What it leaves behind" data-es="Lo que deja"></h2>
+    <div class="impact">
+      <div class="reveal"><h3 data-en="Circular economy"      data-es="Economía circular"></h3><p data-en="Objects re-enter use instead of waste" data-es="Los objetos vuelven al uso en vez de terminar en el descarte"></p></div>
+      <div class="reveal" style="--d:.1s"><h3 data-en="Collective memory" data-es="Memoria colectiva"></h3><p data-en="Individual stories become shared heritage" data-es="Historias individuales que se vuelven patrimonio"></p></div>
+      <div class="reveal" style="--d:.2s"><h3 data-en="Public space"      data-es="Espacio público"></h3><p data-en="A city gets a work it helped decide" data-es="La ciudad recibe una obra que ayudó a decidir"></p></div>
+      <div class="reveal" style="--d:.3s"><h3 data-en="Active museum"     data-es="Museo activo"></h3><p data-en="A place of production, not only exhibition" data-es="Un lugar de producción, no solo de exhibición"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ ACTO 6 · CIERRE ═══════════════════════════ -->
+
+<!-- 19 · CIERRE -->
+<section class="frame frame--closing" data-frame="19" data-act="6" data-ground="ink" data-accent="pink">
+  <div class="frame__tag"><b>19</b><span data-en="Closing" data-es="Cierre"></span></div>
+  <div class="frame__inner">
+    <p class="close__line split" data-en="MUTAR is not about recycling objects." data-es="MUTAR no se trata de reciclar objetos."></p>
+    <p class="close__line split" style="--d:.25s" data-en="It is about recycling our relationship with them." data-es="Se trata de reciclar nuestra relación con ellos."></p>
+    <p class="close__line close__final split" style="--d:.6s" data-en="Letting go, not as loss, but as a collective creative act." data-es="Soltar, no como pérdida, sino como acto creativo colectivo."></p>
+  </div>
+</section>
+
+<!-- 20 · CREDITOS -->
+<section class="frame frame--credits" data-frame="20" data-act="6" data-ground="ink" data-accent="pink">
+  <div class="frame__tag"><b>20</b><span data-en="Closing" data-es="Cierre"></span></div>
+  <div class="frame__inner">
+    <p class="t-huge inflate">MUTAR</p>
+    <dl class="credits reveal" style="--d:.3s">
+      <div><dt data-en="Project"  data-es="Proyecto"></dt><dd>MUTAR</dd></div>
+      <div><dt data-en="Format"   data-es="Formato"></dt><dd data-en="Mixed-reality happening + public sculpture" data-es="Happening en realidad mixta + escultura pública"></dd></div>
+      <div><dt data-en="Status"   data-es="Estado"></dt><dd data-en="Treatment — v2" data-es="Tratamiento — v2"></dd></div>
+      <div><dt data-en="Contact"  data-es="Contacto"></dt><dd data-en="[ to complete ]" data-es="[ a completar ]"></dd></div>
+    </dl>
+    <div class="slot reveal" style="--d:.45s; margin-top:clamp(1.5rem,4vh,3rem)"
+         data-en="[ logos — institutions, partners, sponsors ]"
+         data-es="[ logos — instituciones, partners, sponsors ]"></div>
+  </div>
+</section>
+
+</main>
+
+<script src="js/i18n.js"></script>
+<script src="js/motion.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+/* ==========================================================================
+   MUTAR — Base: reset, ground, chrome, motor de reveals, modo export
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* El contenedor de scroll es el viewport: el snap va aca, no en .deck */
+  scroll-snap-type: y proximity;
+  /* Sin scroll-behavior:smooth global. Un salto de 19.000px animado tarda
+     una eternidad; nav.js decide caso por caso si anima o no. */
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--fg);
+  font-family: var(--font-grotesk);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  overflow-x: hidden;
+  transition: background-color var(--dur-ground) var(--ease-soft),
+              color        var(--dur-ground) var(--ease-soft);
+}
+
+/* Snap "proximity", no "mandatory": los frames imantan, los interludios
+   se recorren libres. Es la mitad del caracter del scroll. */
+.deck { position: relative; z-index: 1; }
+
+h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--ink); }
+
+/* ---- Clases tipograficas ------------------------------------------------ */
+.t-mega, .t-huge {
+  font-family: var(--font-bubble);
+  font-weight: 400;
+  line-height: var(--lh-mega);
+  letter-spacing: var(--track-mega);
+  /* La tipografia gigante nunca debe clipear: fue el bug recurrente de la v1 */
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+.t-mega { font-size: var(--t-mega); }
+.t-huge { font-size: var(--t-huge); }
+
+.t-xl, .t-lg {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-variation-settings: "wdth" 96, "opsz" 48;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+}
+.t-xl { font-size: var(--t-xl); }
+.t-lg { font-size: var(--t-lg); }
+
+.t-body { font-size: var(--t-body); max-width: 46ch; }
+.t-body + .t-body { margin-top: 1em; }
+
+.t-meta {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.dim    { color: var(--fg-dim); }
+
+/* ---- Motor de reveals ---------------------------------------------------
+   motion.js agrega .is-in cuando el elemento entra. Todo lo animado parte
+   de aca, asi reduced-motion se apaga en un solo lugar.                    */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 2.2rem, 0);
+  transition: opacity var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft);
+  transition-delay: var(--d, 0s);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Split por palabras: cada palabra es un .w con su propio delay */
+.split { display: block; }
+.split .w {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.62em, 0) rotate(4deg);
+  transition: opacity 0.55s var(--ease-soft),
+              transform 0.75s var(--ease-back);
+  transition-delay: var(--d, 0s);
+  will-change: transform, opacity;
+}
+.split.is-in .w { opacity: 1; transform: none; }
+
+/* Inflate: el display bubbly crece con squash-stretch y cierra el tracking */
+.inflate {
+  opacity: 0;
+  transform: scale(0.86);
+  letter-spacing: 0.06em;
+  transition: opacity 0.6s var(--ease-soft),
+              transform 1.05s var(--ease-back),
+              letter-spacing 1.05s var(--ease-back);
+  transition-delay: var(--d, 0s);
+}
+.inflate.is-in {
+  opacity: 1;
+  transform: none;
+  letter-spacing: var(--track-mega);
+}
+
+/* ---- Blob field --------------------------------------------------------- */
+.blob-field {
+  position: fixed;
+  inset: -12vmax;
+  z-index: 0;
+  pointer-events: none;
+  filter: url(#goo);
+}
+.blob {
+  position: absolute;
+  /* radios desparejos: leen como blob, no como circulo de clip-art */
+  border-radius: 62% 38% 45% 55% / 48% 58% 42% 52%;
+  background: var(--blob-color, var(--accent));
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  transition: background-color var(--dur-ground) var(--ease-soft);
+  will-change: transform;
+}
+body[data-ground="ink"] .blob,
+body[data-ground="violet"] .blob { mix-blend-mode: screen; opacity: 0.10; }
+
+/* ---- Cursor blob -------------------------------------------------------- */
+.cursor-blob {
+  position: fixed;
+  top: 0; left: 0;
+  width: 26rem; height: 26rem;
+  margin: -13rem 0 0 -13rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+              var(--accent) 0%, transparent 68%);
+  opacity: 0.13;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+body[data-ground="ink"] .cursor-blob,
+body[data-ground="violet"] .cursor-blob { mix-blend-mode: screen; opacity: 0.2; }
+body.is-touch .cursor-blob { display: none; }
+
+/* ---- Rail de progreso --------------------------------------------------- */
+.rail {
+  position: fixed;
+  top: 50%; right: clamp(0.6rem, 1.6vw, 1.75rem);
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  align-items: flex-end;
+}
+/* En el track horizontal el contenido pasa por debajo del rail: lo sacamos */
+body.hide-rail .rail { opacity: 0; pointer-events: none; }
+.rail { transition: opacity var(--dur-base) var(--ease-soft); }
+
+.rail__act {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.12rem 0;
+}
+.rail__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(0.4rem);
+  transition: opacity var(--dur-fast) var(--ease-soft),
+              transform var(--dur-fast) var(--ease-soft);
+  white-space: nowrap;
+}
+.rail__act:hover .rail__label,
+.rail__act.is-active .rail__label { opacity: 0.85; transform: none; }
+.rail__pip {
+  width: 1.4rem; height: 0.34rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.28;
+  transition: width var(--dur-fast) var(--ease-back),
+              opacity var(--dur-fast) var(--ease-soft),
+              background-color var(--dur-fast) var(--ease-soft);
+}
+.rail__act.is-active .rail__pip {
+  width: 2.6rem;
+  opacity: 1;
+  background: var(--accent);
+}
+
+/* ---- Chrome: idioma, contador, hint ------------------------------------- */
+.chrome {
+  position: fixed;
+  z-index: 20;
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+}
+.chrome--tl { top: clamp(1rem, 3vh, 2rem); left: var(--pad-x); }
+.chrome--tr { top: clamp(1rem, 3vh, 2rem); right: var(--pad-x); }
+.chrome--bl { bottom: clamp(1rem, 3vh, 2rem); left: var(--pad-x); }
+.chrome--br { bottom: clamp(1rem, 3vh, 2rem); right: calc(var(--pad-x) + 2.5rem); }
+
+.lang {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+}
+.lang button {
+  padding: 0.4rem 0.8rem;
+  letter-spacing: var(--track-meta);
+  opacity: 0.45;
+  transition: opacity var(--dur-fast), background-color var(--dur-fast);
+}
+.lang button.is-active { opacity: 1; background: var(--accent); color: var(--ink); }
+
+.counter { font-variant-numeric: tabular-nums; }
+
+.scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity var(--dur-base) var(--ease-soft);
+}
+.scroll-hint::after {
+  content: "";
+  width: 2.4rem; height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  animation: hint 2.2s var(--ease-soft) infinite;
+}
+@keyframes hint {
+  0%, 100% { transform: scaleX(0.3); opacity: 0.3; }
+  50%      { transform: scaleX(1);   opacity: 1; }
+}
+body.has-scrolled .scroll-hint { opacity: 0; pointer-events: none; }
+
+/* ---- Slots de imagen ----------------------------------------------------
+   Huecos explicitos para el pase de imagenes. Buscar ".slot" en index.html. */
+.slot {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+  padding: 1.5rem;
+  border: 1.5px dashed color-mix(in srgb, var(--fg) 32%, transparent);
+  border-radius: 1.25rem;
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ---- Utilidades --------------------------------------------------------- */
+.stack { display: flex; flex-direction: column; gap: var(--gap); }
+
+/* ==========================================================================
+   MODO EXPORT — ?print
+   Aplana el deck a paginas 16:9 estaticas listas para PDF / Google Slides.
+   ========================================================================== */
+@page { size: 13.333in 7.5in; margin: 0; }
+
+body.export { overflow-x: auto; background: #d9d5cd; }
+html.export-html { scroll-snap-type: none; scroll-behavior: auto; }
+body.export .blob-field,
+body.export .cursor-blob,
+body.export .rail,
+body.export .chrome,
+body.export .scroll-hint { display: none !important; }
+
+/* Todo revelado, nada animado */
+body.export .reveal,
+body.export .split .w,
+body.export .inflate {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  letter-spacing: normal;
+}
+body.export * { animation: none !important; }
+
+body.export .frame {
+  width: var(--page-w);
+  height: var(--page-h);
+  min-height: 0;
+  margin: 0 auto 1.5rem;
+  overflow: hidden;
+  background: var(--ground);
+  color: var(--fg);
+  break-after: page;
+  page-break-after: always;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+}
+/* Los grounds y acentos por frame en export estan en tokens.css */
+
+/* Los interludios son puro scroll: no tienen equivalente en slide.
+   ?print=full los conserva aplanados. */
+body.export .interlude { display: none; }
+body.export.export--full .interlude {
+  display: grid;
+  width: var(--page-w); height: var(--page-h);
+  margin: 0 auto 1.5rem; overflow: hidden;
+  break-after: page; page-break-after: always;
+}
+
+@media print {
+  body.export { background: #fff; }
+  body.export .frame,
+  body.export.export--full .interlude { margin: 0; box-shadow: none; }
+}
+
+/* ---- Reduced motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .split .w, .inflate {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    opacity: 1;
+    transform: none;
+    letter-spacing: normal;
+  }
+  .blob-field, .cursor-blob { display: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

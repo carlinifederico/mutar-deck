@@ -1,0 +1,114 @@
+/* ==========================================================================
+   MUTAR — Design tokens
+   Paleta, escala tipográfica, ritmo y curvas de movimiento.
+   Todo lo que se repite vive acá. Los frames sólo componen.
+   ========================================================================== */
+
+:root {
+  /* ---- Paleta -------------------------------------------------------- */
+  --bone:      #f2efe9;
+  --bone-deep: #e6e1d6;
+  --ink:       #0d0c0b;
+  --ink-soft:  #1a1917;
+
+  --pink:      #ff2e88;
+  --lime:      #c8f000;
+  --yellow:    #ffe500;
+  --cyan:      #2e9bff;
+  --violet:    #7a3cff;
+  --orange:    #ff5b1f;
+
+  /* ---- Ground activo --------------------------------------------------
+     nav.js reescribe estas tres según el acto en pantalla.
+     El cross-fade del fondo es lo que hace que scrollear se sienta
+     como pasar de sala en sala.                                          */
+  --ground:    var(--bone);
+  --fg:        var(--ink);
+  --accent:    var(--pink);
+  /* --fg-dim y --hairline se derivan de --fg, asi que se redeclaran en cada
+     ground (misma razon que --accent-text). Estos son solo el default.     */
+  --fg-dim:    color-mix(in srgb, var(--fg) 55%, transparent);
+  /* Amarillo o lima como texto sobre hueso no se lee. Este token resuelve
+     el acento para texto; se redeclara en cada regla de acento (ver abajo). */
+  --accent-text: var(--pink);
+  --hairline:  color-mix(in srgb, var(--fg) 18%, transparent);
+
+  /* ---- Tipografía ------------------------------------------------------ */
+  --font-bubble: "Bagel Fat One", system-ui, sans-serif;
+  --font-outline:"Rubik Bubbles", "Bagel Fat One", system-ui, sans-serif;
+  --font-grotesk:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:   "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Saltos brutales a propósito: no hay escalones intermedios.
+     La desproporción entre --t-mega y --t-meta ES el sistema.            */
+  --t-mega:  clamp(4.5rem, 19vw, 24rem);
+  --t-huge:  clamp(3.25rem, 11vw, 12rem);
+  --t-xl:    clamp(2.25rem, 6.5vw, 6.5rem);
+  --t-lg:    clamp(1.5rem, 3.2vw, 2.75rem);
+  --t-body:  clamp(1rem, 1.05vw + 0.7rem, 1.3rem);
+  --t-small: clamp(0.85rem, 0.9vw, 0.95rem);
+  --t-meta:  0.72rem;
+
+  --lh-mega: 0.78;
+  --lh-tight:0.92;
+  --lh-body: 1.45;
+
+  --track-mega: -0.035em;
+  --track-meta:  0.18em;
+
+  /* ---- Ritmo ----------------------------------------------------------- */
+  --pad-x: clamp(1.25rem, 5vw, 6rem);
+  --pad-y: clamp(2rem, 6vh, 5rem);
+  --gap:   clamp(1rem, 2.2vw, 2.5rem);
+  --maxw:  86rem;
+
+  /* ---- Movimiento ------------------------------------------------------ */
+  --ease-soft:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-back:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-goo:   cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:   0.35s;
+  --dur-base:   0.7s;
+  --dur-slow:   1.1s;
+  --dur-ground: 0.9s;
+
+  /* ---- Export ---------------------------------------------------------- */
+  --page-w: 1280px;
+  --page-h: 720px;
+}
+
+/* ---- Grounds y acentos por acto -----------------------------------------
+   nav.js los pone en <body> mientras se scrollea: por eso el cambio de acto
+   se ve como un cross-fade y no como un corte. En modo export no hay scroll
+   ni body activo, asi que ahi cada .frame declara los suyos.
+
+   OJO: una custom property que referencia a otra se resuelve en el elemento
+   donde se declara. Por eso --accent-text se redeclara en cada regla de
+   acento y no una sola vez en :root: ahi tomaria siempre el acento default.
+   ------------------------------------------------------------------------ */
+
+/* 1 · Acentos */
+body[data-accent="pink"],   body.export .frame[data-accent="pink"]   { --accent: var(--pink);   --accent-text: var(--accent); }
+body[data-accent="lime"],   body.export .frame[data-accent="lime"]   { --accent: var(--lime);   --accent-text: var(--accent); }
+body[data-accent="yellow"], body.export .frame[data-accent="yellow"] { --accent: var(--yellow); --accent-text: var(--accent); }
+body[data-accent="cyan"],   body.export .frame[data-accent="cyan"]   { --accent: var(--cyan);   --accent-text: var(--accent); }
+body[data-accent="violet"], body.export .frame[data-accent="violet"] { --accent: var(--violet); --accent-text: var(--accent); }
+body[data-accent="orange"], body.export .frame[data-accent="orange"] { --accent: var(--orange); --accent-text: var(--accent); }
+
+/* 2 · Grounds. Van despues de los acentos a proposito: sobre fondo claro
+       el acento como TEXTO se oscurece y esta regla tiene que ganar.       */
+body[data-ground="bone"],   body.export .frame[data-ground="bone"] {
+  --ground: var(--bone);   --fg: var(--ink);
+  --fg-dim:   color-mix(in srgb, var(--fg) 55%, transparent);
+  --hairline: color-mix(in srgb, var(--fg) 18%, transparent);
+  --accent-text: color-mix(in srgb, var(--accent) 70%, var(--ink));
+}
+body[data-ground="ink"],    body.export .frame[data-ground="ink"] {
+  --ground: var(--ink);    --fg: var(--bone);
+  --fg-dim:   color-mix(in srgb, var(--fg) 55%, transparent);
+  --hairline: color-mix(in srgb, var(--fg) 18%, transparent);
+}
+body[data-ground="violet"], body.export .frame[data-ground="violet"] {
+  --ground: var(--violet); --fg: var(--bone);
+  --fg-dim:   color-mix(in srgb, var(--fg) 55%, transparent);
+  --hairline: color-mix(in srgb, var(--fg) 18%, transparent);
+}
