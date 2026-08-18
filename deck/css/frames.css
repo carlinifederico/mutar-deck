@@ -43,11 +43,18 @@
 .ticks i { display: block; width: 2px; background: currentColor; height: var(--h, 60%); }
 
 /* ---- 01 · Cover --------------------------------------------------------- */
+/* El cuerpo se mide contra el CONTENEDOR (cqi), no contra el viewport.
+   Con vw la palabra crecia mas rapido que la caja de --maxw y en pantallas
+   anchas la R se caia a una segunda linea. "MUTAR" mide 3.19x su cuerpo,
+   asi que 29cqi la deja en ~95% del ancho disponible a cualquier tamano.
+   El nowrap es el seguro: preferimos que se achique antes que partirse.   */
+.frame--cover .frame__inner { container-type: inline-size; }
 .frame--cover .cover__word {
   display: block;
   text-align: center;
-  font-size: clamp(5rem, 26vw, 30rem);
+  font-size: min(26vw, 29cqi);
   line-height: 0.8;
+  white-space: nowrap;
 }
 .frame--cover .cover__sub {
   display: flex;
