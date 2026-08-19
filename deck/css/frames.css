@@ -301,6 +301,7 @@
 /* ---- 12 · Cinturon de herramientas (chips) ------------------------------ */
 .chips { display: flex; flex-wrap: wrap; gap: clamp(0.6rem, 1.6vw, 1.2rem); margin-top: clamp(1.5rem, 4vh, 3rem); }
 .chip {
+  display: inline-flex;
   padding: 0.7rem 1.3rem;
   border-radius: 999px;
   border: 1.5px solid currentColor;
@@ -391,7 +392,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: clamp(0.5rem, 1.6vh, 1.1rem) 0;
+  padding: clamp(0.4rem, 1.2vh, 0.85rem) 0;
   border-top: 1px solid var(--hairline);
   cursor: default;
   transition: padding-left var(--dur-fast) var(--ease-back), color var(--dur-fast);
@@ -756,3 +757,143 @@ body.export .creator        { gap: 0.4rem; }
 body.export .creator__bio   { font-size: 0.75rem; }
 body.export .creator__work span { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
 body.export .city__icon { width: 1.9rem; }
+
+/* ==========================================================================
+   PIEZAS INTERACTIVAS
+   La reunion pidio que la web tenga impronta tecnologica: agarrar y mover,
+   orbitar, pintar por encima. El markup lo genera js/play.js.
+   ========================================================================== */
+
+/* ---- Objetos sueltos sobre la portada ------------------------------------ */
+.objetos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.obj {
+  position: absolute;
+  width: clamp(2.6rem, 4.4vw, 4rem);
+  aspect-ratio: 1;
+  padding: 0;
+  color: color-mix(in srgb, var(--brand) 72%, var(--ground));
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  opacity: 0;
+  transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scale(0.6);
+  transition: opacity 0.7s var(--ease-soft), transform 0.9s var(--ease-back), color 0.3s;
+  transition-delay: var(--d, 0s);
+}
+body.has-loaded .obj { opacity: 1; transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scale(1); }
+.obj:hover  { color: var(--brand); }
+.obj.is-drag {
+  cursor: grabbing;
+  color: var(--brand);
+  transition: color 0.2s;              /* al arrastrar manda el pointer, no la transicion */
+  z-index: 3;
+}
+.obj svg { display: block; width: 100%; height: auto; }
+
+/* ---- Anillo que orbita --------------------------------------------------- */
+.orbita {
+  position: relative;
+  height: clamp(8rem, 19vh, 12rem);
+  margin-top: clamp(0.75rem, 2vh, 1.25rem);
+  touch-action: none;
+  cursor: grab;
+}
+.orbita.is-drag { cursor: grabbing; }
+.orbita__item {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: clamp(3.5rem, 6vw, 5.5rem);
+  aspect-ratio: 1;
+  margin: -2.75rem 0 0 -2.75rem;
+  color: var(--accent);
+  will-change: transform, opacity;
+}
+.orbita__item svg { display: block; width: 100%; height: auto; }
+
+/* ---- Pintar por encima --------------------------------------------------- */
+.pintar {
+  position: relative;
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+}
+.pintar__canvas {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: clamp(9rem, 22vh, 13rem);
+  border: 1.5px dashed color-mix(in srgb, var(--fg) 30%, transparent);
+  border-radius: 1.5rem 2.25rem 1.75rem 2rem;
+  overflow: hidden;
+  touch-action: none;
+  cursor: crosshair;
+}
+.pintar__base {
+  width: clamp(5rem, 11vw, 7.5rem);
+  color: color-mix(in srgb, var(--fg) 45%, transparent);
+  pointer-events: none;
+}
+.pintar__base svg { display: block; width: 100%; height: auto; }
+.pintar__gota {
+  position: absolute;
+  width: 2rem; height: 2rem;
+  margin: -1rem 0 0 -1rem;
+  border-radius: 54% 46% 60% 40% / 48% 58% 42% 52%;
+  transform: scale(var(--s, 1)) rotate(var(--r, 0deg));
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+.pintar__hint {
+  position: absolute;
+  left: 50%; bottom: 1.1rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-soft);
+}
+.pintar.has-played .pintar__hint { opacity: 0; }
+.pintar__reset {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 2px;
+}
+.pintar__reset:hover { color: var(--accent-text); }
+
+/* En export las piezas interactivas se muestran quietas, sin invitacion */
+body.export .objetos,
+body.export .pintar__hint,
+body.export .pintar__reset { display: none; }
+body.export .orbita { height: 9rem; }
+
+/* ---- Iconos dentro de beats y chips -------------------------------------- */
+.beat__icon {
+  display: block;
+  width: clamp(1.9rem, 3vw, 2.5rem);
+  color: var(--accent-text);
+  margin-bottom: 0.55rem;
+}
+.beat__icon svg { display: block; width: 100%; height: auto; }
+
+.chip { align-items: center; gap: 0.6rem; }
+.chip__icon {
+  display: block;
+  width: 1.5rem;
+  flex: none;
+  color: currentColor;
+  opacity: 0.85;
+}
+.chip__icon svg { display: block; width: 100%; height: auto; }
+body.export .beat__icon { width: 1.6rem; margin-bottom: 0.35rem; }
+body.export .chip__icon { width: 1.1rem; }

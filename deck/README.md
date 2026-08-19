@@ -51,11 +51,33 @@ impronta y el rol del artista invitado.
 Los frames 05, 06, 11, 13, 14, 18 y 27 usan `.beats`: la idea entra en tres
 golpes cortos en vez de párrafos.
 
+### Piezas interactivas
+
+La reunión pidió que la web tenga "impronta tecnológica". Hay tres, en
+`js/play.js`, todas apagadas con `prefers-reduced-motion` y en export:
+
+- **Portada** — doce siluetas de objetos que entran a los márgenes y se pueden
+  agarrar y tirar. Es el *"agarrar una cosita y moverla"*.
+- **Frame 16 · La librería** — anillo de diez objetos que orbita solo, se frena
+  al pasar el mouse y se puede girar arrastrando.
+- **Frame 17 · El finish** — arrastrar sobre la escultura la pinta con la
+  paleta de MUTAR. El argumento del frame hecho gesto.
+
+Las siluetas son provisorias: reemplazarlas por los escaneos reales cuando
+existan. Viven en el array `OBJETOS` de `play.js`.
+
 ### Retratos
 
-Poner `gervasio.jpg` y `federico.jpg` en `img/team/`. Van de background del
-círculo: si el archivo no está, se ve el hueco punteado y el layout no se
-mueve.
+`img/team/gervasio.jpg` y `federico.jpg`, 760×760, blanco y negro con grano,
+mismo encuadre relativo de cabeza. Los originales quedaron en `_mat/Team/`
+(fuera del repo). Para regenerarlos, el tratamiento es:
+
+```
+crop=…,scale=760:760,format=gray,eq=contrast=1.18:brightness=0.015,noise=alls=14:allf=u,unsharp=3:3:0.4
+```
+
+Ojo con el `url()` de la foto: va `../img/team/…` porque una custom property
+se resuelve contra la hoja que la consume (`css/frames.css`), no contra el HTML.
 
 ### Huecos marcados
 
