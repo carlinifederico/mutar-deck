@@ -275,6 +275,8 @@
   font-family: var(--font-bubble);
   font-size: clamp(2.5rem, 6vw, 5.5rem);
   line-height: 0.8;
+  /* los rangos con guion (10-15, 20-30) no se parten */
+  white-space: nowrap;
   color: var(--accent-text);
 }
 .figure__label { margin-top: 0.5rem; color: var(--fg-dim); }

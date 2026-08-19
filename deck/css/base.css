@@ -208,8 +208,7 @@ body.hide-rail .rail { opacity: 0; pointer-events: none; }
               transform var(--dur-fast) var(--ease-soft);
   white-space: nowrap;
 }
-.rail__act:hover .rail__label,
-.rail__act.is-active .rail__label { opacity: 0.85; transform: none; }
+.rail__act:hover .rail__label { opacity: 0.9; transform: none; }
 .rail__pip {
   width: 1.4rem; height: 0.34rem;
   border-radius: 999px;
@@ -320,6 +319,8 @@ body.has-scrolled .scroll-hint { opacity: 0; pointer-events: none; }
   pointer-events: none;
 }
 body.has-scrolled .mark-sm { opacity: 1; transform: none; pointer-events: auto; }
+/* el rosa de marca sobre violeta queda turbio: ahi la marca va en hueso */
+body[data-ground="violet"] .mark-sm { color: var(--bone); }
 
 /* ---- Marcador de estructura ---------------------------------------------
    Dice en voz alta que ese bloque todavia no esta escrito. Este deck es un
