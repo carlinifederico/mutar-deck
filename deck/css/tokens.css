@@ -18,6 +18,12 @@
   --violet:    #7a3cff;
   --orange:    #ff5b1f;
 
+  /* Color de marca. Es la constante del deck: el logo, el rail, los enlaces
+     y los remates lo usan en todos los actos. Los acentos por acto siguen
+     dando identidad a cada seccion, pero este es el hilo que las cose.   */
+  --brand:     #ff2e88;
+  --brand-ink: #c41f66;   /* version legible como texto sobre fondo claro */
+
   /* ---- Ground activo --------------------------------------------------
      nav.js reescribe estas tres según el acto en pantalla.
      El cross-fade del fondo es lo que hace que scrollear se sienta
@@ -34,8 +40,12 @@
   --hairline:  color-mix(in srgb, var(--fg) 18%, transparent);
 
   /* ---- Tipografía ------------------------------------------------------ */
+  /* Bagel Fat One es hermosa pero ilegible en frases largas: se reserva para
+     la marca, los numerales y palabras sueltas gigantes.
+     Fredoka sostiene el mismo tono redondo y calido, pero se lee. Todo
+     titular que sea una oracion va en Fredoka.                            */
   --font-bubble: "Bagel Fat One", system-ui, sans-serif;
-  --font-outline:"Rubik Bubbles", "Bagel Fat One", system-ui, sans-serif;
+  --font-display:"Fredoka", "Bagel Fat One", system-ui, sans-serif;
   --font-grotesk:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-mono:   "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
 

@@ -19,7 +19,8 @@
 /* Numeracion + label de acto, arriba a la izquierda de cada frame */
 .frame__tag {
   position: absolute;
-  top: clamp(1.6rem, 4vh, 2.6rem);
+  /* mas abajo que la marca fija del chrome, que vive arriba a la izquierda */
+  top: clamp(3.4rem, 8vh, 5.2rem);
   left: var(--pad-x);
   display: flex;
   gap: 1.1rem;
@@ -48,13 +49,19 @@
    anchas la R se caia a una segunda linea. "MUTAR" mide 3.19x su cuerpo,
    asi que 29cqi la deja en ~95% del ancho disponible a cualquier tamano.
    El nowrap es el seguro: preferimos que se achique antes que partirse.   */
-.frame--cover .frame__inner { container-type: inline-size; }
+/* El logotipo es un SVG: escala solo y nunca se parte en dos lineas, asi
+   que ya no hace falta el calculo de cuerpo contra el contenedor.        */
 .frame--cover .cover__word {
   display: block;
-  text-align: center;
-  font-size: min(26vw, 29cqi);
-  line-height: 0.8;
-  white-space: nowrap;
+  margin: 0 auto;
+  width: min(100%, 62rem);
+  color: var(--brand);
+}
+.frame--credits .credits__logo {
+  display: block;
+  width: min(100%, 26rem);
+  color: var(--fg);
+  margin-bottom: clamp(1rem, 3vh, 2rem);
 }
 .frame--cover .cover__sub {
   display: flex;
@@ -78,7 +85,8 @@
 /* ---- 02–04 · Preguntas -------------------------------------------------- */
 .frame--question .frame__inner { max-width: 68rem; }
 .frame--question .q {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(2.75rem, 8.2vw, 8.5rem);
   line-height: 0.94;
   letter-spacing: -0.02em;
@@ -94,45 +102,23 @@
 
 /* ---- 05 · Tesis (el momento tipografico mas grande) --------------------- */
 .frame--thesis .thesis {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(3rem, 9.5vw, 10rem);
   line-height: 0.9;
   letter-spacing: -0.03em;
 }
 .frame--thesis .thesis em { font-style: normal; }
 
-/* ---- 06 · Concepto (editorial 2 columnas) ------------------------------- */
-.editorial {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  grid-template-columns: 1fr;
-  align-items: start;
-}
-@media (min-width: 62rem) {
-  .editorial { grid-template-columns: 1.1fr 1fr; }
-}
-.editorial__lead { grid-column: 1 / -1; }
+/* ---- Cita destacada (frames 05 y 06) ------------------------------------- */
 .pull {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(1.6rem, 3.4vw, 3.2rem);
   line-height: 1;
   color: var(--accent-text);
-  max-width: 20ch;
+  max-width: 22ch;
 }
-.cols { columns: 1; column-gap: 2.5rem; }
-@media (min-width: 48rem) { .cols { columns: 2; } }
-.cols p { break-inside: avoid; margin-bottom: 1em; max-width: none; }
-
-/* ---- 07 · What is MUTAR ------------------------------------------------- */
-.defn { display: grid; gap: clamp(1.25rem, 3vw, 2.5rem); }
-@media (min-width: 62rem) { .defn { grid-template-columns: 1fr 1fr; } }
-.defn__card {
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-  border-radius: 1.5rem 2.5rem 1.75rem 2.25rem;
-  border: 1px solid var(--hairline);
-}
-.defn__card:first-child { background: var(--accent); color: var(--ink); border-color: transparent; }
-.defn__card:first-child .t-meta { opacity: 0.65; }
 
 /* ---- 08 · Divisor de acto ----------------------------------------------- */
 .frame--divider { align-content: center; text-align: center; }
@@ -146,7 +132,10 @@
 /* ---- 09 · Track horizontal con scrub ------------------------------------ */
 /* El frame es alto; adentro un viewport sticky que traslada el rail.       */
 .frame--track {
-  height: 420vh;
+  /* Cinco tramos de ~55vh: cada step se centra, se sostiene y recien
+     entonces viaja al siguiente. Antes eran 420vh de barrido continuo
+     donde 4000px de scroll movian 1500px de riel: se sentia vacio. */
+  height: 375vh;
   min-height: 0;
   padding: 0;
   display: block;
@@ -157,25 +146,71 @@
   top: 0;
   height: 100svh;
   overflow: hidden;
+  /* tres franjas: titulo arriba, riel al medio, progreso abajo. Antes el
+     riel flotaba solo en el centro y sobraba aire por todos lados. */
   display: grid;
-  align-content: center;
+  /* la columna se fija al ancho del viewport: si no, el grid la estira al
+     ancho del riel (2700px) y el encabezado se va fuera de pantalla */
+  grid-template-columns: 100%;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(4.5rem, 9vh, 7rem) 0 clamp(3.5rem, 7vh, 5rem);
 }
+.track__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 calc(var(--pad-x) + 3.5rem) 0 var(--pad-x);
+}
+.track__count {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+.track__count b { font-weight: 400; color: var(--accent-text); }
 .track__rail {
+  align-self: center;
   display: flex;
   gap: clamp(1.5rem, 4vw, 4rem);
   padding: 0 calc(var(--pad-x) + 3.5rem) 0 var(--pad-x);
   will-change: transform;
 }
 .step {
-  flex: 0 0 min(78vw, 30rem);
+  flex: 0 0 min(80vw, 29rem);
   display: grid;
-  gap: 0.75rem;
+  gap: 0.6rem;
   align-content: start;
-  padding-top: clamp(1rem, 4vh, 3rem);
+  min-height: min(58vh, 27rem);
+  padding: clamp(1.5rem, 3.5vh, 2.25rem) clamp(1.5rem, 2.5vw, 2rem) clamp(1.75rem, 4vh, 2.5rem);
+  border-radius: 1.5rem 2.25rem 1.75rem 2rem;
+  border: 1px solid var(--hairline);
+  /* los que no son el paso activo se apagan: siempre hay un solo foco */
+  opacity: 0.3;
+  transform: scale(0.94);
+  transform-origin: center bottom;
+  transition: opacity 0.5s var(--ease-soft),
+              transform 0.6s var(--ease-back),
+              border-color 0.5s var(--ease-soft),
+              background-color 0.5s var(--ease-soft);
 }
+.step.is-active {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--step, var(--accent)) 55%, transparent);
+  background: color-mix(in srgb, var(--step, var(--accent)) 7%, transparent);
+}
+.step__icon {
+  display: block;
+  width: clamp(2.75rem, 4.5vw, 3.8rem);
+  color: var(--step, var(--accent));
+  margin-bottom: 0.2rem;
+}
+.step__icon svg { display: block; width: 100%; height: auto; }
 .step__n {
   font-family: var(--font-bubble);
-  font-size: clamp(4.5rem, 13vw, 13rem);
+  font-size: clamp(3.5rem, 8vw, 7rem);
   line-height: 0.75;
   color: var(--step, var(--accent));
 }
@@ -189,18 +224,18 @@
 .step__quote { color: var(--step, var(--accent-text)); font-size: var(--t-body); }
 .step__desc  { color: var(--fg-dim); max-width: 32ch; }
 .track__progress {
-  position: absolute;
-  left: var(--pad-x); right: var(--pad-x);
-  bottom: clamp(2rem, 6vh, 4rem);
-  height: 2px;
-  background: var(--hairline);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 calc(var(--pad-x) + 3.5rem) 0 var(--pad-x);
 }
 .track__progress i {
-  display: block; height: 100%;
-  background: var(--accent);
-  transform-origin: left;
-  transform: scaleX(var(--p, 0));
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--hairline);
+  transition: background-color 0.4s var(--ease-soft);
 }
+.track__progress i.is-on { background: var(--accent); }
 
 /* ---- 10 · Pipeline (escalera tipografica) ------------------------------- */
 .ladder { display: grid; gap: 0; margin-top: clamp(1rem, 3vh, 2rem); }
@@ -244,14 +279,15 @@
 }
 .figure__label { margin-top: 0.5rem; color: var(--fg-dim); }
 .hero-fact {
+  font-weight: 600;
   margin-top: clamp(1.5rem, 4vh, 3rem);
   padding: clamp(1rem, 2.5vw, 2rem);
   border-radius: 2rem 1.25rem 2.25rem 1.5rem;
   background: var(--accent);
   color: var(--ink);
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
   font-size: clamp(1.25rem, 3vw, 2.6rem);
-  line-height: 1.05;
+  line-height: 1.15;
 }
 
 /* ---- 12 · Cinturon de herramientas (chips) ------------------------------ */
@@ -275,30 +311,45 @@
 /* ---- 13 · Mismos objetos, 30 resultados --------------------------------- */
 .tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
-  gap: 0.4rem;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.5rem;
   margin-top: clamp(1.5rem, 4vh, 3rem);
   /* acotado a proposito: tiene que leerse como un bloque de resultados,
      no como una barra de 15 columnas */
-  max-width: 44rem;
+  max-width: 52rem;
 }
 .tile {
+  position: relative;
   aspect-ratio: 1;
-  display: grid;
-  place-items: center;
+  margin: 0;
+  padding: 0.3rem;
   border-radius: 0.75rem 1.1rem 0.85rem 1rem;
   border: 1px solid var(--hairline);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  color: var(--fg-dim);
+  color: var(--fg);
   opacity: 0;
   transform: scale(0.7);
-  transition: opacity 0.4s var(--ease-soft), transform 0.5s var(--ease-back), background-color 0.3s;
+  transition: opacity 0.4s var(--ease-soft),
+              transform 0.5s var(--ease-back),
+              background-color 0.3s, border-color 0.3s;
   transition-delay: var(--d, 0s);
 }
 .tiles.is-in .tile { opacity: 1; transform: none; }
-.tile.is-winner { background: var(--accent); color: var(--ink); border-color: transparent; font-weight: 500; }
+.tile svg { display: block; width: 100%; height: 100%; }
+.tile figcaption {
+  position: absolute;
+  left: 0.45rem; top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+/* la ganadora: la unica que se construye de verdad */
+.tile.is-winner {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: transparent;
+}
+.tile.is-winner figcaption { color: color-mix(in srgb, var(--ink) 70%, transparent); }
 
 /* ---- 14 · Votacion ------------------------------------------------------ */
 .vote { display: grid; gap: clamp(1rem, 3vw, 2.5rem); }
@@ -318,7 +369,8 @@
 
 /* ---- 15 · Construccion fisica ------------------------------------------- */
 .frame--build .build__line {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(2rem, 6.5vw, 6.5rem);
   line-height: 0.95;
 }
@@ -338,7 +390,8 @@
 }
 .city:last-child { border-bottom: 1px solid var(--hairline); }
 .city__name {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(1.75rem, 6vw, 5.5rem);
   line-height: 0.9;
   transition: color var(--dur-fast) var(--ease-soft);
@@ -356,7 +409,8 @@
   margin-top: clamp(1rem, 3vh, 2rem);
 }
 .scale-line span {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   line-height: 0.95;
   /* cada escalon es mas grande que el anterior: la escala se ve, no se lee */
   font-size: calc(clamp(1rem, 2.3vw, 2rem) + var(--s, 0) * clamp(0.35rem, 1.1vw, 1rem));
@@ -372,7 +426,8 @@
 /* ---- 18 · Impacto ------------------------------------------------------- */
 .impact { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); margin-top: clamp(1.5rem, 4vh, 3rem); }
 .impact h3 {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(1.15rem, 2.4vw, 2rem);
   line-height: 1;
   color: var(--accent-text);
@@ -382,7 +437,8 @@
 /* ---- 19 · Cierre -------------------------------------------------------- */
 .frame--closing { text-align: center; }
 .frame--closing .close__line {
-  font-family: var(--font-bubble);
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(1.9rem, 5vw, 5rem);
   line-height: 1;
 }
@@ -402,9 +458,12 @@
   z-index: 1;
   padding: clamp(3rem, 12vh, 9rem) 0;
   --pad-r: calc(var(--pad-x) + 3.5rem);
-  overflow: hidden;
   scroll-snap-align: none;
 }
+/* overflow:hidden solo donde hace falta: en el carrete convertia al
+   interludio en contenedor de scroll y anulaba el sticky del stage */
+.interlude--marquee,
+.interlude--band { overflow: hidden; }
 
 /* A · Marquee de objetos */
 .marquee { display: grid; gap: clamp(0.4rem, 1.4vh, 1rem); }
@@ -421,30 +480,6 @@
 .marquee__row:nth-child(3) { -webkit-text-stroke: 1.5px var(--fg); color: transparent; }
 .marquee__row span { display: inline-block; }
 .marquee__row span::after { content: "\00a0·"; opacity: 0.4; }
-
-/* B · La pila */
-.pile { position: relative; min-height: 60svh; display: grid; place-items: center; padding: 0 var(--pad-x); }
-.pile__items { position: relative; width: 100%; max-width: var(--maxw); height: 46svh; }
-.pile__items span {
-  position: absolute;
-  font-family: var(--font-grotesk);
-  font-weight: 800;
-  /* cada item tiene su propio cuerpo: la pila tiene que verse despareja */
-  font-size: calc(clamp(0.8rem, 1.7vw, 1.45rem) * var(--fs, 1));
-  letter-spacing: -0.01em;
-  color: var(--fg);
-  opacity: 0.42;
-  white-space: nowrap;
-  will-change: transform;
-}
-.pile__punch {
-  position: relative;
-  text-align: center;
-  font-family: var(--font-bubble);
-  font-size: clamp(1.75rem, 6.5vw, 6rem);
-  line-height: 0.95;
-  margin-top: clamp(1rem, 3vh, 2rem);
-}
 
 /* C · Banda del recorrido */
 .band { padding: 0 var(--pad-x); }
@@ -487,7 +522,150 @@ body.export .track__progress { display: none; }
 body.export .tiles { grid-template-columns: repeat(10, 1fr); }
 body.export .marquee__row,
 body.export .band__row { transform: none !important; }
-body.export .pile__items span { transform: none !important; }
+body.export .reel { transform: none !important; }
+
+/* ---- Fragmentos cortos (concepto / definicion) ---------------------------
+   La idea entra en tres golpes, no en dos parrafos. Es lo que hace que el
+   deck se lea como estructura y no como documento.                        */
+.beats {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+@media (min-width: 62rem) { .beats { grid-template-columns: repeat(3, 1fr); } }
+.beat {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--accent);
+}
+.beat__n {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  color: var(--accent-text);
+}
+.beat__text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.2vw, 1.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Interludio B · el carrete -------------------------------------------
+   Tantas imagenes que ninguna se puede elegir. Al scrollear la grilla se
+   aleja y entran mas: el zoom-out es el argumento, no un efecto.          */
+.interlude--reel { height: 240vh; padding: 0; }
+.reel__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.reel {
+  /* Columnas tipo masonry, no grilla prolija: tiene que leerse como el
+     carrete de fotos de alguien, con alturas dispares. El ancho en vmax
+     garantiza que al alejarse siga cubriendo el viewport. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 190vmax;
+  columns: 14;
+  column-gap: 6px;
+  transform-origin: center;
+  will-change: transform;
+}
+.reel img {
+  display: block;
+  width: 100%;
+  margin: 0 0 6px;
+  break-inside: avoid;
+  border-radius: 3px;
+  transform: rotate(var(--rot, 0deg));
+}
+/* El velo deja pasar las imagenes pero garantiza que el texto se lea */
+.reel__veil {
+  position: absolute;
+  inset: 0;
+  /* deja ver el mar de imagenes, pero garantiza que el texto del centro
+     tenga contraste suficiente */
+  background:
+    radial-gradient(ellipse 60% 45% at center,
+      var(--ground) 0%,
+      color-mix(in srgb, var(--ground) 82%, transparent) 45%,
+      color-mix(in srgb, var(--ground) 42%, transparent) 100%);
+}
+.reel__punch {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 6.5vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.reel__copy {
+  position: relative;
+  text-align: center;
+  padding: 0 var(--pad-x);
+  max-width: 62rem;
+}
+.reel__answer {
+  margin: clamp(1rem, 3vh, 2rem) auto 0;
+  max-width: 46ch;
+  color: var(--fg-dim);
+}
+
+/* ---- Los creadores ------------------------------------------------------- */
+.creators { display: grid; gap: clamp(1.5rem, 4vw, 3.5rem); margin-top: clamp(1.5rem, 4vh, 2.5rem); }
+@media (min-width: 62rem) { .creators { grid-template-columns: 1fr 1fr; } }
+.creator {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  padding-top: 1rem;
+  border-top: 2px solid var(--accent);
+}
+.creator__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.creator__role {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.creator__bio { font-size: var(--t-small); color: var(--fg-dim); max-width: 44ch; }
+.creator__work { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.creator__work span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.creator__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem; margin-top: 0.2rem; }
+.creator__links a {
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 2px;
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.creator__links a:hover { color: var(--accent-text); border-color: var(--accent); }
 
 /* --------------------------------------------------------------------------
    EXPORT · escala tipografica fija
@@ -520,9 +698,12 @@ body.export .scale-line span           { font-size: calc(1.1rem + var(--s, 0) * 
 body.export .impact h3                 { font-size: 1.4rem; }
 body.export .frame--build .build__line { font-size: 3.4rem; }
 body.export .frame--closing .close__line { font-size: 2.5rem; }
-body.export .pile__punch               { font-size: 3rem; }
+body.export .reel__punch               { font-size: 3rem; }
 body.export .credits dd                { font-size: 1.15rem; }
 body.export .tile                      { font-size: 0.6rem; }
+body.export .beat__text                { font-size: 1.35rem; }
+body.export .creator__name             { font-size: 1.7rem; }
+body.export .creator__bio              { font-size: 0.82rem; }
 
 /* --------------------------------------------------------------------------
    PANTALLAS ANGOSTAS
@@ -541,3 +722,17 @@ body.export .tile                      { font-size: 0.6rem; }
   .ladder__row { padding-left: 0; }
   .step        { flex-basis: 82vw; }
 }
+
+/* Frames que no entran en 720px con la escala de pantalla: se compactan */
+body.export .track__viewport { padding: 2.5rem 0 1.75rem; }
+body.export .step           { min-height: 0; padding: 1rem 1.1rem 1.25rem; }
+body.export .step__icon     { width: 2rem; }
+body.export .step__n        { font-size: 2.6rem; }
+body.export .ladder__row    { padding-top: 0.12rem; padding-bottom: 0.12rem; }
+body.export .ladder__name   { font-size: 0.95rem; }
+body.export .ladder__note   { font-size: 0.72rem; }
+body.export .frame--pipeline .t-lg { font-size: 1.25rem; }
+body.export .creators       { gap: 1.5rem; }
+body.export .creator        { gap: 0.4rem; }
+body.export .creator__bio   { font-size: 0.75rem; }
+body.export .creator__work span { font-size: 0.55rem; padding: 0.2rem 0.5rem; }

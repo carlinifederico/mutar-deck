@@ -1,6 +1,6 @@
 /* ==========================================================================
    MUTAR — Motion
-   Un solo rAF para todo lo continuo (blobs, marquees, pila, track, cursor)
+   Un solo rAF para todo lo continuo (auras, marquees, carrete, track, cursor)
    + IntersectionObserver para las entradas. Sin librerias, sin build.
 
    Si prefers-reduced-motion esta activo, todo esto se apaga y el CSS
@@ -27,7 +27,62 @@
     });
   }
 
-  /* ---- 2 · Tiles generados (frame 13) ----------------------------------- */
+  /* ---- 2 · Las treinta esculturas (frame 12) ------------------------------
+     Antes eran codigos S-01..S-30: no comunicaban nada. Ahora cada tile es
+     una escultura dibujada con EXACTAMENTE las mismas cinco piezas, apiladas
+     distinto. Se ve de un vistazo lo que dice el titulo: mismos objetos,
+     resultados distintos. Layout deterministico para que no cambie en cada
+     carga.                                                                 */
+  function lcg(seed) {
+    var s = (seed * 2654435761) >>> 0;
+    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  }
+
+  function sculpture(i) {
+    var r = lcg(i + 7);
+    var parts = [];
+    var baseY = 86;
+    // las cinco piezas de la biblioteca, siempre las mismas
+    var kit = ['bar', 'box', 'disc', 'ring', 'wedge'];
+    // orden de apilado distinto por escultura
+    var order = kit.slice();
+    for (var k = order.length - 1; k > 0; k--) {
+      var j = Math.floor(r() * (k + 1));
+      var tmp = order[k]; order[k] = order[j]; order[j] = tmp;
+    }
+    var y = baseY;
+    for (var p = 0; p < order.length; p++) {
+      // rangos acotados para que la pila nunca se salga del recuadro
+      var w = 24 + r() * 26;
+      var h = 9 + r() * 13;
+      var x = 50 + (r() - 0.5) * 20;
+      var rot = (r() - 0.5) * 22;
+      var g = '<g transform="translate(' + x.toFixed(1) + ' ' + (y - h / 2).toFixed(1) +
+              ') rotate(' + rot.toFixed(1) + ')">';
+      switch (order[p]) {
+        case 'bar':
+          g += '<rect x="' + (-w / 2) + '" y="' + (-h / 4) + '" width="' + w +
+               '" height="' + (h / 2) + '" rx="' + (h / 5) + '"/>'; break;
+        case 'box':
+          g += '<rect x="' + (-w / 2.6) + '" y="' + (-h / 2) + '" width="' + (w / 1.3) +
+               '" height="' + h + '" rx="' + (h / 4) + '"/>'; break;
+        case 'disc':
+          g += '<circle cx="0" cy="0" r="' + (h / 1.7) + '"/>'; break;
+        case 'ring':
+          g += '<circle cx="0" cy="0" r="' + (h / 1.7) +
+               '" fill="none" stroke="currentColor" stroke-width="' + (h / 4) + '"/>'; break;
+        default:
+          g += '<path d="M' + (-w / 2.4) + ' ' + (h / 2) + ' L' + (w / 2.4) + ' ' + (h / 2) +
+               ' L0 ' + (-h / 1.6) + ' Z"/>'; break;
+      }
+      parts.push(g + '</g>');
+      y -= h * 0.78;
+    }
+    return '<svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">' +
+           '<path d="M14 92h72" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>' +
+           parts.join('') + '</svg>';
+  }
+
   function buildTiles() {
     document.querySelectorAll('[data-tiles]').forEach(function (box) {
       if (box.children.length) return;
@@ -35,9 +90,10 @@
       var winner = parseInt(box.dataset.winner, 10);
       var html = '';
       for (var i = 1; i <= n; i++) {
-        var id = String(i).padStart(2, '0');
-        html += '<span class="tile' + (i === winner ? ' is-winner' : '') +
-                '" style="--d:' + (i * 0.022).toFixed(3) + 's">S-' + id + '</span>';
+        html += '<figure class="tile' + (i === winner ? ' is-winner' : '') +
+                '" style="--d:' + (i * 0.022).toFixed(3) + 's">' +
+                sculpture(i) +
+                '<figcaption>' + String(i).padStart(2, '0') + '</figcaption></figure>';
       }
       box.innerHTML = html;
     });
@@ -55,26 +111,25 @@
     });
   }
 
-  /* ---- 4 · Blob field ---------------------------------------------------- */
-  var blobs = [];
-  function buildBlobs() {
-    var field = document.querySelector('.blob-field');
+  /* ---- 4 · Campo de auras ------------------------------------------------
+     Degradados radiales grandes que derivan lento. Posiciones fijas: el
+     campo tiene que verse compuesto, no aleatorio en cada carga.           */
+  var auras = [];
+  function buildAuras() {
+    var field = document.querySelector('.aura-field');
     if (!field || reduce || isExport) return;
-    // Posiciones fijas y deterministas: el campo tiene que verse compuesto,
-    // no aleatorio distinto en cada carga.
     var spec = [
-      { x: 10, y: 16, s: 22, depth: 0.10, sp: 0.00023, amp: 5 },
-      { x: 82, y: 24, s: 17, depth: 0.18, sp: 0.00031, amp: 7 },
-      { x: 66, y: 74, s: 26, depth: 0.07, sp: 0.00017, amp: 4 },
-      { x: 20, y: 82, s: 15, depth: 0.24, sp: 0.00042, amp: 8 },
-      { x: 44, y: 46, s: 19, depth: 0.13, sp: 0.00026, amp: 6 }
+      { x: 14, y: 20, s: 62, depth: 0.09, sp: 0.000068, amp: 4.5 },
+      { x: 84, y: 30, s: 48, depth: 0.15, sp: 0.000092, amp: 6.0 },
+      { x: 62, y: 78, s: 70, depth: 0.06, sp: 0.000051, amp: 3.5 },
+      { x: 26, y: 84, s: 44, depth: 0.20, sp: 0.000124, amp: 7.0 }
     ];
-    field.innerHTML = spec.map(function (b) {
-      return '<div class="blob" style="left:' + b.x + '%;top:' + b.y +
-             '%;width:' + b.s + 'vmax;height:' + b.s + 'vmax;margin:' +
-             (-b.s / 2) + 'vmax 0 0 ' + (-b.s / 2) + 'vmax"></div>';
+    field.innerHTML = spec.map(function (a) {
+      return '<div class="aura" style="left:' + a.x + '%;top:' + a.y +
+             '%;width:' + a.s + 'vmax;height:' + a.s + 'vmax;margin:' +
+             (-a.s / 2) + 'vmax 0 0 ' + (-a.s / 2) + 'vmax"></div>';
     }).join('');
-    blobs = [].slice.call(field.children).map(function (el, i) {
+    auras = [].slice.call(field.children).map(function (el, i) {
       return { el: el, cfg: spec[i] };
     });
   }
@@ -104,29 +159,30 @@
     });
   }
 
-  /* ---- 6 · La pila (interludio B) ---------------------------------------- */
-  var pileItems = [];
-  function buildPile() {
-    var box = document.querySelector('.pile__items');
+  /* ---- 6 · El carrete (interludio B) --------------------------------------
+     Tantas imagenes que ninguna se puede elegir. Al scrollear la grilla se
+     aleja y entran mas en cuadro: el zoom-out es el argumento.             */
+  var reel = null;
+  function buildReel() {
+    var box = document.querySelector('[data-reel]');
     if (!box) return;
-    var kids = [].slice.call(box.children);
-    // Layout deterministico: se acumula desordenado pero siempre igual
-    // [left%, top%, rotacion, escala] — desprolijo pero siempre igual
-    var spots = [
-      [2, 4, -7, 1.35], [56, 0, 5, 0.85], [26, 16, -3, 1.05], [4, 30, 8, 0.75],
-      [62, 24, 4, 1.2], [30, 40, -6, 0.9], [0, 54, -2, 1.1], [46, 58, 7, 0.8],
-      [16, 72, -4, 1.25], [58, 82, 3, 0.95]
-    ];
-    kids.forEach(function (el, i) {
-      var s = spots[i % spots.length];
-      el.style.left = s[0] + '%';
-      el.style.top = s[1] + '%';
-      el.style.setProperty('--rot', s[2] + 'deg');
-      el.style.setProperty('--fs', s[3]);
-      el.dataset.depth = (0.12 + (i % 5) * 0.07).toFixed(2);
-      el.style.transform = 'rotate(' + s[2] + 'deg)';
-    });
-    pileItems = reduce || isExport ? [] : kids;
+    if (!box.children.length) {
+      var n = parseInt(box.dataset.reel, 10) || 168;
+      var files = [];
+      for (var f = 1; f <= 44; f++) files.push('img/feed/p-' + String(f).padStart(2, '0') + '.jpg');
+      var html = '';
+      for (var i = 0; i < n; i++) {
+        // Placeholder: fotos random tipo galeria personal. El paso 7 es
+        // coprimo con 44, asi que recorre las 44 antes de repetir.
+        var src = files[(i * 7) % files.length];
+        var rot = (((i * 37) % 9) - 4) * 0.35;
+        html += '<img src="' + src + '" style="--rot:' + rot.toFixed(2) +
+                'deg" alt="" loading="lazy" decoding="async">';
+      }
+      box.innerHTML = html;
+    }
+    if (reduce || isExport) return;
+    reel = { el: box, section: box.closest('.interlude--reel'), stage: box.closest('.reel__stage') };
   }
 
   /* ---- 7 · Track horizontal con scrub (frame 09) -------------------------- */
@@ -134,12 +190,29 @@
   function buildTrack() {
     var frame = document.querySelector('.frame--track');
     if (!frame || isExport) return;
+    var rail = frame.querySelector('.track__rail');
+    var steps = [].slice.call(frame.querySelectorAll('.step'));
     track = {
       frame: frame,
-      rail: frame.querySelector('.track__rail'),
+      rail: rail,
       vp: frame.querySelector('.track__viewport'),
-      bar: frame.querySelector('.track__progress i')
+      steps: steps,
+      pips: [].slice.call(frame.querySelectorAll('.track__progress i')),
+      count: frame.querySelector('[data-track-now]'),
+      offsets: [],
+      active: -1
     };
+    measureTrack();
+  }
+
+  // Cuanto hay que desplazar el riel para que cada step quede centrado.
+  // Se recalcula al redimensionar y al cambiar de idioma.
+  function measureTrack() {
+    if (!track || !track.steps.length) return;
+    track.offsets = track.steps.map(function (s) {
+      var c = s.offsetLeft + s.offsetWidth / 2;
+      return Math.max(0, c - window.innerWidth / 2);
+    });
   }
 
   /* ---- 8 · Observador de entradas ---------------------------------------- */
@@ -183,9 +256,9 @@
     velocity += ((y - lastY) - velocity) * 0.18;
     lastY = y;
 
-    // Blobs: deriva lenta + parallax
-    for (var i = 0; i < blobs.length; i++) {
-      var b = blobs[i], c = b.cfg;
+    // Auras: deriva lenta + parallax
+    for (var i = 0; i < auras.length; i++) {
+      var b = auras[i], c = b.cfg;
       var drift = Math.sin(t * c.sp) * c.amp;
       var driftY = Math.cos(t * c.sp * 0.8) * c.amp * 0.6;
       b.el.style.transform =
@@ -203,25 +276,50 @@
         'translate3d(' + (-q.offset).toFixed(2) + 'px,0,0) skewX(' + skew.toFixed(2) + 'deg)';
     }
 
-    // Pila: cada item cae a su profundidad
-    for (var p = 0; p < pileItems.length; p++) {
-      var it = pileItems[p];
-      var depth = parseFloat(it.dataset.depth);
-      var rot = it.style.getPropertyValue('--rot');
-      it.style.transform =
-        'translate3d(0,' + (-y * depth * 0.08).toFixed(2) + 'px,0) rotate(' + rot + ')';
+    // Carrete: se aleja a medida que se atraviesa la seccion
+    if (reel && reel.section) {
+      var rr = reel.section.getBoundingClientRect();
+      var rspan = rr.height - reel.stage.offsetHeight;
+      var rp = rspan > 0 ? -rr.top / rspan : 0;
+      rp = Math.max(0, Math.min(1, rp));
+      // de 1.9 a 0.55: empieza encima tuyo y termina siendo un mar de miniaturas
+      var scale = 1.9 - rp * 1.35;
+      reel.el.style.transform = 'translate(-50%,-50%) scale(' + scale.toFixed(3) + ') rotate(' + (rp * 2 - 1).toFixed(2) + 'deg)';
     }
 
-    // Track horizontal
-    if (track && track.rail) {
-      // rect en vez de offsetTop: no depende de quien sea el offsetParent
+    // Track horizontal, por pasos.
+    // El barrido continuo hacia que se scrollearan miles de pixeles sin que
+    // pasara casi nada. Ahora el progreso se parte en un tramo por step:
+    // la primera mitad del tramo sostiene el step, la segunda viaja al que
+    // sigue. Asi los cinco tienen su momento y ninguno se saltea.
+    if (track && track.rail && track.steps.length) {
       var rect = track.frame.getBoundingClientRect();
       var span = rect.height - track.vp.offsetHeight;
       var prog = span > 0 ? -rect.top / span : 0;
       prog = Math.max(0, Math.min(1, prog));
-      var maxX = Math.max(0, track.rail.scrollWidth - window.innerWidth);
-      track.rail.style.transform = 'translate3d(' + (-prog * maxX).toFixed(2) + 'px,0,0)';
-      if (track.bar) track.bar.style.setProperty('--p', prog.toFixed(4));
+
+      var last = track.steps.length - 1;
+      var f = prog * last;                  // posicion continua entre steps
+      var idx = Math.min(last, Math.floor(f));
+      var local = f - idx;                  // 0..1 dentro del tramo
+      var HOLD = 0.45;                      // cuanto del tramo se queda quieto
+      var t = local <= HOLD ? 0 : (local - HOLD) / (1 - HOLD);
+      t = t * t * (3 - 2 * t);              // smoothstep: sale y entra suave
+
+      var active = local > 0.5 ? Math.min(last, idx + 1) : idx;
+      var x = track.offsets[idx] + (track.offsets[Math.min(last, idx + 1)] - track.offsets[idx]) * t;
+      track.rail.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
+
+      if (active !== track.active) {
+        track.active = active;
+        for (var s = 0; s < track.steps.length; s++) {
+          track.steps[s].classList.toggle('is-active', s === active);
+        }
+        for (var pi = 0; pi < track.pips.length; pi++) {
+          track.pips[pi].classList.toggle('is-on', pi <= active);
+        }
+        if (track.count) track.count.textContent = String(active + 1).padStart(2, '0');
+      }
     }
 
     // Cursor
@@ -240,8 +338,8 @@
     splitAll();
     buildTiles();
     buildTicks();
-    buildBlobs();
-    buildPile();
+    buildAuras();
+    buildReel();
     buildTrack();
     buildMarquees();
     observe();
@@ -260,13 +358,14 @@
   document.addEventListener('mutar:lang', function () {
     splitAll();
     buildMarquees();
+    measureTrack();
     observe();
   });
 
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(buildMarquees, 220);
+    resizeTimer = setTimeout(function () { buildMarquees(); measureTrack(); }, 220);
   }, { passive: true });
 
   window.MUTAR = window.MUTAR || {};

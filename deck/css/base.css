@@ -112,26 +112,44 @@ a { color: inherit; }
   letter-spacing: var(--track-mega);
 }
 
-/* ---- Blob field --------------------------------------------------------- */
-.blob-field {
+/* ---- Campo de auras -----------------------------------------------------
+   Antes eran blobs con border-radius desparejo: el borde duro y la
+   deformacion arbitraria se veian baratos. Ahora son degradados radiales
+   que se desvanecen a transparente — sin borde, sin deformacion. La forma
+   la da la luz, no un recorte.                                             */
+.aura-field {
   position: fixed;
-  inset: -12vmax;
+  inset: -20vmax;
   z-index: 0;
   pointer-events: none;
-  filter: url(#goo);
 }
-.blob {
+.aura {
   position: absolute;
-  /* radios desparejos: leen como blob, no como circulo de clip-art */
-  border-radius: 62% 38% 45% 55% / 48% 58% 42% 52%;
-  background: var(--blob-color, var(--accent));
-  opacity: 0.18;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+              var(--aura-color, var(--accent)) 0%,
+              color-mix(in srgb, var(--aura-color, var(--accent)) 45%, transparent) 42%,
+              transparent 72%);
+  opacity: 0.32;
   mix-blend-mode: multiply;
-  transition: background-color var(--dur-ground) var(--ease-soft);
+  transition: background var(--dur-ground) var(--ease-soft);
   will-change: transform;
 }
-body[data-ground="ink"] .blob,
-body[data-ground="violet"] .blob { mix-blend-mode: screen; opacity: 0.10; }
+body[data-ground="ink"] .aura,
+body[data-ground="violet"] .aura { mix-blend-mode: screen; opacity: 0.22; }
+
+/* ---- Grano ---------------------------------------------------------------
+   Una capa de ruido muy leve sobre todo. No se ve; se siente. Es lo que
+   evita que los degradados queden plasticos y con banding.                 */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.26;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
 
 /* ---- Cursor blob -------------------------------------------------------- */
 .cursor-blob {
@@ -178,6 +196,12 @@ body.hide-rail .rail { opacity: 0; pointer-events: none; }
   font-size: 0.6rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  /* fondo propio: la etiqueta cae sobre el contenido del frame y tiene que
+     leerse igual sobre el logotipo, una foto o un titular */
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter: blur(6px);
   opacity: 0;
   transform: translateX(0.4rem);
   transition: opacity var(--dur-fast) var(--ease-soft),
@@ -198,7 +222,7 @@ body.hide-rail .rail { opacity: 0; pointer-events: none; }
 .rail__act.is-active .rail__pip {
   width: 2.6rem;
   opacity: 1;
-  background: var(--accent);
+  background: var(--brand);
 }
 
 /* ---- Chrome: idioma, contador, hint ------------------------------------- */
@@ -228,7 +252,7 @@ body.hide-rail .rail { opacity: 0; pointer-events: none; }
   opacity: 0.45;
   transition: opacity var(--dur-fast), background-color var(--dur-fast);
 }
-.lang button.is-active { opacity: 1; background: var(--accent); color: var(--ink); }
+.lang button.is-active { opacity: 1; background: var(--brand); color: #fff; }
 
 .counter { font-variant-numeric: tabular-nums; }
 
@@ -268,7 +292,65 @@ body.has-scrolled .scroll-hint { opacity: 0; pointer-events: none; }
   text-align: center;
 }
 
+/* ---- Logo ---------------------------------------------------------------
+   SVG vectorizado del logotipo original. Toma el color por currentColor,
+   asi que sirve igual en rosa de marca, en tinta o en hueso.             */
+/* Se pinta con mask y no con <img>: un SVG dentro de <img> queda aislado y
+   currentColor nunca le llega. Asi el mismo archivo sirve en rosa de marca,
+   en tinta o en hueso, sin duplicar assets.                              */
+.logo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1000 / 221.62;
+  background-color: currentColor;
+  -webkit-mask: url("../img/mutar-logo.svg") center / contain no-repeat;
+  mask: url("../img/mutar-logo.svg") center / contain no-repeat;
+}
+
+/* Marca chica fija, presente en todo el deck menos en la portada */
+.chrome--tl { top: clamp(1rem, 3vh, 2rem); left: var(--pad-x); }
+.mark-sm {
+  display: block;
+  width: clamp(4.5rem, 7vw, 6.5rem);
+  color: var(--brand);
+  opacity: 0;
+  transform: translateY(-0.4rem);
+  transition: opacity var(--dur-base) var(--ease-soft),
+              transform var(--dur-base) var(--ease-soft);
+  pointer-events: none;
+}
+body.has-scrolled .mark-sm { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ---- Marcador de estructura ---------------------------------------------
+   Dice en voz alta que ese bloque todavia no esta escrito. Este deck es un
+   esqueleto y tiene que verse como tal, no como un documento cerrado.     */
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.38rem 0.85rem;
+  border: 1px dashed color-mix(in srgb, var(--fg) 32%, transparent);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.note::before {
+  content: "";
+  width: 0.4rem; height: 0.4rem;
+  border-radius: 50%;
+  background: var(--brand);
+  flex: none;
+}
+
 /* ---- Utilidades --------------------------------------------------------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
 .stack { display: flex; flex-direction: column; gap: var(--gap); }
 
 /* ==========================================================================
@@ -279,10 +361,12 @@ body.has-scrolled .scroll-hint { opacity: 0; pointer-events: none; }
 
 body.export { overflow-x: auto; background: #d9d5cd; }
 html.export-html { scroll-snap-type: none; scroll-behavior: auto; }
-body.export .blob-field,
+body.export .aura-field,
 body.export .cursor-blob,
+body.export .grain,
 body.export .rail,
 body.export .chrome,
+body.export .mark-sm,
 body.export .scroll-hint { display: none !important; }
 
 /* Todo revelado, nada animado */
@@ -335,7 +419,7 @@ body.export.export--full .interlude {
     transform: none;
     letter-spacing: normal;
   }
-  .blob-field, .cursor-blob { display: none; }
+  .aura-field, .cursor-blob { display: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
