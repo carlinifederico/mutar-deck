@@ -1,6 +1,6 @@
 /* ==========================================================================
    MUTAR — Motion
-   Un solo rAF para todo lo continuo (auras, marquees, carrete, track, cursor)
+   Un solo rAF para todo lo continuo (auras, carrete, track, cursor)
    + IntersectionObserver para las entradas. Sin librerias, sin build.
 
    Si prefers-reduced-motion esta activo, todo esto se apaga y el CSS
@@ -134,31 +134,6 @@
     });
   }
 
-  /* ---- 5 · Marquees ------------------------------------------------------ */
-  var marquees = [];
-  function buildMarquees() {
-    marquees = [];
-    document.querySelectorAll('.marquee__row, .band__row').forEach(function (row) {
-      if (!row.dataset.seed) row.dataset.seed = row.innerHTML;
-      row.innerHTML = row.dataset.seed;
-      if (reduce || isExport) return;
-
-      var setWidth = row.scrollWidth;
-      if (!setWidth) return;
-      // Clonar hasta cubrir dos veces el viewport: el loop tiene que ser continuo
-      var copies = Math.max(2, Math.ceil((window.innerWidth * 2) / setWidth) + 1);
-      var seed = row.innerHTML;
-      for (var i = 1; i < copies; i++) row.insertAdjacentHTML('beforeend', seed);
-
-      marquees.push({
-        el: row,
-        w: setWidth,
-        speed: parseFloat(row.dataset.speed) || 0.3,
-        offset: 0
-      });
-    });
-  }
-
   /* ---- 6 · El carrete (interludio B) --------------------------------------
      Tantas imagenes que ninguna se puede elegir. Al scrollear la grilla se
      aleja y entran mas en cuadro: el zoom-out es el argumento.             */
@@ -209,9 +184,12 @@
   // Se recalcula al redimensionar y al cambiar de idioma.
   function measureTrack() {
     if (!track || !track.steps.length) return;
+    // Sin clamp a 0: si el primer step arranca pegado a la izquierda, el que
+    // queda en el centro de la pantalla es el segundo y el primero parece
+    // saltearse. El offset puede ser negativo — el riel se corre a la derecha
+    // y deja aire antes del step 1, que es lo correcto: antes no hay nada.
     track.offsets = track.steps.map(function (s) {
-      var c = s.offsetLeft + s.offsetWidth / 2;
-      return Math.max(0, c - window.innerWidth / 2);
+      return s.offsetLeft + s.offsetWidth / 2 - window.innerWidth / 2;
     });
   }
 
@@ -266,16 +244,6 @@
         (driftY - y * c.depth * 0.06).toFixed(2) + 'px,0)';
     }
 
-    // Marquees: velocidad base + empuje del scroll
-    for (var m = 0; m < marquees.length; m++) {
-      var q = marquees[m];
-      q.offset += (q.speed * dt * 0.06) + velocity * q.speed * 0.06;
-      q.offset = ((q.offset % q.w) + q.w) % q.w;
-      var skew = Math.max(-6, Math.min(6, velocity * 0.12));
-      q.el.style.transform =
-        'translate3d(' + (-q.offset).toFixed(2) + 'px,0,0) skewX(' + skew.toFixed(2) + 'deg)';
-    }
-
     // Carrete: se aleja a medida que se atraviesa la seccion
     if (reel && reel.section) {
       var rr = reel.section.getBoundingClientRect();
@@ -302,7 +270,7 @@
       var f = prog * last;                  // posicion continua entre steps
       var idx = Math.min(last, Math.floor(f));
       var local = f - idx;                  // 0..1 dentro del tramo
-      var HOLD = 0.45;                      // cuanto del tramo se queda quieto
+      var HOLD = 0.32;                      // cuanto del tramo se queda quieto
       var t = local <= HOLD ? 0 : (local - HOLD) / (1 - HOLD);
       t = t * t * (3 - 2 * t);              // smoothstep: sale y entra suave
 
@@ -341,23 +309,20 @@
     buildAuras();
     buildReel();
     buildTrack();
-    buildMarquees();
     observe();
     if (!reduce && !isExport) requestAnimationFrame(frame);
   }
 
   // Las fuentes cambian los anchos: medir despues de que carguen
+  boot();
+  // Las fuentes cambian los anchos de las tarjetas: re-medir al cargarlas
   if (document.fonts && document.fonts.ready) {
-    boot();
-    document.fonts.ready.then(function () { buildMarquees(); });
-  } else {
-    boot();
+    document.fonts.ready.then(measureTrack);
   }
 
   // Al cambiar de idioma el texto se reescribe: hay que re-splitear y re-medir
   document.addEventListener('mutar:lang', function () {
     splitAll();
-    buildMarquees();
     measureTrack();
     observe();
   });
@@ -365,7 +330,7 @@
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { buildMarquees(); measureTrack(); }, 220);
+    resizeTimer = setTimeout(measureTrack, 220);
   }, { passive: true });
 
   window.MUTAR = window.MUTAR || {};

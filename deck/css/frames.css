@@ -132,10 +132,10 @@
 /* ---- 09 · Track horizontal con scrub ------------------------------------ */
 /* El frame es alto; adentro un viewport sticky que traslada el rail.       */
 .frame--track {
-  /* Cinco tramos de ~55vh: cada step se centra, se sostiene y recien
-     entonces viaja al siguiente. Antes eran 420vh de barrido continuo
-     donde 4000px de scroll movian 1500px de riel: se sentia vacio. */
-  height: 375vh;
+  /* Cuatro tramos de ~50vh: cada step se centra, se sostiene un momento y
+     recien entonces viaja al siguiente. Antes era un barrido continuo donde
+     4000px de scroll movian 1500px de riel y se sentia vacio. */
+  height: 300vh;
   min-height: 0;
   padding: 0;
   display: block;
@@ -462,69 +462,6 @@
   --pad-r: calc(var(--pad-x) + 3.5rem);
   scroll-snap-align: none;
 }
-/* overflow:hidden solo donde hace falta: en el carrete convertia al
-   interludio en contenedor de scroll y anulaba el sticky del stage */
-.interlude--marquee,
-.interlude--band { overflow: hidden; }
-
-/* A · Marquee de objetos */
-.marquee { display: grid; gap: clamp(0.4rem, 1.4vh, 1rem); }
-.marquee__row {
-  display: flex;
-  gap: 1.5rem;
-  white-space: nowrap;
-  will-change: transform;
-  font-family: var(--font-bubble);
-  font-size: clamp(1.75rem, 6vw, 5rem);
-  line-height: 1;
-}
-.marquee__row:nth-child(2) { color: var(--accent-text); }
-.marquee__row:nth-child(3) { -webkit-text-stroke: 1.5px var(--fg); color: transparent; }
-.marquee__row span { display: inline-block; }
-.marquee__row span::after { content: "\00a0·"; opacity: 0.4; }
-
-/* C · Banda del recorrido */
-.band { padding: 0 var(--pad-x); }
-.band__row {
-  display: flex;
-  gap: 1.25rem;
-  align-items: center;
-  white-space: nowrap;
-  will-change: transform;
-  font-family: var(--font-grotesk);
-  font-weight: 800;
-  font-size: clamp(1.1rem, 3.2vw, 2.75rem);
-  letter-spacing: -0.02em;
-}
-.band__row i { font-style: normal; color: var(--accent-text); }
-
-/* ==========================================================================
-   EXPORT — ajustes de layout para las paginas 16:9
-   ========================================================================== */
-body.export .frame {
-  padding: 3.5rem 4.5rem 3rem;
-  align-content: center;
-  font-size: 1.05rem;
-}
-body.export .frame__tag { top: 2rem; left: 4.5rem; }
-body.export .frame--track { height: var(--page-h); display: grid; }
-body.export .track__viewport { position: static; height: 100%; overflow: visible; }
-body.export .track__rail {
-  transform: none !important;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.25rem;
-  padding: 0;
-}
-body.export .step { flex: initial; }
-body.export .step__n { font-size: 4rem; }
-body.export .step__title { font-size: 1.4rem; }
-body.export .step__desc, body.export .step__quote { font-size: 0.8rem; }
-body.export .track__progress { display: none; }
-body.export .tiles { grid-template-columns: repeat(10, 1fr); }
-body.export .marquee__row,
-body.export .band__row { transform: none !important; }
-body.export .reel { transform: none !important; }
 
 /* ---- Fragmentos cortos (concepto / definicion) ---------------------------
    La idea entra en tres golpes, no en dos parrafos. Es lo que hace que el
