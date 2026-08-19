@@ -274,7 +274,11 @@
       var t = local <= HOLD ? 0 : (local - HOLD) / (1 - HOLD);
       t = t * t * (3 - 2 * t);              // smoothstep: sale y entra suave
 
-      var active = local > 0.5 ? Math.min(last, idx + 1) : idx;
+      // el viaje empieza recien en HOLD, asi que el punto medio del viaje no
+      // es 0.5 sino HOLD + (1-HOLD)/2. Cambiar el resaltado ahi hace que el
+      // highlight salte justo cuando la tarjeta entrante cruza el centro.
+      var medio = HOLD + (1 - HOLD) / 2;
+      var active = local > medio ? Math.min(last, idx + 1) : idx;
       var x = track.offsets[idx] + (track.offsets[Math.min(last, idx + 1)] - track.offsets[idx]) * t;
       track.rail.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
 

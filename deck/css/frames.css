@@ -140,6 +140,11 @@
   padding: 0;
   display: block;
   scroll-snap-align: none;
+  /* .frame trae align-content:center y Chrome ya lo aplica tambien en layout
+     de bloque: eso centraba el stage sticky dentro de los 300vh del track y
+     lo empujaba un viewport entero hacia abajo. El resultado era una pantalla
+     vacia antes de las tarjetas y el step 1 consumiendose sin verse. */
+  align-content: start;
 }
 .track__viewport {
   position: sticky;
@@ -153,7 +158,8 @@
      ancho del riel (2700px) y el encabezado se va fuera de pantalla */
   grid-template-columns: 100%;
   grid-template-rows: auto 1fr auto;
-  padding: clamp(4.5rem, 9vh, 7rem) 0 clamp(3.5rem, 7vh, 5rem);
+  /* deja pasar el tag del frame, que va absoluto arriba a la izquierda */
+  padding: clamp(5.75rem, 11vh, 8rem) 0 clamp(3.5rem, 7vh, 5rem);
 }
 .track__head {
   display: flex;
