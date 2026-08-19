@@ -27,22 +27,41 @@ Query params: `?lang=es` · `?frame=8` · `?print` · `?print=full`
 
 ---
 
-## Estructura — 20 frames en 8 actos + 1 interludio
+## Estructura — 27 frames en 10 actos + 1 interludio
 
-| | Frame | Ground / acento |
+| | Frames | Ground / acento |
 |---|---|---|
 | **0 · Entrada** | 01 Portada | hueso / rosa |
-| **1 · La pregunta** | 02 · 03 Las dos preguntas | tinta / lima |
+| **1 · La pregunta** | 02 · 03 | tinta / lima |
 | | *interludio — el carrete* | |
 | **2 · La idea** | 04 Tesis · 05 Concepto · 06 Qué es MUTAR | hueso / amarillo |
-| **3 · El recorrido** | 07 Divisor · 08 Cinco movimientos · 09 Pipeline | tinta / cian |
-| **4 · La experiencia** | 10 Happening · 11 Cinturón · 12 Treinta resultados · 13 Votación · 14 Construcción | violeta / amarillo |
-| **5 · Escala** | 15 Ciudades · 16 Escalabilidad · 17 Impacto | hueso / naranja |
-| **6 · Los creadores** | 18 Canda + Carlini | tinta / amarillo |
-| **7 · Cierre** | 19 Cierre · 20 Contacto | tinta / rosa |
+| **3 · El recorrido** | 07 Divisor · 08 Cinco movimientos · 09 El ciclo | tinta / cian |
+| **4 · La experiencia** | 10 Happening · 11 Por qué passthrough · 12 El espacio · 13 Cómo empieza | violeta / amarillo |
+| **5 · La construcción** | 14 Tres fases · 15 Herramientas · 16 La librería · 17 El finish · 18 Artista invitado | tinta / naranja |
+| **6 · La comunidad** | 19 Treinta resultados · 20 Votación · 21 La obra física | hueso / violeta |
+| **7 · Escala** | 22 Ciudades · 23 Escalabilidad · 24 Impacto | hueso / naranja |
+| **8 · Los creadores** | 25 Canda + Carlini | tinta / amarillo |
+| **9 · Cierre** | 26 Cierre · 27 Estado y próximos pasos | tinta / rosa |
 
-Los frames 05 y 06 usan `.beats`: la idea entra en tres golpes cortos en vez
-de dos párrafos. Es lo que hace que el deck se lea como estructura.
+Los actos 4 y 5 salieron de la reunión del 19/08: passthrough, zonas del
+espacio, arranque sin tutorial, las tres fases de construcción, las
+herramientas como experiencias, la librería de 20 objetos, el finish como
+impronta y el rol del artista invitado.
+
+Los frames 05, 06, 11, 13, 14, 18 y 27 usan `.beats`: la idea entra en tres
+golpes cortos en vez de párrafos.
+
+### Retratos
+
+Poner `gervasio.jpg` y `federico.jpg` en `img/team/`. Van de background del
+círculo: si el archivo no está, se ve el hueco punteado y el layout no se
+mueve.
+
+### Huecos marcados
+
+Cinco `.slot` de imagen (planta del espacio, mockup del cinturón, la librería,
+el finish antes/después, referencia de artista invitado) y ocho `.note` con lo
+que falta definir.
 
 ---
 

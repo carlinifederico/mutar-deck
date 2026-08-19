@@ -1,0 +1,4 @@
+Poner aca los retratos:
+  gervasio.jpg
+  federico.jpg
+Cuadrados, 600x600 o mas. Si no estan, el deck muestra el hueco punteado.
