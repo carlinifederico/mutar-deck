@@ -382,7 +382,7 @@
 .cities { display: grid; gap: 0; margin-top: clamp(1rem, 3vh, 2rem); }
 .city {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   padding: clamp(0.5rem, 1.6vh, 1.1rem) 0;
@@ -391,6 +391,20 @@
   transition: padding-left var(--dur-fast) var(--ease-back), color var(--dur-fast);
 }
 .city:last-child { border-bottom: 1px solid var(--hairline); }
+.city__id {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 1.8vw, 1.6rem);
+  min-width: 0;
+}
+/* La silueta va siempre en el color de la ciudad ya oscurecido: el lima y el
+   amarillo puros sobre hueso no se leen. */
+.city__icon {
+  flex: none;
+  width: clamp(2.2rem, 4.6vw, 4rem);
+  color: color-mix(in srgb, var(--city) 70%, var(--ink));
+}
+.city__icon svg { display: block; width: 100%; height: auto; }
 .city__name {
   font-family: var(--font-display);
   font-weight: 600;
@@ -607,6 +621,39 @@
 .creator__links a:hover { color: var(--accent-text); border-color: var(--accent); }
 
 /* --------------------------------------------------------------------------
+   EXPORT · layout de las paginas 16:9
+   Cada frame pasa a ser una caja fija de 1280x720. El track horizontal, que
+   en pantalla es un stage pegajoso, se aplana a cinco columnas.
+   -------------------------------------------------------------------------- */
+body.export .frame {
+  padding: 3.5rem 4.5rem 3rem;
+  align-content: center;
+  font-size: 1.05rem;
+}
+body.export .frame__tag { top: 2rem; left: 4.5rem; }
+
+body.export .frame--track    { height: var(--page-h); display: grid; }
+body.export .track__viewport { position: static; height: 100%; overflow: hidden; }
+body.export .track__rail {
+  align-self: center;
+  transform: none !important;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  padding: 0 4.5rem;
+}
+/* en export no hay step activo: los cinco valen igual */
+body.export .step          { flex: initial; opacity: 1; transform: none; }
+body.export .step__title   { font-size: 1.3rem; }
+body.export .step__quote,
+body.export .step__desc    { font-size: 0.78rem; }
+body.export .track__head   { padding: 0 4.5rem; }
+body.export .track__progress { display: none; }
+
+body.export .tiles { grid-template-columns: repeat(10, 1fr); max-width: none; }
+body.export .reel  { transform: none !important; }
+
+/* --------------------------------------------------------------------------
    EXPORT · escala tipografica fija
    En pantalla los cuerpos se calculan con vw, que mide la ventana del
    navegador — no la pagina de 1280x720. Para que el PDF salga siempre igual,
@@ -675,3 +722,4 @@ body.export .creators       { gap: 1.5rem; }
 body.export .creator        { gap: 0.4rem; }
 body.export .creator__bio   { font-size: 0.75rem; }
 body.export .creator__work span { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
+body.export .city__icon { width: 1.9rem; }
