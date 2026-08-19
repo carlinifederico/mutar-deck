@@ -165,6 +165,40 @@ Sin dependencias ni build. Fuentes desde Google Fonts.
 
 ---
 
+## Versión Google Slides
+
+`deck/export/MUTAR-deck-es.pptx` — los mismos 20 frames como slides nativos:
+cajas de texto y formas reales, todo editable, en castellano.
+
+**Cómo abrirlo:** arrastrá el .pptx a Google Drive y abrilo con Google Slides.
+Drive lo convierte solo.
+
+**Las fuentes hay que agregarlas una vez.** Fredoka, Bagel Fat One, DM Mono y
+Bricolage Grotesque son de Google Fonts pero no vienen en la lista por defecto
+de Slides. En el menú de fuentes → *Más fuentes* → buscá cada una y agregala.
+Hasta que lo hagas, Slides las sustituye por Arial: el deck se ve correcto pero
+pierde su carácter.
+
+**Qué se simplifica respecto del web.** Lo que en la web es movimiento no tiene
+equivalente en una diapositiva: el track horizontal de los cinco movimientos
+pasa a cinco tarjetas en fila, las treinta esculturas dibujadas pasan a una
+grilla numerada con la ganadora resaltada, y el carrete de fotos no está (es un
+interludio de scroll, no un slide). Todo lo demás —textos, colores por acto,
+jerarquías, píldoras de pendiente— es igual.
+
+**Para regenerarlo** después de tocar el contenido:
+
+```
+node deck/tools/build-pptx.js
+```
+
+El contenido de cada slide vive en `deck/tools/build-pptx.js`; el escritor de
+.pptx (ZIP + PresentationML, sin dependencias) en `deck/tools/pptx-lib.js`.
+Ojo: el generador es una fuente aparte del HTML — si cambiás un texto en el deck
+web, hay que cambiarlo también ahí.
+
+---
+
 ## Pendiente
 
 - Reemplazar el feed placeholder por fotos reales de galería personal.
