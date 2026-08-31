@@ -515,8 +515,13 @@
 }
 
 /* ---- Interludio B · el carrete -------------------------------------------
-   Tantas imagenes que ninguna se puede elegir. Al scrollear la grilla se
-   aleja y entran mas: el zoom-out es el argumento, no un efecto.          */
+   Tantas cosas que ninguna se puede elegir. El fondo son objetos escaneados
+   y al scrollear la camara retrocede y entran mas: el zoom-out es el
+   argumento, no un efecto. La escena la arma js/scan.js.
+
+   OJO: nada de overflow:hidden en .interlude--reel. Lo convierte en
+   contenedor de scroll y anula el sticky del stage. El overflow va aca
+   abajo, en .reel__stage.                                                */
 .interlude--reel { height: 240vh; padding: 0; }
 .reel__stage {
   position: sticky;
@@ -526,38 +531,45 @@
   place-items: center;
   overflow: hidden;
 }
-.reel {
-  /* Columnas tipo masonry, no grilla prolija: tiene que leerse como el
-     carrete de fotos de alguien, con alturas dispares. El ancho en vmax
-     garantiza que al alejarse siga cubriendo el viewport. */
+/* El canvas de los objetos escaneados. Va con alpha, asi que lo que se ve
+   por detras del monton es el --ground del deck y el cross-fade de grounds
+   lo sigue tomando gratis. */
+.scan {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 190vmax;
-  columns: 14;
-  column-gap: 6px;
-  transform-origin: center;
-  will-change: transform;
-}
-.reel img {
-  display: block;
+  inset: 0;
   width: 100%;
-  margin: 0 0 6px;
-  break-inside: avoid;
-  border-radius: 3px;
-  transform: rotate(var(--rot, 0deg));
+  height: 100%;
+  display: block;
 }
-/* El velo deja pasar las imagenes pero garantiza que el texto se lea */
+/* Fallback: sin WebGL, en file:// o con reduced-motion, scan.js se saca de
+   encima el canvas y marca el stage. La seccion pasa a ser un render fijo
+   del monton, que dice lo mismo aunque no se mueva. */
+.reel__stage--flat {
+  background: var(--ground) url("../img/scan/poster.webp") center / cover no-repeat;
+}
+/* El velo deja pasar el monton pero garantiza que el texto se lea */
 .reel__veil {
   position: absolute;
   inset: 0;
   /* deja ver el mar de imagenes, pero garantiza que el texto del centro
      tenga contraste suficiente */
   background:
-    radial-gradient(ellipse 60% 45% at center,
-      var(--ground) 0%,
-      color-mix(in srgb, var(--ground) 82%, transparent) 45%,
-      color-mix(in srgb, var(--ground) 42%, transparent) 100%);
+    radial-gradient(ellipse 58% 44% at center,
+      color-mix(in srgb, var(--ground) 90%, transparent) 0%,
+      color-mix(in srgb, var(--ground) 68%, transparent) 46%,
+      color-mix(in srgb, var(--ground) 12%, transparent) 100%);
+}
+/* En vertical el mismo elipse tapa mucho mas alto y deja el monton lavado.
+   Se achata para que el texto siga teniendo su colchon y el monton de abajo
+   conserve el color. */
+@media (max-aspect-ratio: 1/1) {
+  .reel__veil {
+    background:
+      radial-gradient(ellipse 92% 26% at center,
+        color-mix(in srgb, var(--ground) 90%, transparent) 0%,
+        color-mix(in srgb, var(--ground) 62%, transparent) 52%,
+        color-mix(in srgb, var(--ground) 8%, transparent) 100%);
+  }
 }
 .reel__punch {
   font-family: var(--font-display);
@@ -685,7 +697,8 @@ body.export .track__head   { padding: 0 4.5rem; }
 body.export .track__progress { display: none; }
 
 body.export .tiles { grid-template-columns: repeat(10, 1fr); max-width: none; }
-body.export .reel  { transform: none !important; }
+/* En export no hay escena: el stage muestra el poster y listo. */
+body.export .scan  { display: none !important; }
 
 /* --------------------------------------------------------------------------
    EXPORT · escala tipografica fija

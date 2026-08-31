@@ -1,0 +1,35 @@
+{
+  "_comment": [
+    "Elenco del interludio del carrete: cosas en desuso.",
+    "Todo Poly Haven, todo CC0, todo descarga directa sin cuenta.",
+    "'label' es lo que el objeto tiene que leer en pantalla, no el nombre del archivo.",
+    "Para agregar un objeto: buscalo en https://polyhaven.com/models, copia el slug",
+    "y agregalo aca. Despues 'npm run scans:fetch && npm run scans:build'."
+  ],
+  "source": "polyhaven",
+  "license": "CC0",
+  "credit": "Poly Haven (polyhaven.com) — CC0",
+  "res": "1k",
+  "objects": [
+    { "id": "ArmChair_01",                 "label": "sillon victoriano" },
+    { "id": "sofa_03",                     "label": "sofa vintage" },
+    { "id": "painted_wooden_sofa",         "label": "sofa de madera gastado" },
+    { "id": "Rockingchair_01",             "label": "mecedora" },
+    { "id": "vintage_day_bed",             "label": "divan" },
+    { "id": "SchoolDesk_01",               "label": "pupitre" },
+    { "id": "WoodenTable_02",              "label": "mesa chica" },
+    { "id": "vintage_cabinet_01",          "label": "aparador" },
+    { "id": "Shelf_01",                    "label": "estanteria" },
+    { "id": "television_02",               "label": "tv de tubo" },
+    { "id": "Television_01",               "label": "tv de madera" },
+    { "id": "boombox",                     "label": "equipo de musica" },
+    { "id": "cassette_player",             "label": "walkman" },
+    { "id": "filmstrip_projector_8mm",     "label": "proyector 8mm" },
+    { "id": "vintage_radio_transceiver",   "label": "radio" },
+    { "id": "vintage_microwave",           "label": "microondas retro" },
+    { "id": "CashRegister_01",             "label": "caja registradora" },
+    { "id": "vintage_grandfather_clock_01","label": "reloj de pie" },
+    { "id": "vintage_suitcase",            "label": "valija" },
+    { "id": "Camera_01",                   "label": "camara antigua" }
+  ]
+}

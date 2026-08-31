@@ -1,0 +1,21 @@
+{
+  "name": "mutar-deck-tools",
+  "private": true,
+  "description": "Pipeline de assets del deck. No forma parte del deck servido: el deck sigue siendo cero-build, cero-dependencias en runtime.",
+  "scripts": {
+    "scans:fetch": "node fetch-scans.mjs",
+    "scans:build": "node build-scans.mjs",
+    "three": "node build-three.mjs"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.1.1",
+    "@gltf-transform/extensions": "^4.1.1",
+    "@gltf-transform/functions": "^4.1.1",
+    "esbuild": "^0.24.0",
+    "meshoptimizer": "^0.22.0",
+    "sharp": "^0.35.4",
+    "three": "^0.170.0"
+  },
+  "_comment": "sharp queda clavado en la misma major que usa ndarray-pixels (la dep de pixeles de gltf-transform). Dos copias nativas de sharp en el mismo proceso rompen libvips.",
+  "_comment2": "Sin \"type\":\"module\" a proposito: los scripts nuevos son .mjs (ESM por extension) y build-pptx.js sigue siendo CommonJS. Ponerlo lo rompe."
+}

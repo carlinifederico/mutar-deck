@@ -92,10 +92,12 @@
   </div>
 </section>
 
-<!-- INTERLUDIO B · el carrete: tantas que no se puede elegir ninguna -->
+<!-- INTERLUDIO B · el carrete: tantas que no se puede elegir ninguna.
+     El fondo son objetos escaneados (js/scan.js). Si no hay WebGL cae al
+     poster de img/scan/poster.webp y la seccion sigue diciendo lo mismo. -->
 <section class="interlude interlude--reel">
   <div class="reel__stage">
-    <div class="reel" data-reel="192" aria-hidden="true"></div>
+    <canvas class="scan" data-scan aria-hidden="true"></canvas>
     <div class="reel__veil" aria-hidden="true"></div>
     <div class="reel__copy">
       <p class="reel__punch split" data-en="Today there is so much that it feels like nothing." data-es="Hoy es tanto que parece poco."></p>
@@ -723,6 +725,7 @@
 
 <script src="js/i18n.js"></script>
 <script src="js/motion.js"></script>
+<script src="js/scan.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/play.js"></script>
 </body>

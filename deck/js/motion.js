@@ -135,29 +135,14 @@
   }
 
   /* ---- 6 · El carrete (interludio B) --------------------------------------
-     Tantas imagenes que ninguna se puede elegir. Al scrollear la grilla se
-     aleja y entran mas en cuadro: el zoom-out es el argumento.             */
+     Tantas cosas que ninguna se puede elegir. Aca solo se mide el progreso
+     de la seccion; quien dibuja el monton de objetos escaneados es scan.js.
+     Se queda de este lado para que el deck siga teniendo un unico rAF.    */
   var reel = null;
   function buildReel() {
-    var box = document.querySelector('[data-reel]');
-    if (!box) return;
-    if (!box.children.length) {
-      var n = parseInt(box.dataset.reel, 10) || 168;
-      var files = [];
-      for (var f = 1; f <= 44; f++) files.push('img/feed/p-' + String(f).padStart(2, '0') + '.jpg');
-      var html = '';
-      for (var i = 0; i < n; i++) {
-        // Placeholder: fotos random tipo galeria personal. El paso 7 es
-        // coprimo con 44, asi que recorre las 44 antes de repetir.
-        var src = files[(i * 7) % files.length];
-        var rot = (((i * 37) % 9) - 4) * 0.35;
-        html += '<img src="' + src + '" style="--rot:' + rot.toFixed(2) +
-                'deg" alt="" loading="lazy" decoding="async">';
-      }
-      box.innerHTML = html;
-    }
-    if (reduce || isExport) return;
-    reel = { el: box, section: box.closest('.interlude--reel'), stage: box.closest('.reel__stage') };
+    var stage = document.querySelector('.reel__stage');
+    if (!stage || reduce || isExport) return;
+    reel = { section: stage.closest('.interlude--reel'), stage: stage };
   }
 
   /* ---- 7 · Track horizontal con scrub (frame 09) -------------------------- */
@@ -244,15 +229,14 @@
         (driftY - y * c.depth * 0.06).toFixed(2) + 'px,0)';
     }
 
-    // Carrete: se aleja a medida que se atraviesa la seccion
-    if (reel && reel.section) {
+    // Carrete: la camara se aleja a medida que se atraviesa la seccion.
+    // rp es el mismo 0..1 de siempre; lo que cambio es quien lo consume.
+    if (reel && reel.section && window.MUTAR && window.MUTAR.scan) {
       var rr = reel.section.getBoundingClientRect();
       var rspan = rr.height - reel.stage.offsetHeight;
       var rp = rspan > 0 ? -rr.top / rspan : 0;
       rp = Math.max(0, Math.min(1, rp));
-      // de 1.9 a 0.55: empieza encima tuyo y termina siendo un mar de miniaturas
-      var scale = 1.9 - rp * 1.35;
-      reel.el.style.transform = 'translate(-50%,-50%) scale(' + scale.toFixed(3) + ') rotate(' + (rp * 2 - 1).toFixed(2) + 'deg)';
+      window.MUTAR.scan.tick(rp, velocity);
     }
 
     // Track horizontal, por pasos.

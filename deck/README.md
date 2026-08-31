@@ -89,11 +89,29 @@ que falta definir.
 
 ## Las tres piezas con lógica propia
 
-**El interludio del carrete (frame 03 → 04).** Un feed de fotos personales que
-se aleja mientras scrolleás: al principio te tapa la cara, al final es un mar
-de miniaturas. El zoom-out *es* el argumento de "es tanto que parece poco".
-Las fotos son **placeholder** de [Lorem Picsum](https://picsum.photos) en
-`img/feed/` — hay que reemplazarlas por un feed real.
+**El interludio del carrete (frame 03 → 04).** Un montón de objetos escaneados
+—cosas en desuso: sillones, sofás, TVs de tubo, un reloj de pie, valijas— y una
+cámara que retrocede mientras scrolleás: al principio estás adentro del montón,
+al final ves que no termina nunca. El zoom-out *es* el argumento de "es tanto
+que parece poco".
+
+La escena la arma `js/scan.js` con three.js. Tres cosas que conviene saber:
+
+- **Un solo rAF.** `scan.js` no abre loop propio: `motion.js` calcula el
+  progreso `rp` de la sección (el mismo 0..1 de siempre) y llama a
+  `window.MUTAR.scan.tick(rp, velocity)`.
+- **Nada de CDN.** three va vendorizado en `js/vendor/three-bundle.js` y entra
+  por un `import()` dinámico recién cuando el interludio se acerca. Las
+  primeras frames no pagan ni un byte de los ~2 MB de modelos.
+- **Cae al poster.** Sin WebGL, en `file://`, con `prefers-reduced-motion` o en
+  modo export, `scan.js` se saca el canvas de encima y el stage muestra
+  `img/scan/poster.webp`. Abrir el deck con doble clic desde el escritorio
+  entra por esta rama: es esperado, no un bug. Para ver la escena hay que
+  servirlo por HTTP.
+
+Los 20 objetos son CC0 de [Poly Haven](https://polyhaven.com/models). El
+elenco vive en `tools/scans.json` y la procedencia en `CREDITS.md`. Para
+cambiarlo, ver "El pipeline de los escaneos" más abajo.
 
 **Frame 08 · los cinco movimientos.** Track horizontal con scrub: el frame
 mide 300vh y adentro un stage pegajoso desplaza las tarjetas. El progreso se
@@ -184,13 +202,68 @@ css/tokens.css     paleta, marca, escala tipográfica, ritmo, curvas
 css/base.css       reset, chrome, logo, motor de reveals, modo export
 css/frames.css     layout por frame, responsive y overrides de export
 js/i18n.js         toggle EN/ES
-js/motion.js       reveals, split, carrete, track, auras, cursor
+js/motion.js       reveals, split, progreso del carrete, track, auras, cursor
 js/nav.js          frame activo, rail, teclado, deep links, modo export
+js/scan.js         la escena 3D del carrete (objetos escaneados)
+js/vendor/         three.js empaquetado, generado por tools/build-three.mjs
+models/            los 20 .glb del carrete + manifest.json
 img/mutar-logo.svg logotipo vectorizado
-img/feed/          44 fotos placeholder para el carrete
+img/scan/          poster de fallback del carrete
 ```
 
-Sin dependencias ni build. Fuentes desde Google Fonts.
+Sin dependencias ni build **en runtime**: lo que se sirve son archivos
+estáticos. `tools/` sí tiene un `package.json`, pero es solo para regenerar
+assets a mano; nada de eso se sirve.
+
+Fuentes desde Google Fonts.
+
+## El pipeline de los escaneos
+
+Se corre **a mano** y el resultado se commitea. No hay build en CI ni nada que
+se ejecute al publicar.
+
+```
+tools/scans.json        el elenco: un slug de Poly Haven por objeto
+tools/fetch-scans.mjs   los baja crudos a _mat/scans/raw/ (untracked)
+tools/build-scans.mjs   los optimiza a deck/models/*.glb + manifest.json
+tools/build-three.mjs   arma js/vendor/three-bundle.js
+```
+
+**Ojo con Google Drive.** El repo vive en un Drive montado y `npm install` ahí
+se rompe (miles de archivos chicos, locking). Por eso los scripts leen
+`MUTAR_REPO` y `MUTAR_RAW`: se instala la toolchain en un disco local y se
+apunta al repo.
+
+```bash
+mkdir -p ~/mutar-scan-build && cd ~/mutar-scan-build
+cp "$REPO/deck/tools/package.json" . && npm install
+cp "$REPO/deck/tools/"*.mjs .
+MUTAR_REPO="$REPO" MUTAR_RAW="$PWD/raw" node fetch-scans.mjs
+MUTAR_REPO="$REPO" MUTAR_RAW="$PWD/raw" node build-scans.mjs
+MUTAR_REPO="$REPO" node build-three.mjs
+```
+
+Para cambiar el elenco: buscar el modelo en polyhaven.com/models, copiar el
+slug de la URL, agregarlo a `tools/scans.json` y volver a correr fetch + build.
+`scan.js` lee `models/manifest.json`, así que no hay que tocar código.
+
+Tres decisiones del build que no conviene deshacer sin entenderlas:
+
+- **Unlit.** Las texturas ya vienen con la luz horneada. Los materiales se
+  marcan con `KHR_materials_unlit`, que GLTFLoader mapea a `MeshBasicMaterial`:
+  la escena no tiene ni una luz. Volver a iluminarlos los ensucia.
+- **Solo base color.** Sin luces, los mapas de normal/AO/rough/metal no pintan
+  nada. Tirarlos es la mitad del ahorro de peso.
+- **Simplify agresivo (~3.5k tris).** No es solo peso: la decimación es la que
+  deja las facetas y las siluetas grumosas que hacen que lean como escaneos.
+
+Y dos trampas ya pisadas, por si el build vuelve a fallar:
+
+- `sharp` está clavado en la misma major que usa `ndarray-pixels` (la
+  dependencia de píxeles de gltf-transform). Dos copias nativas de sharp en el
+  mismo proceso rompen libvips con `colourspace: parameter space not set`.
+- `prune()` va con `keepSolidTextures: true`. Sin eso decodifica los píxeles de
+  cada textura y explota por lo mismo.
 
 ### Tres detalles del CSS que conviene saber antes de tocarlo
 
