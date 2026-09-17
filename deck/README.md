@@ -12,13 +12,43 @@ no necesita servidor ni build).
 
 ---
 
+## La reunión del 17/09/2026
+
+Gervasio y Federico recorrieron el deck página por página y dictaron el
+feedback *"como si le estuviera hablando a un developer"*. Todo lo que sigue
+salió de ahí; las notas y la transcripción están en
+`_mat/Meets/mutar - 2026_09_17 14_05 CEST - Notes by Gemini.pdf`.
+
+Lo grande fue esto:
+
+1. **El orden.** Lo que sigue al frame del ciclo ahora respeta el orden de ese
+   mismo ciclo. La librería se mudó a antes del happening, y entraron dos
+   frames nuevos: la convocatoria (etapa 1) y la visita (etapa 10).
+2. **El texto.** El deck estaba armado sólo con titulares. Los frames 04, 06,
+   07 y 12 ahora tienen prosa, sacada del documento escrito del proyecto.
+3. **Los fondos.** Fuera las esferas difuminadas; el fondo pasa a ser la
+   retícula de prototipo más las capturas del registro real.
+4. **Menos interacción.** Salieron los objetos arrastrables de la portada y el
+   pintar por encima del finish. El anillo que orbita se mudó al frame de los
+   treinta resultados, que es donde Gervasio lo pidió.
+5. **La navegación.** Las flechas y la barra espaciadora recorren **todas** las
+   secciones, interludio incluido: *"si uno lo navega con la flecha se saltea
+   cosas"*.
+
+Quedó pendiente, y está marcado con `.note` en el deck: el render de la obra
+terminada en sala, la foto del lugar, los objetos 3D del Figma y las compañías
+de los créditos.
+
+---
+
 ## Cómo se recorre
 
 | Acción | |
 |---|---|
 | Scroll | Los frames imantan (snap *proximity*); el interludio se recorre libre |
-| `↑` `↓` `PgUp` `PgDn` | Frame anterior / siguiente |
-| `Home` `End` | Primer / último frame |
+| `↑` `↓` `PgUp` `PgDn` | Sección anterior / siguiente — **incluye el interludio** |
+| `Space` `⇧Space` | Lo mismo, adelante y atrás |
+| `Home` `End` | Primera / última sección |
 | `L` | Cambia idioma EN ⇄ ES |
 | `P` | Abre el modo export |
 | Rail derecho | Salta al primer frame de cada acto |
@@ -27,44 +57,52 @@ Query params: `?lang=es` · `?frame=8` · `?print` · `?print=full`
 
 ---
 
-## Estructura — 27 frames en 10 actos + 1 interludio
+## Estructura — 30 frames en 11 actos + 1 interludio
+
+El 17/09 el deck se reordenó entero: lo que sigue a la página del ciclo ahora
+respeta el orden de ese mismo ciclo. Gervasio: *"la página 10, que es el punto
+número seis del journey, está primera. Entonces habría que reordenarla"*.
 
 | | Frames | Ground / acento |
 |---|---|---|
 | **0 · Entrada** | 01 Portada | hueso / rosa |
 | **1 · La pregunta** | 02 · 03 | tinta / lima |
 | | *interludio — el carrete* | |
-| **2 · La idea** | 04 Tesis · 05 Concepto · 06 Qué es MUTAR | hueso / amarillo |
-| **3 · El recorrido** | 07 Divisor · 08 Cinco movimientos · 09 El ciclo | tinta / cian |
-| **4 · La experiencia** | 10 Happening · 11 Por qué passthrough · 12 El espacio · 13 Cómo empieza | violeta / amarillo |
-| **5 · La construcción** | 14 Tres fases · 15 Herramientas · 16 La librería · 17 El finish · 18 Artista invitado | tinta / naranja |
-| **6 · La comunidad** | 19 Treinta resultados · 20 Votación · 21 La obra física | hueso / violeta |
-| **7 · Escala** | 22 Ciudades · 23 Escalabilidad · 24 Impacto | hueso / naranja |
-| **8 · Los creadores** | 25 Canda + Carlini | tinta / amarillo |
-| **9 · Cierre** | 26 Cierre · 27 Estado y próximos pasos | tinta / rosa |
+| **2 · La idea** | 04 Tesis · 05 Concepto · 06 Qué es MUTAR · 07 Por qué los objetos cargan historia | hueso / amarillo |
+| **3 · El recorrido** | 08 Divisor · 09 Los seis pasos · 10 El ciclo | tinta / cian |
+| **4 · Antes del happening** | 11 La convocatoria · 12 La librería | hueso / cian |
+| **5 · La experiencia** | 13 Happening · 14 Por qué passthrough · 15 El espacio · 16 Cómo empieza | violeta / amarillo |
+| **6 · La construcción** | 17 Tres fases · 18 Herramientas · 19 El finish · 20 Artista invitado | tinta / naranja |
+| **7 · La comunidad** | 21 Treinta resultados · 22 Votación · 23 La obra física · 24 La visita | hueso / violeta |
+| **8 · Escala** | 25 Ciudades · 26 Escalabilidad · 27 Impacto | hueso / naranja |
+| **9 · Los creadores** | 28 Canda + Carlini | tinta / amarillo |
+| **10 · Cierre** | 29 Cierre · 30 Créditos | tinta / rosa |
 
-Los actos 4 y 5 salieron de la reunión del 19/08: passthrough, zonas del
-espacio, arranque sin tutorial, las tres fases de construcción, las
-herramientas como experiencias, la librería de 20 objetos, el finish como
-impronta y el rol del artista invitado.
+Las etapas del ciclo que tienen frame propio son la 1 (convocatoria), la 5
+(librería), la 6 (happening), la 7 (repetición → treinta resultados), la 8
+(votación), la 9 (construcción) y la 10 (visita). Las etapas 2 a 4 —
+curaduría, recolección y escaneo — viven sólo en el sumario del frame 10.
 
-Los frames 05, 06, 11, 13, 14, 18 y 27 usan `.beats`: la idea entra en tres
-golpes cortos en vez de párrafos.
+Los frames 04, 06, 07 y 12 llevan párrafos y no sólo titulares. Fue un pedido
+explícito: *"siento que no hay ninguna página donde haya una exposición de
+texto, párrafo… está todo organizado tipo por headlines"*. El texto se sacó de
+`_mat/Textos varios.pdf`, que es el documento escrito del proyecto.
 
 ### Piezas interactivas
 
-La reunión pidió que la web tenga "impronta tecnológica". Hay tres, en
-`js/play.js`, todas apagadas con `prefers-reduced-motion` y en export:
+Quedó una, en `js/play.js`, apagada con `prefers-reduced-motion` y en export:
 
-- **Portada** — doce siluetas de objetos que entran a los márgenes y se pueden
-  agarrar y tirar. Es el *"agarrar una cosita y moverla"*.
-- **Frame 16 · La librería** — anillo de diez objetos que orbita solo, se frena
-  al pasar el mouse y se puede girar arrastrando.
-- **Frame 17 · El finish** — arrastrar sobre la escultura la pinta con la
-  paleta de MUTAR. El argumento del frame hecho gesto.
+- **Frame 21 · Treinta resultados** — anillo de diez objetos que orbita solo,
+  se frena al pasar el mouse y se puede girar arrastrando. Gervasio lo pidió
+  ahí el 17/09: *"la gente no está acostumbrada a orbitar un objeto online y
+  por ahí no se imagina cómo vas a votar"*. Sólo gira mientras el frame está
+  a la vista.
 
-Las siluetas son provisorias: reemplazarlas por los escaneos reales cuando
-existan. Viven en el array `OBJETOS` de `play.js`.
+Las otras dos salieron en esa misma reunión: los objetos arrastrables de la
+portada (*"no sirven para nada"*) y el pintar por encima del finish (*"no se
+entiende, por favor eliminarlo"*). Las siluetas SVG no se tiraron — `OBJETOS`
+y `svgObjeto()` siguen alimentando el anillo, y son provisorias hasta que
+existan los escaneos reales.
 
 ### Retratos
 
@@ -81,9 +119,21 @@ se resuelve contra la hoja que la consume (`css/frames.css`), no contra el HTML.
 
 ### Huecos marcados
 
-Cinco `.slot` de imagen (planta del espacio, mockup del cinturón, la librería,
-el finish antes/después, referencia de artista invitado) y ocho `.note` con lo
-que falta definir.
+Cuatro `.slot` de imagen (planta del espacio, mockup del cinturón, los
+escaneos reales, referencia de artista invitado) y doce `.note` con lo que
+falta definir. Los que salieron de la reunión del 17/09:
+
+- **01 · 04** — el render de la obra terminada en sala. Federico lo pidió
+  textual: *"alguna imagen del proyecto terminado tiene que haber, medio
+  prototipada, en un salón de un museo"*. Mientras no exista, el fondo es una
+  captura del prototipo.
+- **11** — el formulario real de la convocatoria (la ficha que está es de
+  ejemplo).
+- **13** — una fotografía del lugar: *"acá tendría que haber una imagen del
+  lugar"*.
+- **21** — los objetos 3D que Gervasio va a mandar desde Figma para reemplazar
+  las siluetas del anillo.
+- **30** — las compañías productoras, que en la transcripción quedaron rotas.
 
 ---
 
@@ -113,18 +163,21 @@ Los 20 objetos son CC0 de [Poly Haven](https://polyhaven.com/models). El
 elenco vive en `tools/scans.json` y la procedencia en `CREDITS.md`. Para
 cambiarlo, ver "El pipeline de los escaneos" más abajo.
 
-**Frame 08 · los cinco movimientos.** Track horizontal con scrub: el frame
-mide 300vh y adentro un stage pegajoso desplaza las tarjetas. El progreso se
-parte en un tramo por step — un momento quieto y después el viaje al
-siguiente — así los cinco tienen su momento y ninguno se saltea. El offset de
+**Frame 09 · los seis pasos.** Track horizontal con scrub: el frame mide
+300vh y adentro un stage pegajoso desplaza las tarjetas. El progreso se parte
+en un tramo por step — un momento quieto y después el viaje al siguiente — así
+los seis tienen su momento y ninguno se saltea. El sexto (*Visitarla*) entró
+el 17/09; el riel se mide solo, no hay número fijo en el JS. El offset de
 cada step puede ser negativo: si se lo clampea a 0, el primero queda pegado a
 la izquierda y el que se ve centrado es el segundo. Cada step tiene ícono,
 color propio y se apaga cuando no es el activo.
 
-**Frame 12 · las treinta esculturas.** Cada tile es una escultura dibujada con
+**Frame 21 · las treinta esculturas.** Cada tile es una escultura dibujada con
 las **mismas cinco piezas** (barra, caja, disco, anillo, cuña) apiladas
 distinto. Se generan con un PRNG sembrado por índice, así que el layout no
-cambia entre cargas. La ganadora va en color de marca.
+cambia entre cargas. La ganadora va en color de marca. Desde el 17/09 cada
+tile muestra además su cuenta de votos — también determinística, por el mismo
+PRNG — porque *"se tiene que notar que la gente ya está votando"*.
 
 ---
 
@@ -139,21 +192,35 @@ en `css/proto.css` y son tres cosas:
   sigue al ground del acto sin redeclararse.
 - **Sello.** `.stamp` al lado del contador: *Prototipo · en curso*. Mismo
   idioma que `.note` — borde punteado y punto de marca. Se oculta abajo de 46rem.
-- **Capturas.** Tres frames llevan de fondo un loop del prototipo andando.
+- **Capturas.** El fondo de seis frames sale del registro del prototipo.
 
-### Las tres capturas
+Desde el 17/09 esta capa **es** el fondo del deck: las tres esferas difuminadas
+que habia detras de cada frame se retiraron enteras (`.aura-field` y, con
+ellas, el `.cursor-blob`, que era la misma esfera siguiendo al mouse).
+Federico: *"todos los background son como tres esferas blureadas que son
+horribles"*.
+
+### Las capturas
 
 Salen todas del mismo registro interno (`prototype/capturas/Gerva`, que **no**
-esta en el repo: pesa gigas). Cada clip son 12s tomados de un momento distinto:
+esta en el repo: pesa gigas). Los loops son de 12s; los stills, un cuadro.
 
 | Frame | Archivo | Momento | Qué se ve |
 |---|---|---|---|
-| 12 · El espacio | `media/capture-espacio` | 00:00:18 | el recorrido por la sala y los estantes |
-| 10 · El happening | `media/capture-happening` | 00:04:22 | objetos grandes moviendose a escala real |
-| 15 · Las herramientas | `media/capture-herramientas` | 00:09:42 | la paleta y el pincel en primera persona |
+| 01 · Portada | `media/bg-portada.jpg` | 00:03:48 | still — la sala, al fondo del logotipo |
+| 04 · Tesis | `media/bg-mundo.jpg` | 00:03:18 | still — el plano general, *"el layout del mundo de mutar"* |
+| 08 · Divisor | `media/capture-mutacion` | 00:06:40 | loop — la escultura armandose pieza por pieza |
+| 13 · El happening | `media/capture-happening` | 00:04:22 | loop — objetos grandes moviendose a escala real |
+| 15 · El espacio | `media/capture-espacio` | 00:00:18 | loop — el recorrido por la sala y los estantes |
+| 18 · Las herramientas | `media/capture-herramientas` | 00:09:42 | loop — la paleta y el pincel en primera persona |
 
-El timecode del HUD arranca en el minuto real de cada uno: los tres numeros
-distintos son la prueba de que es un mismo registro mirado en tres momentos.
+El timecode del HUD arranca en el minuto real de cada loop: los numeros
+distintos son la prueba de que es un mismo registro mirado en momentos
+distintos. Los stills no llevan HUD — no hay nada corriendo que contar.
+
+Un fondo que es sólo imagen se marca con `data-capture-still` y `js/capture.js`
+monta un `<img>` en vez del `<video>`. Es el mismo atajo que ya usaba para
+`prefers-reduced-motion` y para el modo export.
 
 **Cómo se agrega una cuarta.** Una linea en el HTML, adentro del `<section>`:
 
@@ -265,21 +332,23 @@ cuerpos se calculan con `vw`, que mide la ventana y no la página.
 ## Archivos
 
 ```
-index.html         20 frames + 1 interludio, con la copy EN/ES inline
+index.html         30 frames + 1 interludio, con la copy EN/ES inline
 css/tokens.css     paleta, marca, escala tipográfica, ritmo, curvas
 css/base.css       reset, chrome, logo, motor de reveals, modo export
 css/frames.css     layout por frame, responsive y overrides de export
 css/proto.css      capa de prototipo: reticula, sello y capturas de fondo
 js/i18n.js         toggle EN/ES
-js/motion.js       reveals, split, progreso del carrete, track, auras, cursor
-js/nav.js          frame activo, rail, teclado, deep links, modo export
+js/motion.js       reveals, split, progreso del carrete, track, tiles y votos
+js/nav.js          sección activa, rail, teclado, deep links, modo export
 js/scan.js         la escena 3D del carrete (objetos escaneados)
 js/capture.js      monta las capturas de video de fondo (lazy + play/pause)
 js/vendor/         three.js empaquetado, generado por tools/build-three.mjs
 models/            los 20 .glb del carrete + manifest.json
 img/mutar-logo.svg logotipo vectorizado
 img/scan/          poster de fallback del carrete
-media/             las tres capturas del prototipo, .mp4 + poster .jpg
+js/play.js         el anillo que orbita (frame 21)
+media/             las capturas del prototipo: loops .mp4 + poster .jpg,
+                   y los dos stills de fondo (portada y tesis)
 ```
 
 Sin dependencias ni build **en runtime**: lo que se sirve son archivos
@@ -287,6 +356,10 @@ estáticos. `tools/` sí tiene un `package.json`, pero es solo para regenerar
 assets a mano; nada de eso se sirve.
 
 Fuentes desde Google Fonts.
+
+`tools/build-pptx.js` y `export/MUTAR-deck-es.pptx` **quedaron atrás**: el
+script hardcodea el deck viejo de 20 slides y no lee `index.html`. Hay que
+rehacerlo antes de volver a generar la versión Google Slides.
 
 ## El pipeline de los escaneos
 
@@ -389,6 +462,10 @@ web, hay que cambiarlo también ahí.
 - Reemplazar el feed placeholder por fotos reales de galería personal.
 - Imágenes del proyecto en los `.slot` marcados.
 - Retratos de los creadores y equipo de producción.
-- Diagrama del pipeline (frame 09).
-- Datos reales de votación (frame 13) — hoy son de ejemplo.
+- Datos reales de votación (frame 22) — hoy son de ejemplo, igual que las
+  cuentas de votos del frame 21.
+- Render de la obra terminada en sala (frames 01 y 04).
+- Foto del lugar del happening (frame 13).
+- Los objetos 3D del Figma para el anillo del frame 21.
+- Las compañías productoras de los créditos (frame 30).
 - Presupuesto, cronograma y requerimientos técnicos.

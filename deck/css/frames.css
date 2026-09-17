@@ -104,8 +104,10 @@
 .frame--thesis .thesis {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(3rem, 9.5vw, 10rem);
-  line-height: 0.9;
+  /* el titular paso de nueve a trece palabras el 17/09 ("patrimonial y
+     colaborativo"): a 9.5vw se comia el frame entero en cuatro lineas */
+  font-size: clamp(2.5rem, 6.4vw, 6.8rem);
+  line-height: 0.92;
   letter-spacing: -0.03em;
 }
 .frame--thesis .thesis em { font-style: normal; }
@@ -746,7 +748,9 @@ body.export .creator__bio              { font-size: 0.82rem; }
 @media (max-width: 48rem) {
   .rail        { right: 0.5rem; gap: 0.45rem; }
   .rail__label { display: none; }
-  .frame       { padding-right: calc(var(--pad-x) + 1.5rem); }
+  /* el numero de frame va absoluto a ~68px del borde; con 9vh de padding el
+     titular le entraba por debajo en cuanto el contenido no era corto */
+  .frame       { padding-right: calc(var(--pad-x) + 1.5rem); padding-top: clamp(6.5rem, 15vh, 8.5rem); }
   .track__rail { padding-right: calc(var(--pad-x) + 1.5rem); }
   .chrome--br  { display: none; }
   .cover__rule { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
@@ -773,40 +777,11 @@ body.export .city__icon { width: 1.9rem; }
 
 /* ==========================================================================
    PIEZAS INTERACTIVAS
-   La reunion pidio que la web tenga impronta tecnologica: agarrar y mover,
-   orbitar, pintar por encima. El markup lo genera js/play.js.
+   Quedo una: el anillo que se orbita, al lado de los treinta resultados.
+   Los objetos arrastrables de la portada y el pintar por encima salieron el
+   17/09 — "no sirven para nada" / "no se entiende". El markup lo genera
+   js/play.js.
    ========================================================================== */
-
-/* ---- Objetos sueltos sobre la portada ------------------------------------ */
-.objetos {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-.obj {
-  position: absolute;
-  width: clamp(2.6rem, 4.4vw, 4rem);
-  aspect-ratio: 1;
-  padding: 0;
-  color: color-mix(in srgb, var(--brand) 72%, var(--ground));
-  pointer-events: auto;
-  touch-action: none;
-  cursor: grab;
-  opacity: 0;
-  transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scale(0.6);
-  transition: opacity 0.7s var(--ease-soft), transform 0.9s var(--ease-back), color 0.3s;
-  transition-delay: var(--d, 0s);
-}
-body.has-loaded .obj { opacity: 1; transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scale(1); }
-.obj:hover  { color: var(--brand); }
-.obj.is-drag {
-  cursor: grabbing;
-  color: var(--brand);
-  transition: color 0.2s;              /* al arrastrar manda el pointer, no la transicion */
-  z-index: 3;
-}
-.obj svg { display: block; width: 100%; height: auto; }
 
 /* ---- Anillo que orbita --------------------------------------------------- */
 .orbita {
@@ -828,67 +803,10 @@ body.has-loaded .obj { opacity: 1; transform: translate3d(var(--x, 0px), var(--y
 }
 .orbita__item svg { display: block; width: 100%; height: auto; }
 
-/* ---- Pintar por encima --------------------------------------------------- */
-.pintar {
-  position: relative;
-  margin-top: clamp(1.25rem, 3vh, 2rem);
-}
-.pintar__canvas {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: clamp(9rem, 22vh, 13rem);
-  border: 1.5px dashed color-mix(in srgb, var(--fg) 30%, transparent);
-  border-radius: 1.5rem 2.25rem 1.75rem 2rem;
-  overflow: hidden;
-  touch-action: none;
-  cursor: crosshair;
-}
-.pintar__base {
-  width: clamp(5rem, 11vw, 7.5rem);
-  color: color-mix(in srgb, var(--fg) 45%, transparent);
-  pointer-events: none;
-}
-.pintar__base svg { display: block; width: 100%; height: auto; }
-.pintar__gota {
-  position: absolute;
-  width: 2rem; height: 2rem;
-  margin: -1rem 0 0 -1rem;
-  border-radius: 54% 46% 60% 40% / 48% 58% 42% 52%;
-  transform: scale(var(--s, 1)) rotate(var(--r, 0deg));
-  pointer-events: none;
-  mix-blend-mode: normal;
-}
-.pintar__hint {
-  position: absolute;
-  left: 50%; bottom: 1.1rem;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: var(--t-meta);
-  letter-spacing: var(--track-meta);
-  text-transform: uppercase;
-  color: var(--fg-dim);
-  pointer-events: none;
-  transition: opacity var(--dur-base) var(--ease-soft);
-}
-.pintar.has-played .pintar__hint { opacity: 0; }
-.pintar__reset {
-  margin-top: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: var(--t-meta);
-  letter-spacing: var(--track-meta);
-  text-transform: uppercase;
-  color: var(--fg-dim);
-  border-bottom: 1px solid var(--hairline);
-  padding-bottom: 2px;
-}
-.pintar__reset:hover { color: var(--accent-text); }
 
-/* En export las piezas interactivas se muestran quietas, sin invitacion */
-body.export .objetos,
-body.export .pintar__hint,
-body.export .pintar__reset { display: none; }
+/* En export la pieza interactiva se muestra quieta, sin invitacion */
 body.export .orbita { height: 9rem; }
+body.export .orbita__item { opacity: 1 !important; }
 
 /* ---- Iconos dentro de beats y chips -------------------------------------- */
 .beat__icon {
@@ -910,3 +828,318 @@ body.export .orbita { height: 9rem; }
 .chip__icon svg { display: block; width: 100%; height: auto; }
 body.export .beat__icon { width: 1.6rem; margin-bottom: 0.35rem; }
 body.export .chip__icon { width: 1.1rem; }
+
+/* ==========================================================================
+   REUNIÓN DEL 17/09/2026
+   Lo que se agrego o se rehizo ese dia. Va al final y no intercalado en el
+   orden de frames de arriba porque el deck se reordeno entero: los numeros
+   de las secciones anteriores ya no coinciden con su posicion.
+   ========================================================================== */
+
+/* ---- 05 · El concepto: cuatro beats y las citas firmadas -----------------
+   El cuarto beat entro el 17/09 ("hoy en dia podemos crear cualquier cosa en
+   segundos"). A tres columnas el cuarto caia solo en una fila nueva.       */
+@media (min-width: 62rem) {
+  .beats--four { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 40rem) and (max-width: 61.99rem) {
+  .beats--four { grid-template-columns: repeat(2, 1fr); }
+}
+
+.quotes {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+@media (min-width: 52rem) { .quotes { grid-template-columns: 1fr 1fr; } }
+
+/* .pull ya trae el cuerpo grande; aca solo se le cuelga la firma */
+.pull p { margin: 0; }
+.pull cite {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  font-style: normal;
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.pull cite i { font-style: italic; text-transform: none; letter-spacing: 0.04em; }
+
+/* ---- 07 · Por que los objetos cargan historia ----------------------------
+   Dos columnas porque son dos historias distintas, no una lista.          */
+.twin {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+@media (min-width: 52rem) { .twin { grid-template-columns: 1fr 1fr; } }
+.twin__label {
+  color: var(--accent-text);
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.twin__col .t-body { max-width: 42ch; }
+
+/* ---- 10 · El ciclo -------------------------------------------------------
+   Antes era una escalera con sangria 0→4→0: leia como zigzag. Gervasio la
+   queria "mas espiralada". Ahora las diez etapas giran y el radio crece un
+   poco en cada vuelta, asi que la diez cae justo por fuera de la uno: el
+   ciclo termina donde empezo, un escalon mas afuera.
+
+   El radio va en rem y no en %, porque translate() en % se resuelve contra
+   la caja del propio elemento y las diez etapas quedarian amontonadas.    */
+.cycle {
+  /* el circulo + su pie tienen que entrar en un viewport: el motor de
+     reveals no dispara lo que queda pegado al borde de abajo */
+  --ring: clamp(8rem, 21vh, 12.5rem);
+  --node: clamp(5.5rem, 9vw, 7.75rem);
+  position: relative;
+  width: 100%;
+  height: calc(var(--ring) * 2 + 10rem);
+  margin: clamp(1rem, 2.5vh, 1.5rem) auto clamp(0.5rem, 2vh, 1.25rem);
+}
+.cycle__ring { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.cycle__stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--node);
+  margin-left: calc(var(--node) / -2);
+  text-align: center;
+  /* el radio crece 0.45rem por etapa: eso es la espiral */
+  --a: calc(var(--i) * 36deg);
+  --r: calc(var(--ring) + var(--i) * 0.45rem);
+  transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) rotate(calc(var(--a) * -1))
+             translateY(-50%);
+}
+/* el reveal va adentro: si fuera en .cycle__stage pisaria la posicion polar */
+.cycle__card { display: block; }
+.cycle__n {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  font-weight: 400;
+  color: var(--accent-text);
+}
+.cycle__name {
+  display: block;
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-top: 0.2rem;
+}
+.cycle__note {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  margin-top: 0.25rem;
+}
+.cycle__hub {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--fg-dim);
+}
+.cycle__hub-n {
+  font-family: var(--font-bubble);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.9;
+  color: color-mix(in srgb, var(--fg) 22%, transparent);
+}
+.cycle__hub-label { margin-top: 0.2rem; }
+
+/* En pantalla chica el circulo no entra: vuelve a ser una lista. */
+@media (max-width: 48rem) {
+  .cycle { height: auto; }
+  .cycle__ring { position: static; display: grid; gap: 0.9rem; }
+  .cycle__stage {
+    position: static;
+    width: auto;
+    margin: 0;
+    transform: none;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .cycle__card { display: contents; }
+  .cycle__name, .cycle__note { text-align: left; }
+  .cycle__note { grid-column: 2; }
+  .cycle__hub { display: none; }
+}
+
+/* ---- 11 · La convocatoria ------------------------------------------------
+   La ficha de ejemplo. Gervasio la pidio con "una carita con la siluetita",
+   no con una foto: el que dona es una persona, no un retrato de stock.    */
+.avatar {
+  display: grid;
+  place-items: center;
+  width: clamp(2.6rem, 4vw, 3.4rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: color-mix(in srgb, var(--fg) 62%, transparent);
+  flex: none;
+}
+.avatar svg { display: block; width: 62%; height: auto; }
+
+.entry {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: start;
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  border: 1.5px dashed color-mix(in srgb, var(--fg) 28%, transparent);
+  border-radius: 1.5rem 1.1rem 1.6rem 1.25rem;
+}
+@media (min-width: 52rem) {
+  .entry { grid-template-columns: auto 8rem 1fr; }
+  .entry__fields { grid-column: 1 / -1; }
+}
+.entry__who { display: flex; align-items: center; gap: 0.75rem; }
+.entry__name {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+}
+.entry__meta { color: var(--fg-dim); margin-top: 0.15rem; }
+.entry__obj {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+  color: color-mix(in srgb, var(--fg) 55%, transparent);
+}
+.entry__obj svg { width: 72%; height: auto; }
+.entry__quote {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.9vw, 1.5rem);
+  line-height: 1.25;
+  max-width: 34ch;
+}
+.entry__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--fg-dim);
+}
+.entry__fields li::before { content: "· "; }
+
+/* ---- 12 · La libreria: las cinco voces -----------------------------------
+   Gervasio: "cinco caritas... I feel attached to this object because it was
+   from my grandfather... there's people telling their stories".           */
+.voices__lead {
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  color: var(--accent-text);
+}
+.voices {
+  display: grid;
+  gap: clamp(0.85rem, 2vw, 1.4rem);
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  margin-top: 0.9rem;
+}
+.voice {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem 0.95rem 1.05rem;
+  border: 1px solid var(--hairline);
+  border-radius: 1.1rem 0.85rem 1.2rem 0.9rem;
+}
+.voice__name {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.voice__quote {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--fg-dim);
+}
+
+/* ---- 21 · Treinta resultados: votos y el anillo --------------------------
+   "Que tenga 20 likes o 20 votes, que se note que la gente ya esta votando",
+   y a la derecha un objeto que se pueda orbitar.                          */
+.outcomes {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  align-items: start;
+}
+@media (min-width: 62rem) { .outcomes { grid-template-columns: 1.55fr 1fr; } }
+.outcomes__aside { display: grid; gap: 0.5rem; }
+.outcomes__aside .t-body { max-width: 34ch; font-size: clamp(0.9rem, 1vw, 1.05rem); }
+
+/* el numero va abajo a la derecha: arriba a la izquierda vive el figcaption */
+.tile__votes {
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.28rem;
+  padding: 0.05rem 0.3rem 0.08rem;
+  border-radius: 999px;
+  /* cae sobre la silueta: sin fondo propio no se lee */
+  background: color-mix(in srgb, var(--ground) 82%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+.tile__votes::before {
+  content: "";
+  display: inline-block;
+  width: 0.34rem;
+  height: 0.34rem;
+  margin-right: 0.22rem;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.04rem;
+}
+.tile.is-winner .tile__votes {
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---- Export -------------------------------------------------------------- */
+/* a diez columnas los tiles miden un tercio: el voto no entra */
+body.export .tile__votes { display: none; }
+/* en la pagina 16:9 el circulo se achica, pero el nodo tiene que achicarse
+   mas que el radio o dos etapas vecinas se pisan */
+body.export .cycle { --ring: 9.5rem; --node: 5.4rem; height: 26rem; }
+body.export .cycle__name { font-size: 0.72rem; }
+body.export .cycle__note { font-size: 0.48rem; }
+body.export .entry { break-inside: avoid; }
+
+/* ---- 11 · La convocatoria: el titular no puede comerse la ficha ---------- */
+.frame--opencall .t-xl { font-size: clamp(2rem, 4.6vw, 4rem); }
+.frame--opencall .hero-fact { font-size: clamp(1.1rem, 2.2vw, 1.9rem); }
+
+/* ---- Los frames densos en pantalla chica --------------------------------
+   Con mucho contenido, align-content:center empuja el titular hacia arriba
+   hasta meterse abajo del numero de frame, que va absoluto. En los frames
+   nuevos (que son los mas cargados) el contenido arranca donde termina el
+   padding y listo.                                                        */
+@media (max-width: 48rem) {
+  .frame--cycle,
+  .frame--library,
+  .frame--opencall,
+  .frame--outcomes,
+  .frame--visit,
+  .frame--stories { align-content: start; }
+}

@@ -124,9 +124,21 @@
   transform: scale(1.03);
 }
 
+/* Sobre hueso la luminosidad devolveria casi la imagen cruda: el ground es
+   claro y casi sin saturacion. Ahi la captura tiene que retroceder mucho mas,
+   porque es el fondo de un titular enorme y no la imagen del frame.       */
+.frame--capture[data-ground="bone"] .capture__media {
+  filter: brightness(1.05) contrast(0.85) saturate(0.25);
+  opacity: 0.5;
+}
+
+/* El fondo de la tesis quiere leerse como una planta del espacio y no como
+   una foto: ahi la reticula del frame se sube encima con mas presencia.   */
+.frame--capture:has(.capture--plan)::after { opacity: 1; mix-blend-mode: normal; }
+
 /* Sobre tinta la luminosidad devolveria un gris plano — y justo ahi la
    captura es la paleta de color del prototipo, que es de lo que habla el
-   frame. Sobre negro, screen deja pasar el color del video.              */
+   frame de herramientas. Sobre negro, screen deja pasar el color.              */
 .frame--capture[data-ground="ink"] .capture__media {
   mix-blend-mode: screen;
   filter: brightness(0.62) contrast(1.1) saturate(0.9);

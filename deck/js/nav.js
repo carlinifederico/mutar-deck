@@ -10,7 +10,15 @@
 
   var params = new URLSearchParams(location.search);
   var body = document.body;
+  // Dos listas, a proposito:
+  // · frames  — lo que se numera. El contador y el deep link ?frame=n cuentan
+  //             frames, no secciones; el interludio no tiene numero.
+  // · steps   — lo que se recorre. Federico, 17/09: "si uno lo navega con la
+  //             flecha se saltea cosas... debe ser lo mismo para no perderse
+  //             nada sin importar con que lo este navegando". El interludio
+  //             del carrete mide 240vh: saltarselo era saltearse una escena.
   var frames = [].slice.call(document.querySelectorAll('.frame'));
+  var steps = [].slice.call(document.querySelectorAll('.frame, .interlude'));
   var railActs = [].slice.call(document.querySelectorAll('.rail__act'));
   var counterNow = document.querySelector('[data-counter-now]');
   var counterTotal = document.querySelector('[data-counter-total]');
@@ -77,9 +85,9 @@
 
   window.addEventListener('resize', pickActive, { passive: true });
 
-  /* ---- Ir a un frame ------------------------------------------------------ */
+  /* ---- Ir a un paso ------------------------------------------------------- */
   function goTo(i) {
-    var f = frames[Math.max(0, Math.min(frames.length - 1, i))];
+    var f = steps[Math.max(0, Math.min(steps.length - 1, i))];
     if (!f) return;
     var delta = f.getBoundingClientRect().top;
     // Animar un salto corto se siente bien; animar 19.000px es una espera.
@@ -94,8 +102,8 @@
   railActs.forEach(function (btn) {
     btn.addEventListener('click', function () {
       var act = btn.dataset.act;
-      for (var i = 0; i < frames.length; i++) {
-        if (frames[i].dataset.act === act) { goTo(i); return; }
+      for (var i = 0; i < steps.length; i++) {
+        if (steps[i].dataset.act === act) { goTo(i); return; }
       }
     });
   });
@@ -106,15 +114,21 @@
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea') return;
 
+    // el indice del teclado es el del PASO que se esta mirando, no el del
+    // frame: si no, desde el interludio la flecha volveria al frame anterior
+    var here = stepIndex();
+
     switch (e.key) {
       case 'ArrowDown': case 'PageDown':
-        e.preventDefault(); goTo(active + 1); break;
+        e.preventDefault(); goTo(here + 1); break;
       case 'ArrowUp': case 'PageUp':
-        e.preventDefault(); goTo(active - 1); break;
+        e.preventDefault(); goTo(here - 1); break;
+      case ' ': case 'Spacebar':
+        e.preventDefault(); goTo(e.shiftKey ? here - 1 : here + 1); break;
       case 'Home':
         e.preventDefault(); goTo(0); break;
       case 'End':
-        e.preventDefault(); goTo(frames.length - 1); break;
+        e.preventDefault(); goTo(steps.length - 1); break;
       case 'l': case 'L':
         if (window.MUTAR && window.MUTAR.toggleLang) window.MUTAR.toggleLang();
         break;
@@ -123,6 +137,20 @@
         break;
     }
   });
+
+  // Que paso esta ocupando el centro del viewport. Si ninguno lo cubre (entre
+  // dos), gana el mas cercano — asi la flecha siempre avanza uno, nunca dos.
+  function stepIndex() {
+    var mid = window.innerHeight / 2;
+    var best = 0, bestDist = Infinity;
+    for (var i = 0; i < steps.length; i++) {
+      var r = steps[i].getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) return i;
+      var dist = Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    }
+    return best;
+  }
 
   /* ---- Deep link ?frame=n ------------------------------------------------- */
   var target = parseInt(params.get('frame'), 10);

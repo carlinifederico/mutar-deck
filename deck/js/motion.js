@@ -1,6 +1,6 @@
 /* ==========================================================================
    MUTAR — Motion
-   Un solo rAF para todo lo continuo (auras, carrete, track, cursor)
+   Un solo rAF para todo lo continuo (carrete, track)
    + IntersectionObserver para las entradas. Sin librerias, sin build.
 
    Si prefers-reduced-motion esta activo, todo esto se apaga y el CSS
@@ -83,17 +83,32 @@
            parts.join('') + '</svg>';
   }
 
+  // Gervasio, 17/09: "que tenga 20 likes o 20 votes, que se note que la gente
+  // ya esta votando". Deterministicos, con el mismo lcg que la forma, para que
+  // la grilla no cambie en cada carga — y la ganadora siempre gana.
+  function votos(i, winner) {
+    if (i === winner) return 128;
+    var r = lcg(i * 13 + 5);
+    r();
+    return 4 + Math.floor(r() * 61);
+  }
+
   function buildTiles() {
     document.querySelectorAll('[data-tiles]').forEach(function (box) {
       if (box.children.length) return;
       var n = parseInt(box.dataset.tiles, 10) || 30;
       var winner = parseInt(box.dataset.winner, 10);
+      var conVotos = box.hasAttribute('data-votes');
       var html = '';
       for (var i = 1; i <= n; i++) {
         html += '<figure class="tile' + (i === winner ? ' is-winner' : '') +
                 '" style="--d:' + (i * 0.022).toFixed(3) + 's">' +
                 sculpture(i) +
-                '<figcaption>' + String(i).padStart(2, '0') + '</figcaption></figure>';
+                '<figcaption>' + String(i).padStart(2, '0') + '</figcaption>' +
+                // sin la palabra "votos": i18n.js corre al cargar y no vuelve a
+                // pasar por lo que construye motion.js. Un numero no se traduce.
+                (conVotos ? '<span class="tile__votes">' + votos(i, winner) + '</span>' : '') +
+                '</figure>';
       }
       box.innerHTML = html;
     });
@@ -111,28 +126,12 @@
     });
   }
 
-  /* ---- 4 · Campo de auras ------------------------------------------------
-     Degradados radiales grandes que derivan lento. Posiciones fijas: el
-     campo tiene que verse compuesto, no aleatorio en cada carga.           */
-  var auras = [];
-  function buildAuras() {
-    var field = document.querySelector('.aura-field');
-    if (!field || reduce || isExport) return;
-    var spec = [
-      { x: 14, y: 20, s: 62, depth: 0.09, sp: 0.000068, amp: 4.5 },
-      { x: 84, y: 30, s: 48, depth: 0.15, sp: 0.000092, amp: 6.0 },
-      { x: 62, y: 78, s: 70, depth: 0.06, sp: 0.000051, amp: 3.5 },
-      { x: 26, y: 84, s: 44, depth: 0.20, sp: 0.000124, amp: 7.0 }
-    ];
-    field.innerHTML = spec.map(function (a) {
-      return '<div class="aura" style="left:' + a.x + '%;top:' + a.y +
-             '%;width:' + a.s + 'vmax;height:' + a.s + 'vmax;margin:' +
-             (-a.s / 2) + 'vmax 0 0 ' + (-a.s / 2) + 'vmax"></div>';
-    }).join('');
-    auras = [].slice.call(field.children).map(function (el, i) {
-      return { el: el, cfg: spec[i] };
-    });
-  }
+  /* ---- 4 · (el campo de auras se retiro) ----------------------------------
+     Eran tres esferas difuminadas detras de cada frame. Federico, 17/09:
+     "todos los background son como tres esferas blureadas que son horribles".
+     El fondo del deck pasa a ser la reticula de proto.css y las capturas del
+     prototipo. Con las auras se fue tambien el cursor-blob, que era la misma
+     esfera siguiendo al mouse.                                              */
 
   /* ---- 6 · El carrete (interludio B) --------------------------------------
      Tantas cosas que ninguna se puede elegir. Aca solo se mide el progreso
@@ -196,16 +195,6 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---- 9 · Cursor blob ---------------------------------------------------- */
-  var cursor = document.querySelector('.cursor-blob');
-  var mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2, cx: 0, cy: 0 };
-  if (cursor && !isTouch && !reduce && !isExport) {
-    mouse.cx = mouse.x; mouse.cy = mouse.y;
-    window.addEventListener('mousemove', function (e) {
-      mouse.x = e.clientX; mouse.y = e.clientY;
-    }, { passive: true });
-  }
-
   /* ---- 10 · Loop unico ---------------------------------------------------- */
   var lastY = window.scrollY;
   var velocity = 0;
@@ -218,16 +207,6 @@
     var y = window.scrollY;
     velocity += ((y - lastY) - velocity) * 0.18;
     lastY = y;
-
-    // Auras: deriva lenta + parallax
-    for (var i = 0; i < auras.length; i++) {
-      var b = auras[i], c = b.cfg;
-      var drift = Math.sin(t * c.sp) * c.amp;
-      var driftY = Math.cos(t * c.sp * 0.8) * c.amp * 0.6;
-      b.el.style.transform =
-        'translate3d(' + drift.toFixed(2) + 'vmax,' +
-        (driftY - y * c.depth * 0.06).toFixed(2) + 'px,0)';
-    }
 
     // Carrete: la camara se aleja a medida que se atraviesa la seccion.
     // rp es el mismo 0..1 de siempre; lo que cambio es quien lo consume.
@@ -278,14 +257,6 @@
       }
     }
 
-    // Cursor
-    if (cursor && !isTouch && !reduce && !isExport) {
-      mouse.cx += (mouse.x - mouse.cx) * 0.09;
-      mouse.cy += (mouse.y - mouse.cy) * 0.09;
-      cursor.style.transform =
-        'translate3d(' + mouse.cx.toFixed(1) + 'px,' + mouse.cy.toFixed(1) + 'px,0)';
-    }
-
     requestAnimationFrame(frame);
   }
 
@@ -294,7 +265,6 @@
     splitAll();
     buildTiles();
     buildTicks();
-    buildAuras();
     buildReel();
     buildTrack();
     observe();

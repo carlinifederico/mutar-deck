@@ -21,6 +21,9 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isExport = /(^|[?&])print(=|&|$)/.test(location.search);
   var still = reduce || isExport;
+  // Algunos fondos son un still y punto: la portada y la tesis no piden un
+  // loop, piden una imagen "que se sienta mas prototipada" (Federico, 17/09).
+  var esStill = function (box) { return still || box.hasAttribute('data-capture-still'); };
   var FPS = 24;
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -42,7 +45,7 @@
     var src = box.dataset.capture;                       // 'media/capture-espacio'
     var start = parseFloat(box.dataset.captureTc) || 0;  // segundo real en el master
 
-    var media = still
+    var media = esStill(box)
       ? '<img class="capture__media" src="' + src + '.jpg" alt="">'
       : '<video class="capture__media" muted playsinline loop disablepictureinpicture ' +
         'preload="none" poster="' + src + '.jpg" data-src="' + src + '.mp4"></video>';
@@ -51,12 +54,12 @@
       media +
       '<span class="capture__veil"></span>' +
       '<span class="capture__marks"><i></i><i></i><i></i><i></i></span>' +
-      '<span class="capture__hud">' +
+      (esStill(box) ? '' : '<span class="capture__hud">' +
         '<span class="capture__rec"></span>' +
         '<span data-en="Headset capture · prototype" ' +
               'data-es="Captura del visor · prototipo"></span>' +
         '<span class="capture__tc">' + timecode(start) + '</span>' +
-      '</span>';
+      '</span>');
 
     // i18n.js ya corrio: estos nodos nacen despues, se traducen a mano una vez.
     // Los cambios de idioma posteriores si los alcanzan (vuelve a consultar el DOM).
@@ -72,8 +75,9 @@
     });
   });
 
-  if (still || !('IntersectionObserver' in window)) {
-    boxes.forEach(function (b) { b.classList.add('is-live'); });
+  boxes = boxes.filter(function (b) { return !esStill(b); });
+  if (!boxes.length || !('IntersectionObserver' in window)) {
+    document.querySelectorAll('[data-capture]').forEach(function (b) { b.classList.add('is-live'); });
     return;
   }
 

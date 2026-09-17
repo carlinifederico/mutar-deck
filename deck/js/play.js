@@ -39,57 +39,17 @@
            (extra || '') + '>' + o.d + '</svg>';
   }
 
-  /* ---- 1 · Objetos que se pueden agarrar (portada) -------------------------
-     El hint que pidio Federico: "agarrar una cosita y moverla". Entran de
-     los bordes hacia el logotipo y despues quedan sueltos para tirarlos.   */
-  function iniciarArrastre(caja) {
-    if (!caja) return;
-    // posiciones de reposo alrededor del logotipo, en % del contenedor
-    // fuera de la franja central: ahi vive el logotipo y no se toca
-    var spots = [
-      [4, 12], [17, 21], [33, 7], [49, 11], [65, 7], [81, 17],
-      [92, 28], [7, 82], [26, 89], [45, 93], [63, 86], [88, 78]
-    ];
-    caja.innerHTML = spots.map(function (s, i) {
-      return '<button class="obj" type="button" tabindex="-1" aria-hidden="true" style="left:' + s[0] +
-             '%;top:' + s[1] + '%;--d:' + (0.7 + i * 0.07).toFixed(2) + 's">' +
-             svgObjeto(i) + '</button>';
-    }).join('');
+  /* ---- 1 · (los objetos arrastrables de la portada se retiraron) -----------
+     Federico, 17/09: "eliminaria todos esos iconos interactivos que no sirven
+     para nada". Las siluetas NO se tiraron: OBJETOS y svgObjeto() siguen
+     alimentando el anillo que orbita.                                        */
 
-    if (reduce || isExport) return;
-
-    var piezas = [].slice.call(caja.children);
-    piezas.forEach(function (p) {
-      var x = 0, y = 0, arrastrando = false, px = 0, py = 0;
-
-      p.addEventListener('pointerdown', function (e) {
-        arrastrando = true;
-        px = e.clientX; py = e.clientY;
-        p.setPointerCapture(e.pointerId);
-        p.classList.add('is-drag');
-        caja.classList.add('has-played');
-      });
-      p.addEventListener('pointermove', function (e) {
-        if (!arrastrando) return;
-        x += e.clientX - px; y += e.clientY - py;
-        px = e.clientX; py = e.clientY;
-        p.style.setProperty('--x', x + 'px');
-        p.style.setProperty('--y', y + 'px');
-      });
-      function soltar(e) {
-        if (!arrastrando) return;
-        arrastrando = false;
-        p.classList.remove('is-drag');
-        try { p.releasePointerCapture(e.pointerId); } catch (err) {}
-      }
-      p.addEventListener('pointerup', soltar);
-      p.addEventListener('pointercancel', soltar);
-    });
-  }
-
-  /* ---- 2 · Anillo que orbita (la libreria) ---------------------------------
-     "10 elementos que los puedas orbitar". Gira solo, se frena al pasar el
-     mouse, y se puede arrastrar para girarlo a mano.                        */
+  /* ---- 2 · Anillo que orbita (los resultados) ------------------------------
+     Gira solo, se frena al pasar el mouse, y se puede arrastrar a mano.
+     Gervasio, 17/09, pidiendolo al lado de las treinta siluetas: "que te
+     explique como es el proceso de que ves la escultura online, porque la
+     gente no esta acostumbrada a orbitar un objeto online y por ahi no se
+     imagina como vas a votar".                                              */
   function iniciarOrbita(caja) {
     if (!caja) return;
     var N = 10;
@@ -120,7 +80,17 @@
     caja.addEventListener('pointerup', soltar);
     caja.addEventListener('pointercancel', soltar);
 
+    // El anillo vive en un frame al fondo del deck. Sin este guardado el rAF
+    // pinta diez transforms por cuadro durante todo el recorrido, para nadie.
+    var visible = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; },
+        { rootMargin: '20% 0px' }).observe(caja);
+    } else { visible = true; }
+
     (function girar() {
+      requestAnimationFrame(girar);
+      if (!visible) return;
       if (!quieto && !arrastrando) ang += vel;
       // el radio va en px sobre el ancho del contenedor: en % seria relativo
       // al propio item y todos quedarian amontonados en el centro
@@ -135,81 +105,15 @@
         items[i].style.opacity = (0.28 + (z + 1) * 0.36).toFixed(3);
         items[i].style.zIndex = Math.round((z + 1) * 50);
       }
-      requestAnimationFrame(girar);
     })();
   }
 
-  /* ---- 3 · Pintar por encima (el finish) -----------------------------------
-     "o que pintes con la cinta por encima". Arrastrar sobre la escultura
-     deja trazos en la paleta de MUTAR: es el argumento del frame hecho gesto. */
-  function iniciarPintura(caja) {
-    if (!caja) return;
-    var lienzo = caja.querySelector('.pintar__canvas');
-    if (!lienzo) return;
-    var base = caja.querySelector('.pintar__base');
-    if (base && !base.innerHTML) {
-      // escultura de muestra armada con las mismas piezas del frame 19
-      base.innerHTML = '<svg viewBox="0 0 100 130" ' + TRAZO + ' aria-hidden="true">' +
-        '<path d="M18 124h64"/>' +
-        '<rect x="30" y="88" width="40" height="30" rx="8"/>' +
-        '<circle cx="50" cy="70" r="15"/>' +
-        '<rect x="36" y="34" width="28" height="22" rx="7"/>' +
-        '<path d="M50 34 60 14H40z"/>' +
-        '</svg>';
-    }
-    var COLORES = ['var(--pink)', 'var(--lime)', 'var(--yellow)', 'var(--cyan)', 'var(--orange)'];
-    if (reduce || isExport) return;
-
-    var pintando = false, n = 0, ultimo = 0;
-
-    function trazo(e) {
-      var r = lienzo.getBoundingClientRect();
-      var t = Date.now();
-      if (t - ultimo < 26) return;              // no saturar de nodos
-      ultimo = t;
-      var s = document.createElement('i');
-      s.className = 'pintar__gota';
-      s.style.left = ((e.clientX - r.left) / r.width * 100) + '%';
-      s.style.top = ((e.clientY - r.top) / r.height * 100) + '%';
-      s.style.background = COLORES[n % COLORES.length];
-      s.style.setProperty('--s', (0.7 + Math.random() * 0.9).toFixed(2));
-      s.style.setProperty('--r', (Math.random() * 60 - 30).toFixed(1) + 'deg');
-      lienzo.appendChild(s);
-      n++;
-      caja.classList.add('has-played');
-      // techo de nodos: se van los mas viejos
-      if (lienzo.children.length > 160) lienzo.removeChild(lienzo.firstChild);
-    }
-
-    lienzo.addEventListener('pointerdown', function (e) {
-      pintando = true; lienzo.setPointerCapture(e.pointerId); trazo(e);
-    });
-    lienzo.addEventListener('pointermove', function (e) {
-      if (pintando) trazo(e);
-      else if (e.pointerType === 'mouse' && caja.classList.contains('has-played')) trazo(e);
-    });
-    function fin(e) {
-      pintando = false;
-      try { lienzo.releasePointerCapture(e.pointerId); } catch (err) {}
-    }
-    lienzo.addEventListener('pointerup', fin);
-    lienzo.addEventListener('pointercancel', fin);
-
-    var limpiar = caja.querySelector('[data-limpiar]');
-    if (limpiar) limpiar.addEventListener('click', function () {
-      lienzo.innerHTML = ''; caja.classList.remove('has-played');
-    });
-  }
+  /* ---- 3 · (pintar por encima se retiro) -----------------------------------
+     Federico, 17/09: "hay que eliminar el elemento este interactivo de que se
+     pinta porque no se entiende. Por favor, eliminarlo".                     */
 
   /* ---- Boot ---------------------------------------------------------------- */
-  requestAnimationFrame(function () {
-    requestAnimationFrame(function () { document.body.classList.add('has-loaded'); });
-  });
-
-  iniciarArrastre(document.querySelector('[data-objetos]'));
-  iniciarOrbita(document.querySelector('[data-orbita]'));
-  iniciarPintura(document.querySelector('[data-pintar]'));
-
-  window.MUTAR = window.MUTAR || {};
-  window.MUTAR.objetos = OBJETOS.length;
+  // querySelectorAll y no querySelector: el anillo se mudo de frame y manana
+  // puede haber otro. Cada instancia se guarda sola (ver girar()).
+  document.querySelectorAll('[data-orbita]').forEach(iniciarOrbita);
 })();

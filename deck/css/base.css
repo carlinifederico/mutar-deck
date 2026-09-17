@@ -112,31 +112,11 @@ a { color: inherit; }
   letter-spacing: var(--track-mega);
 }
 
-/* ---- Campo de auras -----------------------------------------------------
-   Antes eran blobs con border-radius desparejo: el borde duro y la
-   deformacion arbitraria se veian baratos. Ahora son degradados radiales
-   que se desvanecen a transparente — sin borde, sin deformacion. La forma
-   la da la luz, no un recorte.                                             */
-.aura-field {
-  position: fixed;
-  inset: -20vmax;
-  z-index: 0;
-  pointer-events: none;
-}
-.aura {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%,
-              var(--aura-color, var(--accent)) 0%,
-              color-mix(in srgb, var(--aura-color, var(--accent)) 45%, transparent) 42%,
-              transparent 72%);
-  opacity: 0.32;
-  mix-blend-mode: multiply;
-  transition: background var(--dur-ground) var(--ease-soft);
-  will-change: transform;
-}
-body[data-ground="ink"] .aura,
-body[data-ground="violet"] .aura { mix-blend-mode: screen; opacity: 0.22; }
+/* ---- (el campo de auras y el cursor-blob se retiraron) -------------------
+   Eran esferas difuminadas: tres fijas de fondo y una siguiendo al mouse.
+   Federico, 17/09: "todos los background son como tres esferas blureadas que
+   son horribles". El fondo del deck es ahora la reticula de proto.css y las
+   capturas del prototipo. El grano, que si aportaba, se queda.            */
 
 /* ---- Grano ---------------------------------------------------------------
    Una capa de ruido muy leve sobre todo. No se ve; se siente. Es lo que
@@ -150,25 +130,6 @@ body[data-ground="violet"] .aura { mix-blend-mode: screen; opacity: 0.22; }
   mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
-
-/* ---- Cursor blob -------------------------------------------------------- */
-.cursor-blob {
-  position: fixed;
-  top: 0; left: 0;
-  width: 26rem; height: 26rem;
-  margin: -13rem 0 0 -13rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%,
-              var(--accent) 0%, transparent 68%);
-  opacity: 0.13;
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: multiply;
-  will-change: transform;
-}
-body[data-ground="ink"] .cursor-blob,
-body[data-ground="violet"] .cursor-blob { mix-blend-mode: screen; opacity: 0.2; }
-body.is-touch .cursor-blob { display: none; }
 
 /* ---- Rail de progreso --------------------------------------------------- */
 .rail {
@@ -362,8 +323,6 @@ body[data-ground="violet"] .mark-sm { color: var(--bone); }
 
 body.export { overflow-x: auto; background: #d9d5cd; }
 html.export-html { scroll-snap-type: none; scroll-behavior: auto; }
-body.export .aura-field,
-body.export .cursor-blob,
 body.export .grain,
 body.export .rail,
 body.export .chrome,
@@ -420,7 +379,6 @@ body.export.export--full .interlude {
     transform: none;
     letter-spacing: normal;
   }
-  .aura-field, .cursor-blob { display: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
