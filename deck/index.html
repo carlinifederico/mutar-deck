@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/frames.css">
+<link rel="stylesheet" href="css/proto.css">
 </head>
 <body data-ground="bone" data-accent="pink">
 
@@ -44,6 +45,7 @@
 </div>
 <div class="chrome chrome--bl">
   <span class="counter"><b data-counter-now>01</b> / <span data-counter-total>20</span></span>
+  <span class="stamp" data-en="Prototype · in progress" data-es="Prototipo · en curso"></span>
 </div>
 <div class="chrome chrome--br">
   <span class="scroll-hint" data-en="Scroll" data-es="Scrolleá"></span>
@@ -262,8 +264,9 @@
 <!-- ══════════════════════ ACTO 4 · LA EXPERIENCIA ══════════════════════ -->
 
 <!-- 10 · EL HAPPENING -->
-<section class="frame frame--happening" data-frame="10" data-act="4" data-ground="violet" data-accent="yellow">
+<section class="frame frame--happening frame--capture" data-frame="10" data-act="4" data-ground="violet" data-accent="yellow">
   <div class="frame__tag"><b>10</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="capture" data-capture="media/capture-happening" data-capture-tc="262" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Inside the happening" data-es="Dentro del happening"></h2>
     <div class="figures">
@@ -309,8 +312,9 @@
 </section>
 
 <!-- 12 · EL ESPACIO -->
-<section class="frame frame--space" data-frame="12" data-act="4" data-ground="violet" data-accent="yellow">
+<section class="frame frame--space frame--capture" data-frame="12" data-act="4" data-ground="violet" data-accent="yellow">
   <div class="frame__tag"><b>12</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="capture" data-capture="media/capture-espacio" data-capture-tc="18" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="The space is not a workshop." data-es="El espacio no es un taller."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
@@ -391,8 +395,9 @@
 </section>
 
 <!-- 15 · HERRAMIENTAS -->
-<section class="frame frame--tools" data-frame="15" data-act="5" data-ground="ink" data-accent="orange">
+<section class="frame frame--tools frame--capture" data-frame="15" data-act="5" data-ground="ink" data-accent="orange">
   <div class="frame__tag"><b>15</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="capture" data-capture="media/capture-herramientas" data-capture-tc="582" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Tools are experiences, not machines." data-es="Las herramientas son experiencias, no máquinas."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
@@ -728,5 +733,6 @@
 <script src="js/scan.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/play.js"></script>
+<script src="js/capture.js"></script>
 </body>
 </html>

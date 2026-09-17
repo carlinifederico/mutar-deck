@@ -128,6 +128,74 @@ cambia entre cargas. La ganadora va en color de marca.
 
 ---
 
+## La capa de prototipo
+
+El deck muestra un proyecto que todavia se esta construyendo, asi que el sitio
+esta vestido como un archivo de trabajo y no como una pieza cerrada. Vive todo
+en `css/proto.css` y son tres cosas:
+
+- **Reticula.** Un papel milimetrado tenue detras de cada frame (`.frame::after`),
+  que se desvanece hacia los bordes. El color sale de `currentColor`, asi que
+  sigue al ground del acto sin redeclararse.
+- **Sello.** `.stamp` al lado del contador: *Prototipo · en curso*. Mismo
+  idioma que `.note` — borde punteado y punto de marca. Se oculta abajo de 46rem.
+- **Capturas.** Tres frames llevan de fondo un loop del prototipo andando.
+
+### Las tres capturas
+
+Salen todas del mismo registro interno (`prototype/capturas/Gerva`, que **no**
+esta en el repo: pesa gigas). Cada clip son 12s tomados de un momento distinto:
+
+| Frame | Archivo | Momento | Qué se ve |
+|---|---|---|---|
+| 12 · El espacio | `media/capture-espacio` | 00:00:18 | el recorrido por la sala y los estantes |
+| 10 · El happening | `media/capture-happening` | 00:04:22 | objetos grandes moviendose a escala real |
+| 15 · Las herramientas | `media/capture-herramientas` | 00:09:42 | la paleta y el pincel en primera persona |
+
+El timecode del HUD arranca en el minuto real de cada uno: los tres numeros
+distintos son la prueba de que es un mismo registro mirado en tres momentos.
+
+**Cómo se agrega una cuarta.** Una linea en el HTML, adentro del `<section>`:
+
+```html
+<section class="frame frame--loquesea frame--capture" ...>
+  <div class="capture" data-capture="media/capture-x" data-capture-tc="123" aria-hidden="true"></div>
+```
+
+`data-capture` es la ruta sin extension (busca `.mp4` y `.jpg`) y
+`data-capture-tc` el segundo del master donde empieza. `js/capture.js` arma el
+resto: video, velo, marcas de encuadre y HUD.
+
+**Cómo se corta un clip.** Con ffmpeg, 12s con el ultimo segundo fundido contra
+el primero para que el loop no tenga corte:
+
+```
+ffmpeg -ss <SEGUNDO> -t 13 -i <master.mp4> -filter_complex  "[0:v]fps=24,scale=960:-2,setsar=1,split=2[m][t];
+  [m]trim=0:12,setpts=PTS-STARTPTS,split=2[h][r];
+  [h]trim=0:1,setpts=PTS-STARTPTS[head];
+  [r]trim=1:12,setpts=PTS-STARTPTS[rest];
+  [t]trim=12:13,setpts=PTS-STARTPTS[tail];
+  [tail][head]blend=all_expr='A*(1-T)+B*T'[mix];
+  [mix][rest]concat=n=2:v=1[out]" -map "[out]" -an  -c:v libx264 -profile:v main -pix_fmt yuv420p -crf 29 -preset slow  -g 48 -keyint_min 48 -sc_threshold 0 -movflags +faststart media/capture-x.mp4
+ffmpeg -i media/capture-x.mp4 -frames:v 1 -q:v 5 media/capture-x.jpg
+```
+
+`+faststart` no es opcional: sin el, el navegador se queda esperando el moov
+atom y el video nunca arranca.
+
+**Cómo entra el video en la paleta.** No entra con su color, entra como luz.
+Sobre violeta el `mix-blend-mode: luminosity` lo tine con el ground del acto.
+Sobre tinta eso daria un gris plano — y justo ahi la captura *es* la paleta de
+color del prototipo, que es de lo que habla el frame 15 — asi que ahi el blend
+pasa a `screen`, que sobre negro deja pasar el color.
+
+**Peso y cortesia.** Los tres `.mp4` suman ~3 MB y se piden recien un viewport
+antes de verse (`preload="none"` + src diferido). Fuera de pantalla el video se
+pausa. Con `prefers-reduced-motion` o en export no hay video: va el poster
+`.jpg`, quieto y sin HUD.
+
+---
+
 ## Logo y color
 
 El logotipo original (`_mat/Logo/output/logo_byn.jpg`) se vectorizó a
@@ -201,14 +269,17 @@ index.html         20 frames + 1 interludio, con la copy EN/ES inline
 css/tokens.css     paleta, marca, escala tipográfica, ritmo, curvas
 css/base.css       reset, chrome, logo, motor de reveals, modo export
 css/frames.css     layout por frame, responsive y overrides de export
+css/proto.css      capa de prototipo: reticula, sello y capturas de fondo
 js/i18n.js         toggle EN/ES
 js/motion.js       reveals, split, progreso del carrete, track, auras, cursor
 js/nav.js          frame activo, rail, teclado, deep links, modo export
 js/scan.js         la escena 3D del carrete (objetos escaneados)
+js/capture.js      monta las capturas de video de fondo (lazy + play/pause)
 js/vendor/         three.js empaquetado, generado por tools/build-three.mjs
 models/            los 20 .glb del carrete + manifest.json
 img/mutar-logo.svg logotipo vectorizado
 img/scan/          poster de fallback del carrete
+media/             las tres capturas del prototipo, .mp4 + poster .jpg
 ```
 
 Sin dependencias ni build **en runtime**: lo que se sirve son archivos
