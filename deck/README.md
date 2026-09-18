@@ -84,7 +84,7 @@ número seis del journey, está primera. Entonces habría que reordenarla"*.
 | **1 · La pregunta** | 02 · 03 | tinta / lima |
 | | *interludio — el carrete* | |
 | **2 · La idea** | 04 Tesis · 05 Concepto · 06 Qué es MUTAR · 07 Por qué los objetos cargan historia | hueso / amarillo |
-| **3 · El recorrido** | 08 Divisor · 09 Los seis pasos · 10 El ciclo | tinta / cian |
+| **3 · El recorrido** | 08 Divisor · 09 Los seis pasos · 10 El ciclo (escalera de diez etapas en tres fases) | tinta / cian |
 | **4 · Antes del happening** | 11 La convocatoria · 12 La librería | hueso / cian |
 | **5 · La experiencia** | 13 Happening · 14 Por qué passthrough · 15 El espacio · 16 Cómo empieza | violeta / amarillo |
 | **6 · La construcción** | 17 Tres fases · 18 Herramientas · 19 El finish · 20 Artista invitado | tinta / naranja |

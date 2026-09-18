@@ -883,44 +883,44 @@ body.export .chip__icon { width: 1.1rem; }
 .twin__col .t-body { max-width: 42ch; }
 
 /* ---- 10 · El ciclo -------------------------------------------------------
-   Antes era una escalera con sangria 0→4→0: leia como zigzag. Gervasio la
-   queria "mas espiralada". Ahora las diez etapas giran y el radio crece un
-   poco en cada vuelta, asi que la diez cae justo por fuera de la uno: el
-   ciclo termina donde empezo, un escalon mas afuera.
-
-   El radio va en rem y no en %, porque translate() en % se resuelve contra
-   la caja del propio elemento y las diez etapas quedarian amontonadas.    */
-.cycle {
-  /* el circulo + su pie tienen que entrar en un viewport: el motor de
-     reveals no dispara lo que queda pegado al borde de abajo */
-  --ring: clamp(8rem, 21vh, 12.5rem);
-  --node: clamp(5.5rem, 9vw, 7.75rem);
-  position: relative;
-  width: 100%;
-  height: calc(var(--ring) * 2 + 10rem);
-  margin: clamp(1rem, 2.5vh, 1.5rem) auto clamp(0.5rem, 2vh, 1.25rem);
+   18/09: la espiral no se entendia. Ahora es una escalera: diez columnas que
+   suben de izquierda a derecha y se van llenando de color, agrupadas en las
+   tres fases del proyecto. Se lee como avance, no como una rueda. La vuelta
+   al principio la dice el pie de abajo.                                     */
+.cycle { position: relative; margin: clamp(1.25rem, 3vh, 2rem) 0 0; }
+.cycle__ring {
+  margin: 0; padding: 0; list-style: none;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: clamp(0.3rem, 0.6vw, 0.6rem);
+  align-items: end;
+  height: clamp(15rem, 44vh, 24rem);
+  border-bottom: 2px solid var(--hairline);
 }
-.cycle__ring { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
 .cycle__stage {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--node);
-  margin-left: calc(var(--node) / -2);
-  text-align: center;
-  /* el radio crece 0.45rem por etapa: eso es la espiral */
-  --a: calc(var(--i) * 36deg);
-  --r: calc(var(--ring) + var(--i) * 0.45rem);
-  transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) rotate(calc(var(--a) * -1))
-             translateY(-50%);
+  position: relative;
+  height: calc(36% + var(--i) * 7.1%);
+  border-radius: 0.9rem 0.9rem 0 0;
+  border-top: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) calc(6% + var(--i) * 6.5%), transparent);
+  transform-origin: bottom;
+  animation: cycle-grow 0.9s var(--ease-soft) both;
+  animation-delay: calc(var(--i) * 70ms);
+  animation-play-state: paused;
 }
-/* el reveal va adentro: si fuera en .cycle__stage pisaria la posicion polar */
-.cycle__card { display: block; }
+.frame--cycle.is-active .cycle__stage,
+.frame--cycle:has(.is-in) .cycle__stage { animation-play-state: running; }
+@keyframes cycle-grow { from { transform: scaleY(0.15); opacity: 0; } to { transform: none; opacity: 1; } }
+.cycle__stage:last-child { background: var(--accent); }
+.cycle__stage:last-child .cycle__n,
+.cycle__stage:last-child .cycle__name,
+.cycle__stage:last-child .cycle__note { color: var(--ink); }
+.cycle__card { display: block; padding: 0.65rem clamp(0.4rem, 0.8vw, 0.75rem); }
 .cycle__n {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
+  font-family: var(--font-bubble);
+  font-size: clamp(1.2rem, 2.2vw, 2rem);
+  line-height: 1;
   font-weight: 400;
   color: var(--accent-text);
 }
@@ -928,34 +928,44 @@ body.export .chip__icon { width: 1.1rem; }
   display: block;
   font-family: var(--font-grotesk);
   font-weight: 800;
-  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.72rem, 1.05vw, 0.95rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
-  margin-top: 0.2rem;
+  margin-top: 0.35rem;
+  hyphens: auto;
 }
 .cycle__note {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.54rem;
+  font-size: clamp(0.5rem, 0.62vw, 0.6rem);
   line-height: 1.3;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--fg-dim);
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
-.cycle__hub {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+/* las tres fases, debajo de la base */
+.cycle__phases {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: clamp(0.3rem, 0.6vw, 0.6rem);
+  margin-top: 0.7rem;
+}
+.cycle__phase {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
   color: var(--fg-dim);
 }
-.cycle__hub-n {
-  font-family: var(--font-bubble);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 0.9;
-  color: color-mix(in srgb, var(--fg) 22%, transparent);
-}
-.cycle__hub-label { margin-top: 0.2rem; }
+.cycle__phase:nth-child(1) { grid-column: 1 / 6; }
+.cycle__phase:nth-child(2) { grid-column: 6 / 8; color: var(--accent-text); border-color: var(--accent); }
+.cycle__phase:nth-child(3) { grid-column: 8 / 11; }
+.cycle__hub { display: none; }
+.frame--cycle .cycle + .cycle__phases + p { margin-top: clamp(1.25rem, 3.5vh, 2.25rem); }
+body.export .cycle__ring { height: 20rem; }
+body.export .cycle__stage { animation: none; }
 
 /* En pantalla chica el circulo no entra: vuelve a ser una lista. */
 @media (max-width: 48rem) {
@@ -978,6 +988,12 @@ body.export .chip__icon { width: 1.1rem; }
   .cycle__name, .cycle__note { text-align: left; }
   .cycle__note { grid-column: 2; }
   .cycle__hub { display: none; }
+  .cycle__ring { height: auto; border: 0; }
+  .cycle__stage { height: auto; background: none; border-radius: 0; border-top: 0; animation: none; }
+  .cycle__stage:last-child { background: none; }
+  .cycle__stage:last-child .cycle__name { color: var(--fg); }
+  .cycle__n { font-size: 1.1rem; }
+  .cycle__phases { display: none; }
 }
 
 /* ---- 11 · La convocatoria ------------------------------------------------
@@ -1120,7 +1136,6 @@ body.export .chip__icon { width: 1.1rem; }
 body.export .tile__votes { display: none; }
 /* en la pagina 16:9 el circulo se achica, pero el nodo tiene que achicarse
    mas que el radio o dos etapas vecinas se pisan */
-body.export .cycle { --ring: 9.5rem; --node: 5.4rem; height: 26rem; }
 body.export .cycle__name { font-size: 0.72rem; }
 body.export .cycle__note { font-size: 0.48rem; }
 body.export .entry { break-inside: avoid; }
