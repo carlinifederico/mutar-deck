@@ -1156,7 +1156,7 @@ body.export .entry { break-inside: avoid; }
 .fig--plan figcaption { color: color-mix(in srgb, var(--bone) 75%, transparent); }
 
 /* 23 · la obra fisica, sobre la plaza de noche */
-.frame--build .frame__inner { text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5); }
+.frame--build .frame__inner { text-shadow: 0 1px 24px var(--bone); }
 
 /* 30 · contacto: un mail por linea */
 .credits__mail { display: grid; gap: 0.2rem; font-size: clamp(0.9rem, 1.3vw, 1.15rem) !important; }

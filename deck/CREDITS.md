@@ -70,8 +70,9 @@ referencia del proyecto (`prototype/pieces/`). Se comprimen con
 
 ## Imágenes
 
-- `img/renders/*.webp` — renders conceptuales del proyecto (obra propia, del
-  tablero de referencias). Salen de los PNG en `../img/`, a 1600px WebP.
+- `img/renders/*.webp` — pruebas de prototipo (arcilla gris, cotas en rosa),
+  generadas con Nano Banana Pro en Krea a partir de los renders del tablero de
+  referencias (`../img/`). Obra propia; 1800px WebP.
 - `media/capture-*` y `media/still-*` — capturas del prototipo, obra propia.
 
 ## three.js

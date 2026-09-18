@@ -263,3 +263,6 @@ body.export .fig__frame { box-shadow: 0 0 0 1px var(--hairline); }
   .capture { transition: none; }
   .fig__frame > img { transition: none; }
 }
+
+/* cierre: tres lineas grandes sobre la maqueta, el velo sube */
+.frame--closing .capture__veil { background: radial-gradient(75% 65% at 50% 50%, color-mix(in srgb, var(--cg) 84%, transparent) 0%, color-mix(in srgb, var(--cg) 55%, transparent) 70%, color-mix(in srgb, var(--cg) 30%, transparent) 100%); }
