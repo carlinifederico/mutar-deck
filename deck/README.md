@@ -9,7 +9,14 @@ quedan píldoras `.note` ni huecos `.slot`: cada frame tiene su imagen, su
 captura o su objeto 3D real. La raíz del repo (`../index.html`) redirige acá;
 el sitio viejo quedó en `../v1.html`.
 
-Abrir: `deck/index.html` directamente en el navegador (anda desde `file://`,
+**Online:** https://mutar-art.pages.dev (Cloudflare Pages, cuenta
+carlini@3dar.com). Copia de respaldo en GitHub Pages:
+https://carlinifederico.github.io/mutar-deck/
+
+**Publicar un cambio:** `bash deck/tools/deploy-pages.sh`. GitHub Pages se
+actualiza solo con cada push; Cloudflare no, hay que correr el script.
+
+Abrir local: `deck/index.html` directamente en el navegador (anda desde `file://`,
 no necesita servidor ni build).
 
 ---
