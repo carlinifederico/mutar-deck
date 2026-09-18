@@ -4,8 +4,10 @@ Propuesta alternativa al deck de la raíz (`../index.html`). Misma información,
 otra dirección: el logotipo hand-drawn en rosa de marca, tipografía grande,
 fondos suaves y un scroll con movimiento, más un modo de exportación a 16:9.
 
-**Este pase es de estructura.** Cada frame tiene su título real y lo mínimo de
-cuerpo; lo que falta está marcado con la píldora `.note`, no disimulado.
+**Desde el 18/09 es una versión para enviar**, no un documento interno. No
+quedan píldoras `.note` ni huecos `.slot`: cada frame tiene su imagen, su
+captura o su objeto 3D real. La raíz del repo (`../index.html`) redirige acá;
+el sitio viejo quedó en `../v1.html`.
 
 Abrir: `deck/index.html` directamente en el navegador (anda desde `file://`,
 no necesita servidor ni build).
@@ -35,9 +37,22 @@ Lo grande fue esto:
    secciones, interludio incluido: *"si uno lo navega con la flecha se saltea
    cosas"*.
 
-Quedó pendiente, y está marcado con `.note` en el deck: el render de la obra
-terminada en sala, la foto del lugar, los objetos 3D del Figma y las compañías
-de los créditos.
+## El pase del 18/09: listo para enviar
+
+1. **Fuera lo interno.** Salieron las doce `.note`, los cuatro `.slot`, el
+   sello *Prototipo · en curso* y los `[ a definir ]` de los créditos.
+   Créditos: Ojo Raro, y los mails de los dos como contacto.
+2. **El video se ve.** La retícula ya no pasa por encima de las capturas, el
+   video entra con su color real (antes era `luminosity`) y el velo cubre sólo
+   el lado del texto. Los loops de video pasaron de cuatro a siete.
+3. **Imagen en cada hueco.** Renders de la obra en sala, en la plaza y en el
+   museo virtual (`img/renders/`), la planta del happening dibujada en SVG, y
+   un componente `.fig` (imagen enmarcada + epígrafe numerado) para todas.
+4. **Los objetos reales en 3D.** La librería (frame 12) muestra siete de los
+   modelos del prototipo y se giran a mano; el visor del frame 21 muestra la
+   escultura base. Ver "Objetos reales" abajo.
+5. **Los creadores.** Retratos grandes, al lado del nombre, y la bio nueva de
+   Federico con sus créditos.
 
 ---
 
@@ -117,23 +132,54 @@ crop=…,scale=760:760,format=gray,eq=contrast=1.18:brightness=0.015,noise=alls=
 Ojo con el `url()` de la foto: va `../img/team/…` porque una custom property
 se resuelve contra la hoja que la consume (`css/frames.css`), no contra el HTML.
 
-### Huecos marcados
+### Imágenes por frame
 
-Cuatro `.slot` de imagen (planta del espacio, mockup del cinturón, los
-escaneos reales, referencia de artista invitado) y doce `.note` con lo que
-falta definir. Los que salieron de la reunión del 17/09:
+| Frame | Qué hay |
+|---|---|
+| 01 Portada | fondo: render de la ballena de objetos en sala |
+| 04 Tesis | Fig. 01 — la obra terminada en sala (render) |
+| 07 Historias | Fig. 02 — la pila de objetos (render) |
+| 08 Divisor | captura hero: la escultura creciendo |
+| 12 Librería | estantería 3D con los objetos reales |
+| 13 Happening | captura: objetos grandes a escala real |
+| 14 Passthrough | Fig. 03 — la sala con gente (render) |
+| 15 Espacio | captura + Fig. 04, la planta en SVG |
+| 16 · 17 · 18 · 19 | capturas: entrada, gizmos, herramientas, paleta |
+| 20 Artista | Fig. 05 (render) |
+| 21 Resultados | visor 3D de la escultura base |
+| 22 Votación | Fig. 06 — un resultado de grupo (captura) |
+| 23 Obra física | fondo: la obra en la plaza, de noche (render) |
+| 24 Visita | Fig. 07 — el museo virtual (render) |
+| 27 Impacto | Fig. 08 (render) |
+| 29 Cierre | fondo: render de la criatura-máquina |
 
-- **01 · 04** — el render de la obra terminada en sala. Federico lo pidió
-  textual: *"alguna imagen del proyecto terminado tiene que haber, medio
-  prototipada, en un salón de un museo"*. Mientras no exista, el fondo es una
-  captura del prototipo.
-- **11** — el formulario real de la convocatoria (la ficha que está es de
-  ejemplo).
-- **13** — una fotografía del lugar: *"acá tendría que haber una imagen del
-  lugar"*.
-- **21** — los objetos 3D que Gervasio va a mandar desde Figma para reemplazar
-  las siluetas del anillo.
-- **30** — las compañías productoras, que en la transcripción quedaron rotas.
+### El componente `.fig`
+
+```html
+<figure class="fig reveal" style="--ar:16/9">
+  <div class="fig__frame"><img src="img/renders/x.webp" alt="…" loading="lazy"></div>
+  <figcaption><b>Fig. 09</b><span data-en="…" data-es="…"></span></figcaption>
+</figure>
+```
+
+`--ar` fija la proporción. `.fig--band` la vuelve una banda panorámica de un
+tercio de pantalla. Para poner texto y figura lado a lado está `.duo`
+(`.duo--flip` invierte, `.duo--wide` le da más ancho a la figura); adentro de
+un `.duo` los cuerpos tipográficos bajan un escalón solos.
+
+### Objetos reales
+
+`js/objects.js` monta un visor three.js en cada `[data-visor]`. Lee
+`models/real/manifest.json`, normaliza cada modelo a 1 de lado y lo gira; se
+arrastra para rotarlo. Con `[data-visor-pick]` se arma una lista para elegir.
+Mismas reglas que el carrete: lazy, sin luces, y cae al contenido
+`.visor__poster` en `file://`, sin WebGL, con reduced-motion o en export.
+
+Para regenerar los `.glb` desde `prototype/pieces/_gameready/glb/`:
+
+```bash
+MUTAR_REPO="$REPO" node build-real.mjs   # desde la toolchain local, ver abajo
+```
 
 ---
 
@@ -181,18 +227,15 @@ PRNG — porque *"se tiene que notar que la gente ya está votando"*.
 
 ---
 
-## La capa de prototipo
+## La capa de imagen
 
-El deck muestra un proyecto que todavia se esta construyendo, asi que el sitio
-esta vestido como un archivo de trabajo y no como una pieza cerrada. Vive todo
-en `css/proto.css` y son tres cosas:
+Vive toda en `css/proto.css` y son tres cosas:
 
 - **Reticula.** Un papel milimetrado tenue detras de cada frame (`.frame::after`),
   que se desvanece hacia los bordes. El color sale de `currentColor`, asi que
   sigue al ground del acto sin redeclararse.
-- **Sello.** `.stamp` al lado del contador: *Prototipo · en curso*. Mismo
-  idioma que `.note` — borde punteado y punto de marca. Se oculta abajo de 46rem.
-- **Capturas.** El fondo de seis frames sale del registro del prototipo.
+- **Capturas.** Siete frames tienen un loop del prototipo de fondo; otros cuatro, un still o un render.
+- **Figuras.** `.fig`, la imagen enmarcada con epígrafe (ver arriba).
 
 Desde el 17/09 esta capa **es** el fondo del deck: las tres esferas difuminadas
 que habia detras de cada frame se retiraron enteras (`.aura-field` y, con
@@ -207,12 +250,25 @@ esta en el repo: pesa gigas). Los loops son de 12s; los stills, un cuadro.
 
 | Frame | Archivo | Momento | Qué se ve |
 |---|---|---|---|
-| 01 · Portada | `media/bg-portada.jpg` | 00:03:48 | still — la sala, al fondo del logotipo |
 | 04 · Tesis | `media/bg-mundo.jpg` | 00:03:18 | still — el plano general, *"el layout del mundo de mutar"* |
-| 08 · Divisor | `media/capture-mutacion` | 00:06:40 | loop — la escultura armandose pieza por pieza |
+| 08 · Divisor | `media/capture-escultura` | f1 00:01:34 | loop hero — la escultura rosa creciendo |
 | 13 · El happening | `media/capture-happening` | 00:04:22 | loop — objetos grandes moviendose a escala real |
 | 15 · El espacio | `media/capture-espacio` | 00:00:18 | loop — el recorrido por la sala y los estantes |
+| 16 · Cómo empieza | `media/capture-onboarding` | 00:02:56 | loop — el carrito y los primeros objetos |
+| 17 · Tres fases | `media/capture-gizmo` | f1 00:02:26 | loop — rotando la pieza con el gizmo |
 | 18 · Las herramientas | `media/capture-herramientas` | 00:09:42 | loop — la paleta y el pincel en primera persona |
+| 19 · El finish | `media/capture-paleta` | f1 00:00:28 | loop — el panel de materiales |
+
+`f1` es `prototype/capturas/f1.mp4` (1080p, se corta a 1280 de ancho); el
+resto sale del master de Gerva. Las stills `still-galpon` y `still-resultado`
+(poster de la estantería y Fig. 06) salen del master de Gerva a 00:00:10 y
+00:10:55.
+
+Desde el 18/09 la captura entra **con su color**: sin `mix-blend-mode`, sin
+scanlines, y con un velo sólo del lado del texto. La retícula no se dibuja en
+los frames con captura. `.capture--hero` casi no lleva velo (frame 08) y
+`.capture--center` va en viñeta para texto centrado (portada y cierre). Un
+fondo que no es captura se declara con `data-capture-img="img/…"`.
 
 El timecode del HUD arranca en el minuto real de cada loop: los numeros
 distintos son la prueba de que es un mismo registro mirado en momentos
@@ -237,7 +293,7 @@ resto: video, velo, marcas de encuadre y HUD.
 el primero para que el loop no tenga corte:
 
 ```
-ffmpeg -ss <SEGUNDO> -t 13 -i <master.mp4> -filter_complex  "[0:v]fps=24,scale=960:-2,setsar=1,split=2[m][t];
+ffmpeg -ss <SEGUNDO> -t 13 -i <master.mp4> -filter_complex  "[0:v]fps=24,scale=1280:-2,setsar=1,split=2[m][t];
   [m]trim=0:12,setpts=PTS-STARTPTS,split=2[h][r];
   [h]trim=0:1,setpts=PTS-STARTPTS[head];
   [r]trim=1:12,setpts=PTS-STARTPTS[rest];
@@ -250,13 +306,7 @@ ffmpeg -i media/capture-x.mp4 -frames:v 1 -q:v 5 media/capture-x.jpg
 `+faststart` no es opcional: sin el, el navegador se queda esperando el moov
 atom y el video nunca arranca.
 
-**Cómo entra el video en la paleta.** No entra con su color, entra como luz.
-Sobre violeta el `mix-blend-mode: luminosity` lo tine con el ground del acto.
-Sobre tinta eso daria un gris plano — y justo ahi la captura *es* la paleta de
-color del prototipo, que es de lo que habla el frame 15 — asi que ahi el blend
-pasa a `screen`, que sobre negro deja pasar el color.
-
-**Peso y cortesia.** Los tres `.mp4` suman ~3 MB y se piden recien un viewport
+**Peso y cortesia.** Los siete `.mp4` suman ~12 MB y se piden recien un viewport
 antes de verse (`preload="none"` + src diferido). Fuera de pantalla el video se
 pausa. Con `prefers-reduced-motion` o en export no hay video: va el poster
 `.jpg`, quieto y sin HUD.
@@ -457,15 +507,9 @@ web, hay que cambiarlo también ahí.
 
 ---
 
-## Pendiente
+## Para una próxima versión
 
-- Reemplazar el feed placeholder por fotos reales de galería personal.
-- Imágenes del proyecto en los `.slot` marcados.
-- Retratos de los creadores y equipo de producción.
-- Datos reales de votación (frame 22) — hoy son de ejemplo, igual que las
-  cuentas de votos del frame 21.
-- Render de la obra terminada en sala (frames 01 y 04).
-- Foto del lugar del happening (frame 13).
-- Los objetos 3D del Figma para el anillo del frame 21.
-- Las compañías productoras de los créditos (frame 30).
-- Presupuesto, cronograma y requerimientos técnicos.
+- Presupuesto, cronograma y requerimientos técnicos (se hablan en la próxima
+  reunión).
+- Equipo de producción, cuando esté definido.
+- `tools/build-pptx.js` sigue atrás del HTML.

@@ -44,16 +44,19 @@
   boxes.forEach(function (box) {
     var src = box.dataset.capture;                       // 'media/capture-espacio'
     var start = parseFloat(box.dataset.captureTc) || 0;  // segundo real en el master
+    // Un fondo que no es captura (un render, por ejemplo) trae su archivo
+    // entero en data-capture-img; las capturas siguen siendo ruta + .jpg/.mp4.
+    var poster = box.dataset.captureImg || src + '.jpg';
 
     var media = esStill(box)
-      ? '<img class="capture__media" src="' + src + '.jpg" alt="">'
+      ? '<img class="capture__media" src="' + poster + '" alt="">'
       : '<video class="capture__media" muted playsinline loop disablepictureinpicture ' +
-        'preload="none" poster="' + src + '.jpg" data-src="' + src + '.mp4"></video>';
+        'preload="none" poster="' + poster + '" data-src="' + src + '.mp4"></video>';
 
     box.innerHTML =
       media +
       '<span class="capture__veil"></span>' +
-      '<span class="capture__marks"><i></i><i></i><i></i><i></i></span>' +
+      (box.hasAttribute('data-capture-img') ? '' : '<span class="capture__marks"><i></i><i></i><i></i><i></i></span>') +
       (esStill(box) ? '' : '<span class="capture__hud">' +
         '<span class="capture__rec"></span>' +
         '<span data-en="Headset capture · prototype" ' +

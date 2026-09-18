@@ -50,6 +50,30 @@ descarga directa. Se reemplazaron por equivalentes de la misma familia:
 Si aparecen los originales, se agregan a `tools/scans.json` y se vuelve a
 correr el pipeline: `scan.js` los toma del manifest sin tocar código.
 
+## Objetos reales del prototipo
+
+`deck/models/real/` son obra propia: los mismos modelos que se cargan en el
+prototipo de Gravity Sketch, generados con Tripo3D a partir de las imágenes de
+referencia del proyecto (`prototype/pieces/`). Se comprimen con
+`tools/build-real.mjs` (unlit, ~14k triángulos, texturas a 1024px WebP).
+
+| archivo | qué es | peso |
+| --- | --- | ---: |
+| `gramofono.glb` | gramófono | 333 KB |
+| `sofa.glb` | sofá | 284 KB |
+| `contrabajo.glb` | contrabajo | 345 KB |
+| `caldera.glb` | caldera | 344 KB |
+| `radio.glb` | radio reloj | 268 KB |
+| `silla.glb` | silla de plástico | 232 KB |
+| `avion.glb` | avión | 329 KB |
+| `escultura.glb` | escultura base (frame 21) | 307 KB |
+
+## Imágenes
+
+- `img/renders/*.webp` — renders conceptuales del proyecto (obra propia, del
+  tablero de referencias). Salen de los PNG en `../img/`, a 1600px WebP.
+- `media/capture-*` y `media/still-*` — capturas del prototipo, obra propia.
+
 ## three.js
 
 `deck/js/vendor/three-bundle.js` es un bundle parcial de

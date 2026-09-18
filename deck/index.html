@@ -44,7 +44,6 @@
 </div>
 <div class="chrome chrome--bl">
   <span class="counter"><b data-counter-now>01</b> / <span data-counter-total>20</span></span>
-  <span class="stamp" data-en="Prototype · in progress" data-es="Prototipo · en curso"></span>
 </div>
 <div class="chrome chrome--br">
   <span class="scroll-hint" data-en="Scroll" data-es="Scrolleá"></span>
@@ -55,8 +54,8 @@
 <!-- ═══════════════════════ ACTO 0 · ENTRADA ═══════════════════════ -->
 
 <!-- 01 · PORTADA -->
-<section class="frame frame--cover frame--capture" data-frame="1" data-act="0" data-ground="bone" data-accent="pink">
-  <div class="capture" data-capture="media/bg-portada" data-capture-still aria-hidden="true"></div>
+<section class="frame frame--cover frame--capture" data-frame="1" data-act="0" data-ground="ink" data-accent="pink">
+  <div class="capture capture--center" data-capture="cover" data-capture-img="img/renders/sala-ballena.webp" data-capture-still aria-hidden="true"></div>
   <div class="frame__inner">
     <h1 class="cover__word inflate"><span class="logo" role="img" aria-label="MUTAR"></span></h1>
     <p class="cover__sub t-meta reveal" style="--d:.5s">
@@ -64,8 +63,7 @@
       <span data-en="Collective public sculpture" data-es="Escultura pública colectiva"></span>
     </p>
     <div class="cover__rule t-meta reveal" style="--d:.7s">
-      <span class="note" data-en="Structure in progress — not a final document"
-                         data-es="Estructura en desarrollo — no es un documento final"></span>
+      <span>Montreal &middot; Buenos Aires</span>
       <span>2026</span>
     </div>
   </div>
@@ -109,16 +107,19 @@
 <section class="frame frame--thesis frame--capture" data-frame="4" data-act="2" data-ground="bone" data-accent="yellow">
   <div class="frame__tag"><b>04</b><span data-en="The Idea" data-es="La Idea"></span></div>
   <div class="capture capture--plan" data-capture="media/bg-mundo" data-capture-still aria-hidden="true"></div>
-  <div class="frame__inner">
-    <h2 class="thesis split"
-        data-en="MUTAR turns personal clutter into public, patrimonial and collaborative art."
-        data-es="MUTAR convierte el desorden personal en arte público, patrimonial y colaborativo."></h2>
-    <p class="t-body reveal" style="--d:.5s; margin-top:clamp(1.5rem,4vh,3rem)"
-       data-en="Every object carries a story. MUTAR does not erase it — it writes a new one on top. What was made in the past is reworked in the present and left standing in public, as something the future can still read."
-       data-es="Todo objeto carga una historia. MUTAR no la borra: le escribe una nueva encima. Lo que se fabricó en el pasado se rehace en el presente y queda parado en el espacio público, como algo que el futuro todavía puede leer."></p>
-    <p class="note reveal" style="--d:.7s; margin-top:clamp(1.25rem,3vh,2rem)"
-       data-en="To add — a render of the finished piece in a museum hall"
-       data-es="A sumar — un render de la obra terminada en sala"></p>
+  <div class="frame__inner duo">
+    <div>
+      <h2 class="thesis split"
+          data-en="MUTAR turns personal clutter into public, patrimonial and collaborative art."
+          data-es="MUTAR convierte el desorden personal en arte público, patrimonial y colaborativo."></h2>
+      <p class="t-body reveal" style="--d:.5s; margin-top:clamp(1.5rem,4vh,3rem)"
+         data-en="Every object carries a story. MUTAR does not erase it — it writes a new one on top. What was made in the past is reworked in the present and left standing in public, as something the future can still read."
+         data-es="Todo objeto carga una historia. MUTAR no la borra: le escribe una nueva encima. Lo que se fabricó en el pasado se rehace en el presente y queda parado en el espacio público, como algo que el futuro todavía puede leer."></p>
+    </div>
+    <figure class="fig reveal" style="--d:.35s; --ar:1/1">
+      <div class="fig__frame"><img src="img/renders/sala-mamut.webp" alt="A sculpture made of hundreds of donated objects, standing in a museum hall" loading="lazy" style="object-position:58% 50%"></div>
+      <figcaption><b>Fig. 01</b><span data-en="The finished piece, in a museum hall — concept render" data-es="La obra terminada, en sala — render conceptual"></span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -193,6 +194,8 @@
 <section class="frame frame--stories" data-frame="7" data-act="2" data-ground="bone" data-accent="yellow">
   <div class="frame__tag"><b>07</b><span data-en="The Idea" data-es="La Idea"></span></div>
   <div class="frame__inner">
+    <div class="duo duo--stories">
+    <div>
     <h2 class="t-xl split" data-en="Why objects carry stories" data-es="Por qué los objetos cargan historia"></h2>
     <div class="twin">
       <div class="twin__col reveal" style="--d:.2s">
@@ -207,6 +210,12 @@
     <p class="hero-fact reveal" style="--d:.45s"
        data-en="An object with a story still waiting to be told is worth more than a new one."
        data-es="Un objeto con una historia esperando ser contada vale más que uno nuevo."></p>
+    </div>
+    <figure class="fig reveal" style="--d:.4s">
+      <div class="fig__frame"><img src="img/renders/pila.webp" alt="A pile of old televisions, speakers and appliances lit in a gallery" loading="lazy" style="object-position:50% 60%"></div>
+      <figcaption><b>Fig. 02</b><span data-en="Everything we keep without knowing why" data-es="Todo lo que guardamos sin saber por qué"></span></figcaption>
+    </figure>
+    </div>
   </div>
 </section>
 
@@ -215,7 +224,7 @@
 <!-- 08 · DIVISOR -->
 <section class="frame frame--divider frame--capture" data-frame="8" data-act="3" data-ground="ink" data-accent="cyan">
   <div class="frame__tag"><b>08</b><span data-en="The Journey" data-es="El Recorrido"></span></div>
-  <div class="capture" data-capture="media/capture-mutacion" data-capture-tc="400" aria-hidden="true"></div>
+  <div class="capture capture--hero" data-capture="media/capture-escultura" data-capture-tc="94" aria-hidden="true"></div>
   <div class="frame__inner">
     <p class="div__word inflate" data-en="HOW THE MUTATION" data-es="CÓMO SUCEDE LA"></p>
     <p class="div__word inflate" style="--d:.18s" data-en="HAPPENS" data-es="MUTACIÓN"></p>
@@ -345,9 +354,6 @@
     <p class="hero-fact reveal" style="--d:.45s"
        data-en="We are not looking for the prettiest object. We are looking for the one with the most to say — and for someone actually willing to part with it."
        data-es="No buscamos el objeto más lindo. Buscamos el que más tiene para decir — y a alguien de verdad dispuesto a desprenderse de él."></p>
-    <p class="note reveal" style="--d:.55s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="Example entry — the real submission form is to define"
-       data-es="Ficha de ejemplo — el formulario real de la convocatoria está a definir"></p>
   </div>
 </section>
 
@@ -355,6 +361,8 @@
 <section class="frame frame--library" data-frame="12" data-act="4" data-ground="bone" data-accent="cyan">
   <div class="frame__tag"><b>12</b><span data-en="Before the happening" data-es="Antes del happening"></span></div>
   <div class="frame__inner">
+    <div class="duo duo--library">
+    <div>
     <h2 class="t-xl split" data-en="The library" data-es="La librería"></h2>
     <div class="figures">
       <div class="reveal"><p class="figure__n">20</p><p class="figure__label t-meta" data-en="objects per edition" data-es="objetos por edición"></p></div>
@@ -365,6 +373,30 @@
     <p class="t-body reveal" style="--d:.35s; margin-top:clamp(1.25rem,3vh,2rem)"
        data-en="Every object keeps its real scale and its story. Before the happening, anyone can browse the library and find out where each piece came from."
        data-es="Cada objeto conserva su escala real y su historia. Antes del happening, cualquiera puede recorrer la librería y enterarse de dónde salió cada pieza."></p>
+    </div>
+    <!-- La estanteria: los objetos reales del prototipo, los mismos que se
+         cargan en el visor. js/objects.js monta el 3D; sin WebGL queda el
+         still del galpon con los estantes. -->
+    <div class="shelf reveal" style="--d:.72s" data-visor="gramofono,sofa,contrabajo,caldera,radio,silla,avion">
+      <div class="shelf__stage fig__frame" data-visor-stage>
+        <img class="visor__poster" src="media/still-galpon.jpg" alt="The virtual warehouse of the prototype, with shelves full of scanned objects" loading="lazy">
+        <p class="shelf__now t-meta" data-visor-label></p>
+      </div>
+      <div class="shelf__side">
+        <p class="t-meta shelf__title" data-en="From the prototype library" data-es="De la librería del prototipo"></p>
+        <ol class="shelf__list">
+          <li><button type="button" data-visor-pick="gramofono"><b>01</b><span data-en="Gramophone" data-es="Gramófono"></span></button></li>
+          <li><button type="button" data-visor-pick="sofa"><b>02</b><span data-en="Sofa" data-es="Sofá"></span></button></li>
+          <li><button type="button" data-visor-pick="contrabajo"><b>03</b><span data-en="Double bass" data-es="Contrabajo"></span></button></li>
+          <li><button type="button" data-visor-pick="caldera"><b>04</b><span data-en="Boiler" data-es="Caldera"></span></button></li>
+          <li><button type="button" data-visor-pick="radio"><b>05</b><span data-en="Clock radio" data-es="Radio reloj"></span></button></li>
+          <li><button type="button" data-visor-pick="silla"><b>06</b><span data-en="Plastic chair" data-es="Silla de plástico"></span></button></li>
+          <li><button type="button" data-visor-pick="avion"><b>07</b><span data-en="Toy airplane" data-es="Avión"></span></button></li>
+        </ol>
+        <p class="t-meta dim shelf__hint" data-en="Pick one · drag to turn it" data-es="Elegí uno · arrastrá para girarlo"></p>
+      </div>
+    </div>
+    </div>
 
     <!-- El componente humano que pidio Gervasio: no son objetos sueltos, son
          personas contando por que se desprendieron de algo. -->
@@ -398,12 +430,6 @@
       </li>
     </ul>
 
-    <div class="slot reveal" style="--d:.72s; margin-top:clamp(1.25rem,3vh,2rem)"
-         data-en="[ img — the real scans, photogrammetry over the twenty objects ]"
-         data-es="[ img — los escaneos reales, fotogrametría sobre los veinte objetos ]"></div>
-    <p class="note reveal" style="--d:.75s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="Example voices — to research: objects that represent each host city"
-       data-es="Voces de ejemplo — a investigar: objetos representativos de cada ciudad sede"></p>
   </div>
 </section>
 
@@ -424,9 +450,6 @@
     <p class="hero-fact reveal" style="--d:.4s"
        data-en="You cannot move a fridge by yourself. At real scale, collaborating stops being an idea and becomes physical."
        data-es="Una heladera no la movés solo. A escala real, colaborar deja de ser una idea y se vuelve físico."></p>
-    <p class="note reveal" style="--d:.55s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="To add — a photograph of the venue itself"
-       data-es="A sumar — una imagen del lugar"></p>
   </div>
 </section>
 
@@ -452,9 +475,15 @@
         <p class="beat__text" data-en="The same object can exist in several versions at the same time." data-es="El mismo objeto puede existir en varias versiones a la vez."></p>
       </div>
     </div>
-    <p class="hero-fact reveal" style="--d:.4s"
-       data-en="Full VR would cut the room out. Passthrough keeps the museum, the floor and the people in it."
-       data-es="La VR total borraría la sala. El passthrough conserva el museo, el piso y la gente."></p>
+    <div class="duo duo--flip" style="margin-top:clamp(1.5rem,4vh,2.5rem)">
+      <p class="hero-fact reveal" style="--d:.4s; margin-top:0"
+         data-en="Full VR would cut the room out. Passthrough keeps the museum, the floor and the people in it."
+         data-es="La VR total borraría la sala. El passthrough conserva el museo, el piso y la gente."></p>
+      <figure class="fig reveal" style="--d:.3s">
+        <div class="fig__frame"><img src="img/renders/sala-coral.webp" alt="Visitors walking around a large sculpture of assembled objects in a museum" loading="lazy"></div>
+        <figcaption><b>Fig. 03</b><span data-en="The room stays: the museum, the floor and the people" data-es="La sala no desaparece: el museo, el piso y la gente"></span></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -462,7 +491,8 @@
 <section class="frame frame--space frame--capture" data-frame="15" data-act="5" data-ground="violet" data-accent="yellow">
   <div class="frame__tag"><b>15</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
   <div class="capture" data-capture="media/capture-espacio" data-capture-tc="18" aria-hidden="true"></div>
-  <div class="frame__inner">
+  <div class="frame__inner duo">
+   <div>
     <h2 class="t-xl split" data-en="The space is not a workshop." data-es="El espacio no es un taller."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
        data-en="Zones with different jobs, but in an invented universe — not a replica of a garage."
@@ -477,18 +507,72 @@
     <p class="hero-fact reveal" style="--d:.4s"
        data-en="Outside the circle of light objects have no colour. You carry one into the centre and it appears."
        data-es="Fuera del círculo de luz los objetos no tienen color. Traés uno al centro y aparece."></p>
-    <div class="slot reveal" style="--d:.5s; margin-top:clamp(1.25rem,3vh,2rem)"
-         data-en="[ img — plan of the space with its zones ]"
-         data-es="[ img — planta del espacio con sus zonas ]"></div>
-    <p class="note reveal" style="--d:.55s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="To validate in prototype — moldable matter is the hardest part"
-       data-es="A validar en prototipo — la materia moldeable es lo más difícil"></p>
+   </div>
+    <!-- La planta. Dibujada, no una foto: cada zona es un tipo de pieza. -->
+    <figure class="fig fig--plan reveal" style="--d:.35s; --ar:3/2">
+      <div class="fig__frame">
+        <svg class="plan" viewBox="0 0 600 400" role="img" aria-label="Plan of the space">
+          <defs>
+            <radialGradient id="plan-luz" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#ffe500" stop-opacity=".55"/>
+              <stop offset=".6" stop-color="#ffe500" stop-opacity=".18"/>
+              <stop offset="1" stop-color="#ffe500" stop-opacity="0"/>
+            </radialGradient>
+            <pattern id="plan-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#f2efe9" stroke-opacity=".07"/></pattern>
+          </defs>
+          <rect x="0" y="0" width="600" height="400" fill="#0d0c0b"/>
+          <rect x="0" y="0" width="600" height="400" fill="url(#plan-grid)"/>
+          <!-- muros, con la entrada abajo -->
+          <path d="M270 370H30V30h540v340H330" fill="none" stroke="#f2efe9" stroke-width="3" stroke-linecap="round"/>
+          <path d="M300 395v-40M290 365l10-12 10 12" fill="none" stroke="#ffe500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- circulo de luz y plataforma -->
+          <circle cx="300" cy="195" r="118" fill="url(#plan-luz)"/>
+          <circle cx="300" cy="195" r="118" fill="none" stroke="#ffe500" stroke-width="1.5" stroke-dasharray="4 7"/>
+          <circle cx="300" cy="195" r="48" fill="none" stroke="#ffe500" stroke-width="3"/>
+          <path d="M300 157v-14M300 233v14M262 195h-14M338 195h14" stroke="#ffe500" stroke-width="2" stroke-linecap="round"/>
+          <path d="M318 170a28 28 0 0 1 8 25" fill="none" stroke="#ffe500" stroke-width="2" stroke-linecap="round"/>
+          <!-- estantes: pared izquierda -->
+          <g fill="none" stroke="#f2efe9" stroke-opacity=".8" stroke-width="2">
+            <rect x="52" y="70" width="26" height="70" rx="3"/><rect x="52" y="160" width="26" height="70" rx="3"/><rect x="52" y="250" width="26" height="70" rx="3"/>
+            <path d="M52 93h26M52 117h26M52 183h26M52 207h26M52 273h26M52 297h26"/>
+          </g>
+          <!-- objetos grandes: arriba -->
+          <g fill="#f2efe9" fill-opacity=".14" stroke="#f2efe9" stroke-width="2">
+            <rect x="160" y="52" width="70" height="44" rx="8"/><rect x="250" y="48" width="44" height="52" rx="10"/><circle cx="345" cy="74" r="24"/><rect x="390" y="56" width="58" height="36" rx="6"/>
+          </g>
+          <!-- la pila: abajo a la derecha, cincuenta iguales -->
+          <g fill="#ff2e88">
+            <circle cx="450" cy="300" r="6"/><circle cx="465" cy="292" r="6"/><circle cx="480" cy="304" r="6"/><circle cx="458" cy="313" r="6"/><circle cx="474" cy="318" r="6"/><circle cx="490" cy="290" r="6"/><circle cx="496" cy="312" r="6"/><circle cx="442" cy="318" r="6"/><circle cx="486" cy="326" r="6"/><circle cx="468" cy="278" r="6"/><circle cx="505" cy="300" r="6"/><circle cx="452" cy="333" r="6"/>
+          </g>
+          <!-- materia: a la derecha -->
+          <g fill="none" stroke-width="2.5">
+            <path d="M482 150c14-18 42-18 56 0s-6 34-28 34-42-16-28-34z" stroke="#c8f000"/>
+            <path d="M488 214c10-10 30-10 40 0s-4 22-20 22-30-12-20-22z" stroke="#2e9bff"/>
+          </g>
+          <g font-family="DM Mono, monospace" font-size="12" letter-spacing="1.5" fill="#f2efe9">
+            <text x="300" y="275" text-anchor="middle" fill="#ffe500" data-en="CENTRAL PLATFORM" data-es="PLATAFORMA CENTRAL"></text>
+            <text x="300" y="292" text-anchor="middle" fill-opacity=".6" data-en="the circle of light" data-es="el círculo de luz"></text>
+            <text x="92" y="200" data-en="SHELVES" data-es="ESTANTES"></text>
+            <text x="92" y="216" fill-opacity=".6" data-en="medium pieces" data-es="piezas medianas"></text>
+            <text x="160" y="120" data-en="LARGE OBJECTS" data-es="OBJETOS GRANDES"></text>
+            <text x="160" y="136" fill-opacity=".6" data-en="the structure" data-es="la estructura"></text>
+            <text x="420" y="350" fill="#ff2e88" data-en="THE PILE" data-es="LA PILA"></text>
+            <text x="420" y="364" fill-opacity=".6" data-en="fifty of the same" data-es="cincuenta iguales"></text>
+            <text x="470" y="128" fill="#c8f000" data-en="MATTER" data-es="MATERIA"></text>
+            <text x="556" y="254" text-anchor="end" fill-opacity=".6" data-en="earth, sand, water" data-es="tierra, arena, agua"></text>
+            <text x="316" y="390" fill="#ffe500" data-en="ENTRANCE" data-es="ENTRADA"></text>
+          </g>
+        </svg>
+      </div>
+      <figcaption><b>Fig. 04</b><span data-en="Plan of the happening — five zones around the light" data-es="Planta del happening — cinco zonas alrededor de la luz"></span></figcaption>
+    </figure>
   </div>
 </section>
 
 <!-- 16 · CÓMO EMPIEZA -->
-<section class="frame frame--onboarding" data-frame="16" data-act="5" data-ground="violet" data-accent="yellow">
+<section class="frame frame--onboarding frame--capture" data-frame="16" data-act="5" data-ground="violet" data-accent="yellow">
   <div class="frame__tag"><b>16</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="capture" data-capture="media/capture-onboarding" data-capture-tc="176" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Nobody starts from zero." data-es="Nadie empieza desde cero."></h2>
     <div class="beats">
@@ -514,8 +598,9 @@
 <!-- ═══════════════════════ ACTO 6 · LA CONSTRUCCIÓN ═══════════════════════ -->
 
 <!-- 17 · TRES FASES -->
-<section class="frame frame--phases" data-frame="17" data-act="6" data-ground="ink" data-accent="orange">
+<section class="frame frame--phases frame--capture" data-frame="17" data-act="6" data-ground="ink" data-accent="orange">
   <div class="frame__tag"><b>17</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="capture" data-capture="media/capture-gizmo" data-capture-tc="146" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="It is built in three phases." data-es="Se construye en tres fases."></h2>
     <div class="beats">
@@ -561,15 +646,13 @@
     <p class="hero-fact reveal" style="--d:.4s"
        data-en="One welder. To weld, three people have to press at the same time."
        data-es="Una sola soldadora. Para soldar, tres personas tienen que apretar a la vez."></p>
-    <div class="slot reveal" style="--d:.5s; margin-top:clamp(1.25rem,3vh,2rem)"
-         data-en="[ mockup — the belt in first person, real hands in passthrough ]"
-         data-es="[ mockup — el cinturón en primera persona, manos reales en passthrough ]"></div>
   </div>
 </section>
 
 <!-- 19 · EL FINISH -->
-<section class="frame frame--finish" data-frame="19" data-act="6" data-ground="ink" data-accent="orange">
+<section class="frame frame--finish frame--capture" data-frame="19" data-act="6" data-ground="ink" data-accent="orange">
   <div class="frame__tag"><b>19</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="capture" data-capture="media/capture-paleta" data-capture-tc="28" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="The signature appears at the end." data-es="La impronta aparece al final."></h2>
     <div class="chips reveal" style="--d:.3s">
@@ -607,9 +690,10 @@
         <p class="beat__text" data-en="A real stage of the process, not a name on the flyer." data-es="Una etapa real del proceso, no un nombre en el flyer."></p>
       </div>
     </div>
-    <div class="slot reveal" style="--d:.4s; margin-top:clamp(1.5rem,4vh,2.5rem)"
-         data-en="[ img — reference: a guest artist finishing the winning piece ]"
-         data-es="[ img — referencia: un artista invitado terminando la obra ganadora ]"></div>
+    <figure class="fig fig--band reveal" style="--d:.4s">
+      <div class="fig__frame"><img src="img/renders/artista.webp" alt="A figure trailing a mass of fabric and objects through a gallery" loading="lazy" style="object-position:50% 40%"></div>
+      <figcaption><b>Fig. 05</b><span data-en="The guest artist gives the piece its last hand — concept render" data-es="El artista invitado le da la última mano a la obra — render conceptual"></span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -630,7 +714,11 @@
       <!-- Gervasio: "a la derecha podria haber un orbit de un objeto, que te
            explique como es el proceso de que ves la escultura online" -->
       <aside class="outcomes__aside">
-        <div class="orbita reveal" data-orbita style="--d:.35s"></div>
+        <div class="visor reveal" style="--d:.35s" data-visor="escultura">
+          <div class="visor__stage" data-visor-stage>
+            <div class="orbita visor__poster" data-orbita></div>
+          </div>
+        </div>
         <p class="t-meta dim reveal" style="--d:.4s; text-align:center"
            data-en="Drag to spin" data-es="Arrastrá para girar"></p>
         <p class="t-body reveal" style="--d:.45s"
@@ -638,9 +726,6 @@
            data-es="Cada propuesta se publica como una pieza 3D que se puede girar. Mirás adentro, leés de dónde salió cada objeto — y recién ahí votás."></p>
       </aside>
     </div>
-    <p class="note reveal" style="--d:.6s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="Placeholder silhouettes and vote counts — the real scans come from the object library"
-       data-es="Siluetas y votos de ejemplo — los escaneos reales salen de la librería de objetos"></p>
   </div>
 </section>
 
@@ -659,14 +744,18 @@
       <div class="bar"><span>S-04</span><i style="--v:.71;--d:.45s"></i></div>
       <div class="bar"><span>S-23</span><i style="--v:.58;--d:.55s"></i></div>
       <div class="bar"><span>S-11</span><i style="--v:.4;--d:.65s"></i></div>
-      <p class="note" data-en="Placeholder data — voting platform to define" data-es="Datos de ejemplo — plataforma de votación a definir"></p>
+      <figure class="fig" style="margin-top:1.25rem; --ar:21/9">
+        <div class="fig__frame"><img src="media/still-resultado.jpg" alt="A coloured sculpture built by a group, inside the virtual warehouse" loading="lazy" style="object-position:55% 55%"></div>
+        <figcaption><b>Fig. 06</b><span data-en="A group result, still inside the headset — prototype capture" data-es="Un resultado de grupo, todavía dentro del visor — captura del prototipo"></span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <!-- 23 · LA OBRA FÍSICA · etapa 9 -->
-<section class="frame frame--build" data-frame="23" data-act="7" data-ground="bone" data-accent="violet">
+<section class="frame frame--build frame--capture" data-frame="23" data-act="7" data-ground="ink" data-accent="violet">
   <div class="frame__tag"><b>23</b><span data-en="The Community" data-es="La Comunidad"></span></div>
+  <div class="capture" data-capture="build" data-capture-img="img/renders/plaza-noche.webp" data-capture-still aria-hidden="true"></div>
   <div class="frame__inner">
     <p class="build__line build__line--fade split" data-en="The technology disappears." data-es="La tecnología desaparece."></p>
     <p class="build__line split" style="--d:.3s" data-en="Only the work remains." data-es="Lo único que permanece es la obra."></p>
@@ -681,7 +770,8 @@
   <div class="frame__tag"><b>24</b><span data-en="The Community" data-es="La Comunidad"></span></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="And then you can go and see it." data-es="Y después se puede ir a verla."></h2>
-    <div class="beats">
+    <div class="duo duo--wide" style="margin-top:clamp(1.5rem,4vh,2.5rem); align-items:start">
+    <div class="beats" style="margin-top:0">
       <div class="beat reveal">
         <span class="beat__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 42h36"/><path d="M11 42V20l13-9 13 9v22"/><path d="M20 42V30h8v12"/></svg></span>
         <span class="beat__n" data-en="In the city" data-es="En la ciudad"></span>
@@ -698,12 +788,17 @@
         <p class="beat__text" data-en="Every piece can be downloaded as an STL, so anyone with a 3D printer can hold a small version of it." data-es="Cada pieza se puede bajar como STL, así cualquiera con una impresora 3D puede tener una versión chica en la mano."></p>
       </div>
     </div>
-    <p class="hero-fact reveal" style="--d:.4s"
+    <div class="stack" style="gap:1rem">
+      <figure class="fig reveal" style="--d:.3s">
+        <div class="fig__frame"><img src="img/renders/sala-reloj.webp" alt="An assemblage of everyday objects — a clock, a tram, balls — shown in a museum" loading="lazy"></div>
+        <figcaption><b>Fig. 07</b><span data-en="Every sculpture, the winner and the thirty others, in a museum you can walk through" data-es="Cada escultura, la ganadora y las otras treinta, en un museo que se recorre"></span></figcaption>
+      </figure>
+    <p class="hero-fact reveal" style="--d:.4s; margin-top:0"
        data-en="The digital cycle closes on its own. The physical piece is what the city gets to keep."
        data-es="El ciclo digital cierra solo. La pieza física es lo que se queda la ciudad."></p>
-    <p class="note reveal" style="--d:.5s; margin-top:clamp(1rem,2.5vh,1.5rem)"
-       data-en="Agreed 17/09 — the digital prototype must stand on its own, without depending on the physical build"
-       data-es="Acordado 17/09 — el prototipo digital tiene que sostenerse solo, sin depender de la construcción física"></p>
+
+    </div>
+    </div>
   </div>
 </section>
 
@@ -724,9 +819,6 @@
       <div class="city reveal" style="--city:var(--cyan);--d:.2s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12V4"/><path d="M18 42V12h12v30"/><path d="M17 22h14M17 32h14"/><path d="M14 42h20"/></svg></span><span class="city__name" data-en="Taiwan" data-es="Taiwán"></span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
       <div class="city reveal" style="--city:var(--violet);--d:.25s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13h36"/><path d="M11 20h26"/><path d="M15 13v29M33 13v29"/></svg></span><span class="city__name" data-en="Tokyo" data-es="Tokio"></span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
     </div>
-    <p class="note reveal" style="--d:.35s; margin-top:clamp(1.25rem,3vh,2rem)"
-       data-en="To define — host cities, venues and partners"
-       data-es="A definir — ciudades sede, venues y partners"></p>
   </div>
 </section>
 
@@ -765,6 +857,10 @@
       <div class="reveal" style="--d:.2s"><h3 data-en="Public space"      data-es="Espacio público"></h3><p data-en="A work the city helped decide"   data-es="Una obra que la ciudad ayudó a decidir"></p></div>
       <div class="reveal" style="--d:.3s"><h3 data-en="Active museum"     data-es="Museo activo"></h3><p data-en="Production, not only exhibition" data-es="Producción, no solo exhibición"></p></div>
     </div>
+    <figure class="fig fig--band reveal" style="--d:.4s">
+      <div class="fig__frame"><img src="img/renders/sala-inmersiva.webp" alt="Visitors walking through a room filled with large sculpted forms" loading="lazy" style="object-position:50% 55%"></div>
+      <figcaption><b>Fig. 08</b><span data-en="A work the city helped decide — concept render" data-es="Una obra que la ciudad ayudó a decidir — render conceptual"></span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -778,7 +874,7 @@
     <div class="creators">
 
       <article class="creator reveal">
-        <span class="creator__photo" style="--foto:url(../img/team/gervasio.jpg)" role="img" aria-label="Gervasio Canda"><span class="creator__photo-ph" data-en="[ photo ]" data-es="[ foto ]"></span></span>
+        <span class="creator__photo" style="--foto:url(../img/team/gervasio.jpg)" role="img" aria-label="Gervasio Canda"></span>
         <p class="creator__role" data-en="Director · Art direction" data-es="Dirección · Dirección de arte"></p>
         <h3 class="creator__name">Gervasio Canda</h3>
         <p class="creator__bio"
@@ -798,18 +894,21 @@
       </article>
 
       <article class="creator reveal" style="--d:.15s">
-        <span class="creator__photo" style="--foto:url(../img/team/federico.jpg)" role="img" aria-label="Federico Carlini"><span class="creator__photo-ph" data-en="[ photo ]" data-es="[ foto ]"></span></span>
+        <span class="creator__photo" style="--foto:url(../img/team/federico.jpg)" role="img" aria-label="Federico Carlini"></span>
         <p class="creator__role" data-en="Director · Visual artist · Musician" data-es="Dirección · Artista visual · Músico"></p>
         <h3 class="creator__name">Federico Carlini</h3>
         <p class="creator__bio"
-           data-en="Director, art direction and visual development at 3dar, Buenos Aires. Works across animation, immersive media and music."
-           data-es="Dirección, dirección de arte y desarrollo visual en 3dar, Buenos Aires. Trabaja entre animación, medios inmersivos y música."></p>
-        <div class="creator__work">
-          <span>Paper Birds</span><span>The Silence Between</span><span>Uncanny Valley</span><span>Lil Dicky: Earth</span><span>3dar</span>
-        </div>
+           data-en="Director, visual artist and musician based in Buenos Aires. His work merges music and visual arts through creative exploration and a strong emotional approach. With over 15 years of experience, he has worked across immersive experiences, virtual reality, animation, film and music — lately with a focus on immersive storytelling."
+           data-es="Director, artista visual y músico radicado en Buenos Aires. Su obra cruza la música y las artes visuales desde la exploración creativa y una fuerte impronta emocional. Con más de 15 años de trayectoria, trabajó en experiencias inmersivas, realidad virtual, animación, cine y música — últimamente enfocado en el storytelling inmersivo."></p>
         <p class="creator__bio"
-           data-en="Co-director of Paper Birds, a 30-minute interactive VR film for Quest with Edward Norton and Joss Stone."
-           data-es="Codirector de Paper Birds, película VR interactiva de 30 minutos para Quest con Edward Norton y Joss Stone."></p>
+           data-en="Director at 3dar, where he has been part of award-winning international productions such as Earth (2018), featuring Lil Dicky and Leonardo DiCaprio, and Eggscape (2023), winner of the Venice Biennale Immersive Prize. He directed and produced Paper Birds (2021), a musical VR experience made with Edward Norton and Joss Stone, officially selected at the Venice Biennale, SXSW and Tribeca."
+           data-es="Director en 3dar, donde participó en producciones internacionales premiadas como Earth (2018), con Lil Dicky y Leonardo DiCaprio, y Eggscape (2023), ganadora del Venice Biennale Immersive Prize. Dirigió y produjo Paper Birds (2021), una experiencia VR musical hecha con Edward Norton y Joss Stone, en selección oficial de la Bienal de Venecia, SXSW y Tribeca."></p>
+        <ul class="creator__credits">
+          <li><b>Eggscape</b> <span data-en="MR · Art director · 2023 — Venice Biennale Immersive Prize" data-es="MR · Director de arte · 2023 — Venice Biennale Immersive Prize"></span></li>
+          <li><b>Paper Birds</b> <span data-en="VR · Director and producer · 2021 — Venice, SXSW, Tribeca" data-es="VR · Director y productor · 2021 — Venecia, SXSW, Tribeca"></span></li>
+          <li><b>Earth</b> <span data-en="Music video · Art director · 2018 — MTV VMAs official selection" data-es="Videoclip · Director de arte · 2018 — Selección oficial MTV VMAs"></span></li>
+          <li><b>Waqay &middot; Petricor</b> <span data-en="Albums · Composer, producer, director · 2015, 2023" data-es="Discos · Compositor, productor, director · 2015, 2023"></span></li>
+        </ul>
         <p class="creator__links">
           <a href="https://federicocarlini.com" target="_blank" rel="noopener">Site</a>
           <a href="https://www.imdb.com/name/nm10623762/" target="_blank" rel="noopener">IMDb</a>
@@ -819,16 +918,14 @@
       </article>
 
     </div>
-    <p class="note reveal" style="--d:.35s; margin-top:clamp(1.25rem,3vh,2rem)"
-       data-en="To add — portraits, and the production team"
-       data-es="A sumar — retratos, y el equipo de producción"></p>
   </div>
 </section>
 
 <!-- ═══════════════════════ ACTO 10 · CIERRE ═══════════════════════ -->
 
 <!-- 29 · CIERRE -->
-<section class="frame frame--closing" data-frame="29" data-act="10" data-ground="ink" data-accent="pink">
+<section class="frame frame--closing frame--capture" data-frame="29" data-act="10" data-ground="ink" data-accent="pink">
+  <div class="capture capture--center" data-capture="closing" data-capture-img="img/renders/criatura-maquina.webp" data-capture-still aria-hidden="true"></div>
   <div class="frame__tag"><b>29</b><span data-en="Closing" data-es="Cierre"></span></div>
   <div class="frame__inner">
     <p class="close__line split" data-en="MUTAR is not about recycling objects." data-es="MUTAR no se trata de reciclar objetos."></p>
@@ -861,13 +958,9 @@
     </div>
     <dl class="credits reveal" style="--d:.35s">
       <div><dt data-en="By"      data-es="Por"></dt><dd>Gervasio Canda &middot; Federico Carlini</dd></div>
-      <div><dt data-en="Companies" data-es="Compañías"></dt><dd data-en="[ to define ]" data-es="[ a definir ]"></dd></div>
-      <div><dt data-en="Contact" data-es="Contacto"></dt><dd data-en="[ to complete ]" data-es="[ a completar ]"></dd></div>
-      <div><dt data-en="Site"    data-es="Sitio"></dt><dd data-en="mut.ar  [ to register ]" data-es="mut.ar  [ a registrar ]"></dd></div>
+      <div><dt data-en="Companies" data-es="Compañías"></dt><dd><a href="https://www.ojoraro.com.ar/en/" target="_blank" rel="noopener">Ojo Raro</a></dd></div>
+      <div><dt data-en="Contact" data-es="Contacto"></dt><dd class="credits__mail"><a href="mailto:carlinifederico@gmail.com">carlinifederico@gmail.com</a><a href="mailto:candagervasio@gmail.com">candagervasio@gmail.com</a></dd></div>
     </dl>
-    <p class="note reveal" style="--d:.5s; margin-top:clamp(1.25rem,3vh,2rem)"
-       data-en="To add — budget, timeline and technical requirements"
-       data-es="A sumar — presupuesto, cronograma y requerimientos técnicos"></p>
   </div>
 </section>
 
@@ -878,6 +971,7 @@
 <script src="js/scan.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/play.js"></script>
+<script src="js/objects.js"></script>
 <script src="js/capture.js"></script>
 </body>
 </html>

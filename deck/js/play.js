@@ -90,7 +90,8 @@
 
     (function girar() {
       requestAnimationFrame(girar);
-      if (!visible) return;
+      // si el visor 3D ya tapo al anillo, no hay nada que girar
+      if (!visible || !caja.offsetParent) return;
       if (!quieto && !arrastrando) ang += vel;
       // el radio va en px sobre el ancho del contenedor: en % seria relativo
       // al propio item y todos quedarian amontonados en el centro
