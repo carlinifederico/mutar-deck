@@ -109,7 +109,56 @@
     })();
   }
 
-  /* ---- 3 · (pintar por encima se retiro) -----------------------------------
+  /* ---- 3 · La ficha de cada objeto de la libreria (frame 12) ---------------
+     Gervasio, 19/09: "al pararse sobre cada objeto se activa, aparece Pedro o
+     Julien, una pequena historia y su ficha... y algo que falta y es
+     importante: relation to the theme".
+
+     Los datos viven en el propio boton de la lista (data-*), asi que esto
+     anda igual sin WebGL, en file:// y en export — a diferencia del visor 3D
+     de objects.js, que ahi ni arranca.                                       */
+  function iniciarFicha(lista) {
+    var card = document.querySelector('[data-obj-card]');
+    if (!card) return;
+    var botones = [].slice.call(lista.querySelectorAll('[data-visor-pick]'));
+    if (!botones.length) return;
+
+    var campos = {
+      owner:    card.querySelector('[data-obj-owner]'),
+      story:    card.querySelector('[data-obj-story]'),
+      size:     card.querySelector('[data-obj-size]'),
+      material: card.querySelector('[data-obj-material]'),
+      year:     card.querySelector('[data-obj-year]'),
+      rel:      card.querySelector('[data-obj-rel]')
+    };
+    var actual = botones[0];
+
+    function lang() {
+      return (window.MUTAR && window.MUTAR.lang && window.MUTAR.lang()) || 'en';
+    }
+    function pintar(btn) {
+      if (!btn) return;
+      actual = btn;
+      var d = btn.dataset, l = lang();
+      botones.forEach(function (b) { b.classList.toggle('is-on', b === btn); });
+      if (campos.owner)    campos.owner.textContent    = d.owner || '';
+      if (campos.story)    campos.story.textContent    = d['story' + (l === 'es' ? 'Es' : 'En')] || '';
+      if (campos.size)     campos.size.textContent     = d.size || '';
+      if (campos.material) campos.material.textContent = d['material' + (l === 'es' ? 'Es' : 'En')] || '';
+      if (campos.year)     campos.year.textContent     = d.year || '';
+      if (campos.rel)      campos.rel.textContent      = d['rel' + (l === 'es' ? 'Es' : 'En')] || '';
+    }
+
+    botones.forEach(function (b) {
+      b.addEventListener('pointerenter', function () { pintar(b); });
+      b.addEventListener('focus', function () { pintar(b); });
+      b.addEventListener('click', function () { pintar(b); });
+    });
+    document.addEventListener('mutar:lang', function () { pintar(actual); });
+    pintar(actual);
+  }
+
+  /* ---- 4 · (pintar por encima se retiro) -----------------------------------
      Federico, 17/09: "hay que eliminar el elemento este interactivo de que se
      pinta porque no se entiende. Por favor, eliminarlo".                     */
 
@@ -117,4 +166,5 @@
   // querySelectorAll y no querySelector: el anillo se mudo de frame y manana
   // puede haber otro. Cada instancia se guarda sola (ver girar()).
   document.querySelectorAll('[data-orbita]').forEach(iniciarOrbita);
+  document.querySelectorAll('[data-objs]').forEach(iniciarFicha);
 })();

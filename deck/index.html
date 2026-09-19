@@ -55,7 +55,10 @@
 
 <!-- 01 · PORTADA -->
 <section class="frame frame--cover frame--capture" data-frame="1" data-act="0" data-ground="bone" data-accent="pink">
-  <div class="capture capture--center" data-capture="cover" data-capture-img="img/renders/sala-ballena.webp" data-capture-still aria-hidden="true"></div>
+  <!-- 19/09: "probar que toda la imagen este mucho mas lavada, casi blanca:
+       que se reconozca primero la silueta y recien de cerca los objetos", y
+       que MUTAR se lea bien encima. Ver .capture--wash en proto.css. -->
+  <div class="capture capture--center capture--wash" data-capture="cover" data-capture-img="img/renders/sala-ballena.webp" data-capture-still aria-hidden="true"></div>
   <div class="frame__inner">
     <h1 class="cover__word inflate"><span class="logo" role="img" aria-label="MUTAR"></span></h1>
     <p class="cover__sub t-meta reveal" style="--d:.5s">
@@ -150,16 +153,31 @@
         <p class="beat__text" data-en="And now anything can be made in seconds. The craft disappears." data-es="Y ahora cualquier cosa se hace en segundos. El oficio desaparece."></p>
       </div>
     </div>
-    <div class="quotes reveal" style="--d:.4s">
+    <!-- 19/09: "el punto conceptual que falta no es simplemente 'no tiramos
+         objetos', sino POR QUE no los tiramos". Los cinco valores salen
+         textuales del feedback. -->
+    <p class="t-body reveal" style="--d:.42s; margin-top:clamp(1.25rem,3vh,2rem)"
+       data-en="And we get attached to things. We do not keep them because they are useful. We keep them for what they are worth to us — what does this object mean to me?"
+       data-es="Y nos apegamos a las cosas. No las guardamos porque sirvan: las guardamos por lo que valen para nosotros — ¿qué significa este objeto para mí?"></p>
+    <ul class="values reveal" style="--d:.5s">
+      <li><b>01</b><span data-en="What it is worth"     data-es="Lo que vale"></span><small data-en="the material"            data-es="el material"></small></li>
+      <li><b>02</b><span data-en="What it means"        data-es="Lo que significa"></span><small data-en="the personal value" data-es="el valor personal"></small></li>
+      <li><b>03</b><span data-en="Where it comes from"  data-es="De dónde viene"></span><small data-en="the object's own story" data-es="la historia del objeto"></small></li>
+      <li><b>04</b><span data-en="Whose it was"         data-es="De quién fue"></span><small data-en="a relationship"        data-es="una relación"></small></li>
+      <li><b>05</b><span data-en="What it brings back"  data-es="Lo que trae"></span><small data-en="the memories attached"  data-es="los recuerdos asociados"></small></li>
+    </ul>
+    <!-- La cita de Cohen se fue: "no tiene tanto que ver con objetos". En su
+         lugar, una linea propia sobre apego, del propio feedback. -->
+    <div class="quotes reveal" style="--d:.56s">
       <blockquote class="pull">
         <p data-en="&ldquo;What exists but is not used will destroy us.&rdquo;"
            data-es="&ldquo;Lo que está y no se usa nos fulminará.&rdquo;"></p>
         <cite>Luis Alberto Spinetta &middot; <i>Cantata de puentes amarillos</i></cite>
       </blockquote>
       <blockquote class="pull">
-        <p data-en="&ldquo;There is a crack in everything. That&rsquo;s how the light gets in.&rdquo;"
-           data-es="&ldquo;Hay una grieta en todo. Así es como entra la luz.&rdquo;"></p>
-        <cite>Leonard Cohen &middot; <i>Anthem</i>, 1992</cite>
+        <p data-en="&ldquo;We hold on to objects not for what they are worth, but for the stories and the people they carry.&rdquo;"
+           data-es="&ldquo;Nos aferramos a los objetos no por lo que valen, sino por las historias y la gente que cargan.&rdquo;"></p>
+        <cite>MUTAR</cite>
       </blockquote>
     </div>
   </div>
@@ -170,6 +188,19 @@
   <div class="frame__tag"><b>06</b><span data-en="The Idea" data-es="La Idea"></span></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="What is MUTAR?" data-es="¿Qué es MUTAR?"></h2>
+    <!-- 19/09: "se pasa demasiado rapido del titulo a los tres textos largos.
+         Agregar primero una frase muy corta y directa, casi como definicion",
+         y despues el recorrido completo: real → virtual → real. -->
+    <p class="lede reveal" style="--d:.15s"
+       data-en="MUTAR invites a community to transform and repurpose objects into contemporary art."
+       data-es="MUTAR invita a una comunidad a transformar y reutilizar objetos para convertirlos en arte contemporáneo."></p>
+    <p class="arc reveal" style="--d:.28s">
+      <span class="arc__step" data-en="It starts with real objects" data-es="Empieza con objetos reales"></span>
+      <b aria-hidden="true">&rarr;</b>
+      <span class="arc__step" data-en="it goes through a virtual space" data-es="pasa por un espacio virtual"></span>
+      <b aria-hidden="true">&rarr;</b>
+      <span class="arc__step arc__step--end" data-en="and it ends as a real piece" data-es="y termina en una pieza real"></span>
+    </p>
     <div class="beats">
       <div class="beat reveal">
         <span class="beat__n" data-en="Let go and donate" data-es="Soltar y donar"></span>
@@ -207,7 +238,14 @@
         <p class="t-body" data-en="And the one its owner gives it: the kitchen it lived in, the hands that used it, the reason it was kept long after it stopped being useful." data-es="Y la que le da su dueño: la cocina donde vivió, las manos que lo usaron, la razón por la que se guardó mucho después de dejar de servir."></p>
       </div>
     </div>
-    <p class="hero-fact reveal" style="--d:.45s"
+    <!-- 19/09: "asegurarse de que quede clara esa dualidad: la historia
+         previa del objeto y la NUEVA que adquiere en el proceso colectivo". -->
+    <p class="twin__new reveal" style="--d:.42s">
+      <span class="t-meta" data-en="And the one that starts here" data-es="Y la que empieza acá"></span>
+      <span data-en="Inside MUTAR the object stops being anybody&rsquo;s and earns a second, collective story: chosen by strangers, welded into a sculpture, voted by a whole city."
+            data-es="Dentro de MUTAR el objeto deja de ser de alguien y gana una segunda historia, colectiva: lo eligen desconocidos, se suelda en una escultura, lo vota una ciudad entera."></span>
+    </p>
+    <p class="hero-fact reveal" style="--d:.5s"
        data-en="An object with a story still waiting to be told is worth more than a new one."
        data-es="Un objeto con una historia esperando ser contada vale más que uno nuevo."></p>
     </div>
@@ -236,8 +274,8 @@
   <div class="track__viewport">
     <div class="frame__tag"><b>09</b><span data-en="The Journey" data-es="El Recorrido"></span></div>
     <div class="track__head">
-      <h2 class="t-lg" data-en="Six steps" data-es="Seis pasos"></h2>
-      <span class="track__count"><b data-track-now>01</b> / 06</span>
+      <h2 class="t-lg" data-en="Seven steps" data-es="Siete pasos"></h2>
+      <span class="track__count"><b data-track-now>01</b> / 07</span>
     </div>
     <div class="track__rail">
       <article class="step" style="--step:var(--pink)">
@@ -258,32 +296,41 @@
         <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="17" width="15" height="15" rx="5"/><circle cx="35" cy="24.5" r="7.5"/><path d="M27.5 24.5H20"/><path d="M24 12.5V7M29.5 15 33 11.5M18.5 15 15 11.5"/></svg></span>
         <p class="step__n">3</p>
         <h3 class="step__title" data-en="Craft &amp; play" data-es="Crear y jugar"></h3>
-        <p class="step__quote" data-en="&ldquo;Build together, without owners.&rdquo;" data-es="&ldquo;Construir juntos, sin dueños.&rdquo;"></p>
-        <p class="step__desc" data-en="In real life, through technology: a virtual prototype of a new piece." data-es="En la vida real, a través de la tecnología: un prototipo virtual de una pieza nueva."></p>
+        <p class="step__quote" data-en="&ldquo;Many outcomes, not one.&rdquo;" data-es="&ldquo;Muchos resultados, no uno.&rdquo;"></p>
+        <p class="step__desc" data-en="Every group builds a different sculpture out of the same twenty objects. The process ends with dozens of possible pieces." data-es="Cada grupo construye una escultura distinta con los mismos veinte objetos. El proceso termina con decenas de piezas posibles."></p>
       </article>
+      <!-- 19/09: "entre el 3 y el 4 falta un paso: como las esculturas se
+           suben y la comunidad las ve". Ese es este. -->
       <article class="step" style="--step:var(--cyan)">
-        <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="17" width="34" height="23" rx="6"/><path d="M15 17v-6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6"/><path d="M17 28.5 22 33.5 32 23"/></svg></span>
+        <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 30V8"/><path d="M15 17l9-9 9 9"/><path d="M8 30v6a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4v-6"/></svg></span>
         <p class="step__n">4</p>
+        <h3 class="step__title" data-en="Go public" data-es="Salir a la luz"></h3>
+        <p class="step__quote" data-en="&ldquo;Every proposal is published.&rdquo;" data-es="&ldquo;Toda propuesta se publica.&rdquo;"></p>
+        <p class="step__desc" data-en="All of them go online as 3D pieces. The community can turn each one around and compare the alternatives." data-es="Todas salen online como piezas 3D. La comunidad puede girar cada una y comparar las alternativas."></p>
+      </article>
+      <article class="step" style="--step:var(--violet)">
+        <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="17" width="34" height="23" rx="6"/><path d="M15 17v-6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v6"/><path d="M17 28.5 22 33.5 32 23"/></svg></span>
+        <p class="step__n">5</p>
         <h3 class="step__title" data-en="The community chooses" data-es="La comunidad elige"></h3>
         <p class="step__quote" data-en="&ldquo;Not the prettiest. The most representative.&rdquo;" data-es="&ldquo;No la más linda. La más representativa.&rdquo;"></p>
-        <p class="step__desc" data-en="The one that tells the story of that city best." data-es="La que mejor cuenta la historia de esa ciudad."></p>
+        <p class="step__desc" data-en="The city votes. One proposal wins — the one that tells its story best." data-es="La ciudad vota. Gana una propuesta: la que mejor cuenta su historia."></p>
       </article>
       <article class="step" style="--step:var(--orange)">
         <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="30" width="15" height="12" rx="3.5"/><rect x="26" y="30" width="15" height="12" rx="3.5"/><rect x="16.5" y="16" width="15" height="12" rx="3.5"/><circle cx="24" cy="7.5" r="4"/></svg></span>
-        <p class="step__n">5</p>
+        <p class="step__n">6</p>
         <h3 class="step__title" data-en="Build it for real" data-es="Construirla de verdad"></h3>
         <p class="step__quote" data-en="&ldquo;What was virtual becomes physical.&rdquo;" data-es="&ldquo;Lo virtual se vuelve físico.&rdquo;"></p>
         <p class="step__desc" data-en="The winner is built with the real objects, and stays in the city." data-es="La ganadora se construye con los objetos reales y queda en la ciudad."></p>
       </article>
-      <article class="step" style="--step:var(--violet)">
+      <article class="step" style="--step:var(--pink)">
         <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 24s7.5-12 20-12 20 12 20 12-7.5 12-20 12S4 24 4 24z"/><circle cx="24" cy="24" r="6"/></svg></span>
-        <p class="step__n">6</p>
+        <p class="step__n">7</p>
         <h3 class="step__title" data-en="Visit it" data-es="Visitarla"></h3>
         <p class="step__quote" data-en="&ldquo;From the city, or from anywhere.&rdquo;" data-es="&ldquo;Desde la ciudad, o desde cualquier lado.&rdquo;"></p>
         <p class="step__desc" data-en="Every sculpture lives on in a virtual museum you can walk through." data-es="Cada escultura sigue viva en un museo virtual que se puede recorrer."></p>
       </article>
     </div>
-    <div class="track__progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="track__progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
 </section>
 
@@ -321,36 +368,58 @@
 
 <!-- 11 · LA CONVOCATORIA · etapa 1 -->
 <section class="frame frame--opencall" data-frame="11" data-act="4" data-ground="bone" data-accent="cyan">
-  <div class="frame__tag"><b>11</b><span data-en="Before the happening" data-es="Antes del happening"></span></div>
+  <div class="frame__tag"><b>11</b><span data-en="Before the happening" data-es="Antes del happening"></span><em class="frame__stage" data-en="Stage 01 · Open call" data-es="Etapa 01 · Convocatoria"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Anyone can send an object." data-es="Cualquiera puede mandar un objeto."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
-       data-en="The call stays open for a month. You send photographs, measurements and condition — and above all the story: what it was, who used it, and why you are ready to let it go."
-       data-es="La convocatoria queda abierta un mes. Mandás fotos, medidas y estado — y sobre todo la historia: qué fue, quién lo usaba y por qué estás listo para soltarlo."></p>
+       data-en="The call stays open for a month. Every object is registered before it enters the library: photographs first, then size, weight, condition and location — and above all the story: what it was, who used it, and why you are ready to let it go."
+       data-es="La convocatoria queda abierta un mes. Cada objeto se registra antes de entrar a la librería: primero las fotos, después tamaño, peso, estado y ubicación — y sobre todo la historia: qué fue, quién lo usaba y por qué estás listo para soltarlo."></p>
 
-    <div class="entry reveal" style="--d:.32s">
-      <div class="entry__who">
+    <!-- 19/09: "hacer que se sienta todavia mas claramente como un formulario
+         que Pedro esta completando: carga las fotos y despues completa campos
+         concretos — size, weight, condition, location". Registrar el objeto
+         es el paso previo a que entre en la libreria. -->
+    <form class="entry entry--form reveal" style="--d:.32s" onsubmit="return false">
+      <header class="entry__who">
         <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="entry__name">Pedro</p>
-        <p class="entry__meta t-meta" data-en="Montreal &middot; sent 1 object" data-es="Montreal &middot; envió 1 objeto"></p>
-      </div>
-      <div class="entry__obj" aria-hidden="true">
-        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M30 86h40M34 86V44a16 16 0 0 1 32 0v42"/><path d="M38 44h24"/><circle cx="50" cy="30" r="9"/><path d="M50 21v-7"/>
-        </svg>
-      </div>
-      <blockquote class="entry__quote"
-         data-en="&ldquo;It was my grandfather&rsquo;s. I have not used it in twenty years and I cannot bring myself to throw it out.&rdquo;"
-         data-es="&ldquo;Era de mi abuelo. Hace veinte años que no lo uso y no me animo a tirarlo.&rdquo;"></blockquote>
-      <ul class="entry__fields t-meta">
-        <li data-en="Photographs" data-es="Fotografías"></li>
-        <li data-en="Size and weight" data-es="Medidas y peso"></li>
-        <li data-en="Condition" data-es="Estado"></li>
-        <li data-en="Location" data-es="Ubicación"></li>
-        <li data-en="Its story" data-es="Su historia"></li>
-        <li data-en="Why let it go" data-es="Por qué soltarlo"></li>
-      </ul>
-    </div>
+        <span>
+          <b class="entry__name">Pedro</b>
+          <span class="entry__meta t-meta" data-en="Montreal &middot; registering 1 object" data-es="Montreal &middot; registrando 1 objeto"></span>
+        </span>
+        <span class="entry__stamp t-meta" data-en="Open call 01" data-es="Convocatoria 01"></span>
+      </header>
+
+      <fieldset class="entry__block entry__block--shots">
+        <legend class="t-meta"><b>1</b><span data-en="Photographs of the object" data-es="Fotografías del objeto"></span></legend>
+        <div class="shots">
+          <span class="shot"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 86h40M34 86V44a16 16 0 0 1 32 0v42"/><path d="M38 44h24"/><circle cx="50" cy="30" r="9"/><path d="M50 21v-7"/></svg></span>
+          <span class="shot"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 82h56"/><path d="M34 82V38l16-12 16 12v44"/><circle cx="50" cy="56" r="8"/></svg></span>
+          <span class="shot"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="30" width="60" height="44" rx="8"/><path d="M20 52h60M50 30v44"/></svg></span>
+          <span class="shot shot--add" aria-hidden="true"><b>+</b></span>
+        </div>
+      </fieldset>
+
+      <fieldset class="entry__block entry__block--data">
+        <legend class="t-meta"><b>2</b><span data-en="The object" data-es="El objeto"></span></legend>
+        <dl class="fields">
+          <div><dt data-en="Size"      data-es="Tamaño"></dt><dd>62 &times; 40 &times; 35 cm</dd></div>
+          <div><dt data-en="Weight"    data-es="Peso"></dt><dd>11 kg</dd></div>
+          <div><dt data-en="Condition" data-es="Estado"></dt><dd data-en="Works &middot; crank missing" data-es="Funciona &middot; sin manivela"></dd></div>
+          <div><dt data-en="Location"  data-es="Ubicación"></dt><dd>Montreal, QC</dd></div>
+          <div><dt data-en="Material"  data-es="Material"></dt><dd data-en="Oak and brass" data-es="Roble y bronce"></dd></div>
+          <div><dt data-en="Year"      data-es="Año"></dt><dd>c. 1954</dd></div>
+        </dl>
+      </fieldset>
+
+      <fieldset class="entry__block entry__block--story">
+        <legend class="t-meta"><b>3</b><span data-en="Its story, and why you are letting it go" data-es="Su historia, y por qué lo soltás"></span></legend>
+        <blockquote class="entry__quote"
+           data-en="&ldquo;It was my grandfather&rsquo;s. I have not used it in twenty years and I cannot bring myself to throw it out.&rdquo;"
+           data-es="&ldquo;Era de mi abuelo. Hace veinte años que no lo uso y no me animo a tirarlo.&rdquo;"></blockquote>
+      </fieldset>
+
+      <p class="entry__submit"><span data-en="Send to the library" data-es="Enviar a la librería"></span></p>
+    </form>
 
     <p class="hero-fact reveal" style="--d:.45s"
        data-en="We are not looking for the prettiest object. We are looking for the one with the most to say — and for someone actually willing to part with it."
@@ -360,11 +429,17 @@
 
 <!-- 12 · LA LIBRERÍA · etapa 5 -->
 <section class="frame frame--library" data-frame="12" data-act="4" data-ground="bone" data-accent="cyan">
-  <div class="frame__tag"><b>12</b><span data-en="Before the happening" data-es="Antes del happening"></span></div>
+  <div class="frame__tag"><b>12</b><span data-en="Before the happening" data-es="Antes del happening"></span><em class="frame__stage" data-en="Stage 05 · Digital library" data-es="Etapa 05 · Biblioteca digital"></em></div>
   <div class="frame__inner">
     <div class="duo duo--library">
     <div>
     <h2 class="t-xl split" data-en="The library" data-es="La librería"></h2>
+    <!-- 19/09: "la Library no deberia sentirse como una coleccion generica de
+         objetos: tiene que estar vinculada al tema de esa convocatoria". -->
+    <p class="theme reveal" style="--d:.1s">
+      <b class="t-meta" data-en="The call for this edition" data-es="La convocatoria de esta edición"></b>
+      <span data-en="&ldquo;What the house kept&rdquo; &middot; Montreal" data-es="&ldquo;Lo que la casa guardó&rdquo; &middot; Montreal"></span>
+    </p>
     <div class="figures">
       <div class="reveal"><p class="figure__n">20</p><p class="figure__label t-meta" data-en="objects per edition" data-es="objetos por edición"></p></div>
       <div class="reveal" style="--d:.1s"><p class="figure__n">3</p><p class="figure__label t-meta" data-en="large — the structure" data-es="grandes — la estructura"></p></div>
@@ -372,8 +447,8 @@
       <div class="reveal" style="--d:.3s"><p class="figure__n">4</p><p class="figure__label t-meta" data-en="small — the detail" data-es="chicos — el detalle"></p></div>
     </div>
     <p class="t-body reveal" style="--d:.35s; margin-top:clamp(1.25rem,3vh,2rem)"
-       data-en="Every object keeps its real scale and its story. Before the happening, anyone can browse the library and find out where each piece came from."
-       data-es="Cada objeto conserva su escala real y su historia. Antes del happening, cualquiera puede recorrer la librería y enterarse de dónde salió cada pieza."></p>
+       data-en="Every object keeps its real scale and its story. Before the happening, anyone can browse the library, stop on a piece and see who gave it, what it is made of — and why it belongs to this call."
+       data-es="Cada objeto conserva su escala real y su historia. Antes del happening, cualquiera puede recorrer la librería, pararse en una pieza y ver quién la dio, de qué está hecha — y por qué pertenece a esta convocatoria."></p>
     </div>
     <!-- La estanteria: los objetos reales del prototipo, los mismos que se
          cargan en el visor. js/objects.js monta el 3D; sin WebGL queda el
@@ -385,51 +460,88 @@
       </div>
       <div class="shelf__side">
         <p class="t-meta shelf__title" data-en="From the prototype library" data-es="De la librería del prototipo"></p>
-        <ol class="shelf__list">
-          <li><button type="button" data-visor-pick="gramofono"><b>01</b><span data-en="Gramophone" data-es="Gramófono"></span></button></li>
-          <li><button type="button" data-visor-pick="sofa"><b>02</b><span data-en="Sofa" data-es="Sofá"></span></button></li>
-          <li><button type="button" data-visor-pick="contrabajo"><b>03</b><span data-en="Double bass" data-es="Contrabajo"></span></button></li>
-          <li><button type="button" data-visor-pick="caldera"><b>04</b><span data-en="Boiler" data-es="Caldera"></span></button></li>
-          <li><button type="button" data-visor-pick="radio"><b>05</b><span data-en="Clock radio" data-es="Radio reloj"></span></button></li>
-          <li><button type="button" data-visor-pick="silla"><b>06</b><span data-en="Plastic chair" data-es="Silla de plástico"></span></button></li>
-          <li><button type="button" data-visor-pick="avion"><b>07</b><span data-en="Toy airplane" data-es="Avión"></span></button></li>
+        <!-- 19/09: "al pararse sobre cada objeto se activa, aparece Pedro o
+             Julien, una pequena historia y su ficha. Y algo que falta y es
+             importante: relation to the theme." Los datos viajan en el propio
+             boton; js/play.js los vuelca en la ficha de abajo. -->
+        <ol class="shelf__list" data-objs>
+          <li><button type="button" data-visor-pick="gramofono"
+              data-owner="Pedro" data-size="62 × 40 × 35 cm" data-year="c. 1954"
+              data-material-en="Oak and brass" data-material-es="Roble y bronce"
+              data-story-en="&ldquo;It was my grandfather&rsquo;s. I never learned to use it.&rdquo;"
+              data-story-es="&ldquo;Era de mi abuelo. Nunca aprendí a usarlo.&rdquo;"
+              data-rel-en="The first machine that ever brought music into a house."
+              data-rel-es="La primera máquina que metió música adentro de una casa."><b>01</b><span data-en="Gramophone" data-es="Gramófono"></span></button></li>
+          <li><button type="button" data-visor-pick="sofa"
+              data-owner="Amira" data-size="190 × 85 × 78 cm" data-year="1978"
+              data-material-en="Wood, foam and wool" data-material-es="Madera, goma espuma y lana"
+              data-story-en="&ldquo;It came with me from the other side of the ocean. It does not fit here.&rdquo;"
+              data-story-es="&ldquo;Vino conmigo del otro lado del océano. Acá no entra.&rdquo;"
+              data-rel-en="Where the family sat to listen to everything else."
+              data-rel-es="Donde la familia se sentaba a escuchar todo lo demás."><b>02</b><span data-en="Sofa" data-es="Sofá"></span></button></li>
+          <li><button type="button" data-visor-pick="contrabajo"
+              data-owner="Julien" data-size="185 × 65 × 30 cm" data-year="1962"
+              data-material-en="Maple and spruce" data-material-es="Arce y abeto"
+              data-story-en="&ldquo;The shop closed in 1998. This is the last thing left of it.&rdquo;"
+              data-story-es="&ldquo;El taller cerró en 1998. Es lo último que queda de él.&rdquo;"
+              data-rel-en="The instrument that never once left the living room."
+              data-rel-es="El instrumento que nunca salió del living."><b>03</b><span data-en="Double bass" data-es="Contrabajo"></span></button></li>
+          <li><button type="button" data-visor-pick="caldera"
+              data-owner="Sofía" data-size="140 × 60 × 60 cm" data-year="1969"
+              data-material-en="Cast iron and steel" data-material-es="Hierro fundido y acero"
+              data-story-en="&ldquo;Forty winters in the basement. It gave up last year.&rdquo;"
+              data-story-es="&ldquo;Cuarenta inviernos en el sótano. El año pasado se entregó.&rdquo;"
+              data-rel-en="The machine that kept the house warm for forty winters."
+              data-rel-es="La máquina que mantuvo la casa en pie cuarenta inviernos."><b>04</b><span data-en="Boiler" data-es="Caldera"></span></button></li>
+          <li><button type="button" data-visor-pick="radio"
+              data-owner="Bo" data-size="18 × 12 × 9 cm" data-year="1986"
+              data-material-en="Plastic and glass" data-material-es="Plástico y vidrio"
+              data-story-en="&ldquo;It woke me up every day for twenty years. Now a phone does.&rdquo;"
+              data-story-es="&ldquo;Me despertó todos los días durante veinte años. Ahora lo hace un teléfono.&rdquo;"
+              data-rel-en="It woke the whole house up, every morning."
+              data-rel-es="Despertaba a toda la casa, cada mañana."><b>05</b><span data-en="Clock radio" data-es="Radio reloj"></span></button></li>
+          <li><button type="button" data-visor-pick="silla"
+              data-owner="Pedro" data-size="82 × 45 × 48 cm" data-year="2003"
+              data-material-en="Polypropylene" data-material-es="Polipropileno"
+              data-story-en="&ldquo;I moved eleven times and never once threw it out.&rdquo;"
+              data-story-es="&ldquo;Me mudé once veces y nunca la tiré.&rdquo;"
+              data-rel-en="The cheapest thing in the house, and the one that lasted longest."
+              data-rel-es="Lo más barato de la casa, y lo que más duró."><b>06</b><span data-en="Plastic chair" data-es="Silla de plástico"></span></button></li>
+          <li><button type="button" data-visor-pick="avion"
+              data-owner="Julien" data-size="34 × 30 × 12 cm" data-year="1991"
+              data-material-en="Tin and paint" data-material-es="Hojalata y pintura"
+              data-story-en="&ldquo;My son&rsquo;s. He is thirty-four.&rdquo;"
+              data-story-es="&ldquo;De mi hijo. Tiene treinta y cuatro años.&rdquo;"
+              data-rel-en="A child&rsquo;s, kept long after the child grew up."
+              data-rel-es="De un chico, guardado mucho después de que el chico creciera."><b>07</b><span data-en="Toy airplane" data-es="Avión"></span></button></li>
         </ol>
-        <p class="t-meta dim shelf__hint" data-en="Pick one · drag to turn it" data-es="Elegí uno · arrastrá para girarlo"></p>
+        <p class="t-meta dim shelf__hint" data-en="Hover an object · drag to turn it" data-es="Pasá por un objeto · arrastrá para girarlo"></p>
+
+        <!-- La ficha del objeto: quien lo dio, su historia, sus datos y —lo
+             que faltaba— por que pertenece a esta convocatoria. -->
+        <div class="objcard" data-obj-card>
+          <p class="objcard__who">
+            <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
+            <b data-obj-owner></b>
+          </p>
+          <p class="objcard__story" data-obj-story></p>
+          <dl class="objcard__data">
+            <div><dt class="t-meta" data-en="Size"     data-es="Tamaño"></dt><dd data-obj-size></dd></div>
+            <div><dt class="t-meta" data-en="Material" data-es="Material"></dt><dd data-obj-material></dd></div>
+            <div><dt class="t-meta" data-en="Year"     data-es="Año"></dt><dd data-obj-year></dd></div>
+          </dl>
+          <p class="objcard__rel">
+            <b class="t-meta" data-en="Relation to the theme" data-es="Relación con el tema"></b>
+            <span data-obj-rel></span>
+          </p>
+        </div>
       </div>
     </div>
     </div>
 
-    <!-- El componente humano que pidio Gervasio: no son objetos sueltos, son
-         personas contando por que se desprendieron de algo. -->
-    <p class="voices__lead t-meta reveal" style="--d:.4s"
-       data-en="There are people telling their stories" data-es="Hay gente contando su historia"></p>
-    <ul class="voices">
-      <li class="voice reveal" style="--d:.44s">
-        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="voice__name">Pedro</p>
-        <p class="voice__quote" data-en="&ldquo;It was my grandfather&rsquo;s. I never learned to use it.&rdquo;" data-es="&ldquo;Era de mi abuelo. Nunca aprendí a usarla.&rdquo;"></p>
-      </li>
-      <li class="voice reveal" style="--d:.5s">
-        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="voice__name">Amira</p>
-        <p class="voice__quote" data-en="&ldquo;It came with me from the other side of the ocean. It does not fit here.&rdquo;" data-es="&ldquo;Vino conmigo del otro lado del océano. Acá no entra.&rdquo;"></p>
-      </li>
-      <li class="voice reveal" style="--d:.56s">
-        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="voice__name">Julien</p>
-        <p class="voice__quote" data-en="&ldquo;The shop closed in 1998. This is the last thing left of it.&rdquo;" data-es="&ldquo;El taller cerró en 1998. Es lo último que queda de él.&rdquo;"></p>
-      </li>
-      <li class="voice reveal" style="--d:.62s">
-        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="voice__name">Sofía</p>
-        <p class="voice__quote" data-en="&ldquo;I moved eleven times and never once opened the box.&rdquo;" data-es="&ldquo;Me mudé once veces y nunca abrí la caja.&rdquo;"></p>
-      </li>
-      <li class="voice reveal" style="--d:.68s">
-        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M24 23c5 0 9-4.3 9-9.5S29 4 24 4s-9 4.3-9 9.5S19 23 24 23z"/><path d="M24 27c-9.4 0-17 6.1-17 13.6 0 .8.6 1.4 1.4 1.4h31.2c.8 0 1.4-.6 1.4-1.4C41 33.1 33.4 27 24 27z"/></svg></span>
-        <p class="voice__name">Bo</p>
-        <p class="voice__quote" data-en="&ldquo;I would rather see it standing in a square than in my basement.&rdquo;" data-es="&ldquo;Prefiero verla parada en una plaza que en mi sótano.&rdquo;"></p>
-      </li>
-    </ul>
+    <!-- Las cinco voces que pidio Gervasio el 17/09 no se fueron: ahora cada
+         una vive pegada a su objeto, en la ficha de arriba, que es como lo
+         pidio el feedback del 19/09. -->
 
   </div>
 </section>
@@ -438,7 +550,7 @@
 
 <!-- 13 · DENTRO DEL HAPPENING · etapa 6 -->
 <section class="frame frame--happening frame--capture" data-frame="13" data-act="5" data-ground="violet" data-accent="yellow">
-  <div class="frame__tag"><b>13</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__tag"><b>13</b><span data-en="The Experience" data-es="La Experiencia"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="capture" data-capture="media/capture-happening" data-capture-tc="262" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Inside the happening" data-es="Dentro del happening"></h2>
@@ -448,15 +560,21 @@
       <div class="reveal" style="--d:.2s"><p class="figure__n">0</p><p class="figure__label t-meta" data-en="controllers — hands only"  data-es="controles — solo manos"></p></div>
       <div class="reveal" style="--d:.3s"><p class="figure__n">20–30</p><p class="figure__label t-meta" data-en="objects in the library" data-es="objetos en la biblioteca"></p></div>
     </div>
+    <!-- 19/09: "la frase resulta demasiado complicada. Reemplazar por algo
+         muy simple que explique la mecanica; la consecuencia de diseno
+         —colaboracion— puede explicarse despues." -->
     <p class="hero-fact reveal" style="--d:.4s"
-       data-en="You cannot move a fridge by yourself. At real scale, collaborating stops being an idea and becomes physical."
-       data-es="Una heladera no la movés solo. A escala real, colaborar deja de ser una idea y se vuelve físico."></p>
+       data-en="Objects have different sizes and weights. Some of them need more than one player to move."
+       data-es="Los objetos tienen distintos tamaños y pesos. Algunos necesitan más de un jugador para moverse."></p>
+    <p class="t-meta reveal" style="--d:.5s; margin-top:0.9rem"
+       data-en="That is why people collaborate here: not because the rules say so, because the weight does."
+       data-es="Por eso acá la gente colabora: no porque lo diga una regla, sino porque lo dice el peso."></p>
   </div>
 </section>
 
 <!-- 14 · POR QUÉ PASSTHROUGH -->
 <section class="frame frame--passthrough" data-frame="14" data-act="5" data-ground="violet" data-accent="yellow">
-  <div class="frame__tag"><b>14</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__tag"><b>14</b><span data-en="The Experience" data-es="La Experiencia"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Why passthrough" data-es="Por qué passthrough"></h2>
     <div class="beats">
@@ -480,20 +598,24 @@
       <p class="hero-fact reveal" style="--d:.4s; margin-top:0"
          data-en="Full VR would cut the room out. Passthrough keeps the museum, the floor and the people in it."
          data-es="La VR total borraría la sala. El passthrough conserva el museo, el piso y la gente."></p>
+      <!-- 19/09: "mover el video de la pag. 15 a la pagina anterior,
+           donde aparece el cuadradito con las esculturas grises. Asi usamos
+           el video antes, para explicar el proceso, y liberamos la 15." -->
       <figure class="fig reveal" style="--d:.3s">
-        <div class="fig__frame"><img src="img/renders/sala-coral.webp" alt="Visitors walking around a large sculpture of assembled objects in a museum" loading="lazy"></div>
-        <figcaption><b>Fig. 03</b><span data-en="The room stays: the museum, the floor and the people — prototype study" data-es="La sala no desaparece: el museo, el piso y la gente — prueba de prototipo"></span></figcaption>
+        <div class="fig__frame"><span class="capture capture--fig" data-capture="media/capture-espacio" data-capture-tc="18" aria-hidden="true"></span></div>
+        <figcaption><b>Fig. 03</b><span data-en="The room stays: the museum, the floor and the people — prototype capture" data-es="La sala no desaparece: el museo, el piso y la gente — captura del prototipo"></span></figcaption>
       </figure>
     </div>
   </div>
 </section>
 
 <!-- 15 · EL ESPACIO -->
-<section class="frame frame--space frame--capture" data-frame="15" data-act="5" data-ground="violet" data-accent="yellow">
-  <div class="frame__tag"><b>15</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
-  <div class="capture" data-capture="media/capture-espacio" data-capture-tc="18" aria-hidden="true"></div>
-  <div class="frame__inner duo">
-   <div>
+<!-- 19/09: sin video de fondo ("sacar el video, dejar el plano mas limpio y
+     mas grande"). El video se mudo al frame 14. -->
+<section class="frame frame--space" data-frame="15" data-act="5" data-ground="violet" data-accent="yellow">
+  <div class="frame__tag"><b>15</b><span data-en="The Experience" data-es="La Experiencia"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
+  <div class="frame__inner space">
+   <div class="space__head">
     <h2 class="t-xl split" data-en="The space is not a workshop." data-es="El espacio no es un taller."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
        data-en="Zones with different jobs, but in an invented universe — not a replica of a garage."
@@ -509,7 +631,9 @@
        data-en="Outside the circle of light objects have no colour. You carry one into the centre and it appears."
        data-es="Fuera del círculo de luz los objetos no tienen color. Traés uno al centro y aparece."></p>
    </div>
-    <!-- La planta. Dibujada, no una foto: cada zona es un tipo de pieza. -->
+    <!-- La planta. Dibujada, no una foto: cada zona es un tipo de pieza.
+         19/09: mas grande, y con siluetas de gente vista desde arriba para
+         que se lea la escala humana y que estan trabajando juntos. -->
     <figure class="fig fig--plan reveal" style="--d:.35s; --ar:3/2">
       <div class="fig__frame">
         <svg class="plan" viewBox="0 0 600 400" role="img" aria-label="Plan of the space">
@@ -520,6 +644,11 @@
               <stop offset="1" stop-color="#ffe500" stop-opacity="0"/>
             </radialGradient>
             <pattern id="plan-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#f2efe9" stroke-opacity=".07"/></pattern>
+            <g id="plan-person" fill="none" stroke="#f2efe9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="0" cy="0" r="4.6" fill="#f2efe9" stroke="none"/>
+              <path d="M-9.5 7.5a9.8 9.8 0 0 1 19 0"/>
+              <path d="M-8.5 5.5 -13.5 -3.5M8.5 5.5 13.5 -3.5"/>
+            </g>
           </defs>
           <rect x="0" y="0" width="600" height="400" fill="#0d0c0b"/>
           <rect x="0" y="0" width="600" height="400" fill="url(#plan-grid)"/>
@@ -550,6 +679,18 @@
             <path d="M482 150c14-18 42-18 56 0s-6 34-28 34-42-16-28-34z" stroke="#c8f000"/>
             <path d="M488 214c10-10 30-10 40 0s-4 22-20 22-30-12-20-22z" stroke="#2e9bff"/>
           </g>
+          <!-- la gente: vista cenital, hombros y brazos hacia lo que mueven -->
+          <g class="plan__crew">
+            <use href="#plan-person" transform="translate(300 128) rotate(180)"/>
+            <use href="#plan-person" transform="translate(238 176) rotate(90)"/>
+            <use href="#plan-person" transform="translate(362 176) rotate(-90)"/>
+            <use href="#plan-person" transform="translate(268 252) rotate(-20)"/>
+            <use href="#plan-person" transform="translate(336 250) rotate(18)"/>
+            <use href="#plan-person" transform="translate(132 300) rotate(-90)"/>
+            <use href="#plan-person" transform="translate(196 112) rotate(150)"/>
+            <use href="#plan-person" transform="translate(412 300) rotate(35)"/>
+            <use href="#plan-person" transform="translate(470 196) rotate(90)"/>
+          </g>
           <g font-family="DM Mono, monospace" font-size="12" letter-spacing="1.5" fill="#f2efe9">
             <text x="300" y="275" text-anchor="middle" fill="#ffe500" data-en="CENTRAL PLATFORM" data-es="PLATAFORMA CENTRAL"></text>
             <text x="300" y="292" text-anchor="middle" fill-opacity=".6" data-en="the circle of light" data-es="el círculo de luz"></text>
@@ -565,14 +706,14 @@
           </g>
         </svg>
       </div>
-      <figcaption><b>Fig. 04</b><span data-en="Plan of the happening — five zones around the light" data-es="Planta del happening — cinco zonas alrededor de la luz"></span></figcaption>
+      <figcaption><b>Fig. 04</b><span data-en="Plan of the happening — ten to fifteen people, five zones around the light" data-es="Planta del happening — diez a quince personas, cinco zonas alrededor de la luz"></span></figcaption>
     </figure>
   </div>
 </section>
 
 <!-- 16 · CÓMO EMPIEZA -->
 <section class="frame frame--onboarding frame--capture" data-frame="16" data-act="5" data-ground="violet" data-accent="yellow">
-  <div class="frame__tag"><b>16</b><span data-en="The Experience" data-es="La Experiencia"></span></div>
+  <div class="frame__tag"><b>16</b><span data-en="The Experience" data-es="La Experiencia"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="capture" data-capture="media/capture-onboarding" data-capture-tc="176" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Nobody starts from zero." data-es="Nadie empieza desde cero."></h2>
@@ -590,7 +731,19 @@
         <p class="beat__text" data-en="No tutorial. What can be done is understood by doing it." data-es="Sin tutorial. Lo que se puede hacer se entiende haciéndolo."></p>
       </div>
     </div>
-    <p class="hero-fact reveal" style="--d:.4s"
+    <!-- 19/09: "agregar una frase con mas energia que marque que aca comienza
+         realmente el trabajo colectivo: teamwork, communication, hands-on, y
+         pensar juntos que tiene que tener la escultura y con que elementos." -->
+    <div class="chips reveal" style="--d:.34s">
+      <span class="chip"><span data-en="Teamwork"          data-es="Equipo"></span></span>
+      <span class="chip"><span data-en="Communication"     data-es="Comunicación"></span></span>
+      <span class="chip"><span data-en="Hands-on work"     data-es="Trabajo manual"></span></span>
+      <span class="chip"><span data-en="Deciding together" data-es="Decidir juntos"></span><small data-en="what it is, what builds it" data-es="qué es, con qué se arma"></small></span>
+    </div>
+    <p class="hero-fact reveal" style="--d:.42s"
+       data-en="This is where collective creation begins. People talk, experiment and work with their hands: what should this sculpture be, and which objects are going to build it?"
+       data-es="Acá empieza la creación colectiva. La gente habla, experimenta y trabaja con las manos: ¿qué tiene que ser esta escultura y con qué objetos se construye?"></p>
+    <p class="t-meta reveal" style="--d:.52s; margin-top:0.9rem"
        data-en="People put on a headset and freeze. The interaction has to be simple, and some of it automatic: join two pieces and they weld themselves."
        data-es="La gente se pone el casco y se queda quieta. La interacción tiene que ser simple, y parte automática: unís dos piezas y se sueldan solas."></p>
   </div>
@@ -600,7 +753,7 @@
 
 <!-- 17 · TRES FASES -->
 <section class="frame frame--phases frame--capture" data-frame="17" data-act="6" data-ground="ink" data-accent="orange">
-  <div class="frame__tag"><b>17</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="frame__tag"><b>17</b><span data-en="Building" data-es="La Construcción"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="capture" data-capture="media/capture-gizmo" data-capture-tc="146" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="It is built in three phases." data-es="Se construye en tres fases."></h2>
@@ -629,7 +782,7 @@
 
 <!-- 18 · LAS HERRAMIENTAS -->
 <section class="frame frame--tools frame--capture" data-frame="18" data-act="6" data-ground="ink" data-accent="orange">
-  <div class="frame__tag"><b>18</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="frame__tag"><b>18</b><span data-en="Building" data-es="La Construcción"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="capture" data-capture="media/capture-herramientas" data-capture-tc="582" aria-hidden="true"></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Tools are experiences, not machines." data-es="Las herramientas son experiencias, no máquinas."></h2>
@@ -651,9 +804,10 @@
 </section>
 
 <!-- 19 · EL FINISH -->
-<section class="frame frame--finish frame--capture" data-frame="19" data-act="6" data-ground="ink" data-accent="orange">
-  <div class="frame__tag"><b>19</b><span data-en="Building" data-es="La Construcción"></span></div>
-  <div class="capture" data-capture="media/capture-paleta" data-capture-tc="28" aria-hidden="true"></div>
+<!-- 19/09: "en la seccion de la signature piece conviene sacar el video para
+     que no compita con el contenido". El de herramientas (18) se queda. -->
+<section class="frame frame--finish" data-frame="19" data-act="6" data-ground="ink" data-accent="orange">
+  <div class="frame__tag"><b>19</b><span data-en="Building" data-es="La Construcción"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="The signature appears at the end." data-es="La impronta aparece al final."></h2>
     <div class="chips reveal" style="--d:.3s">
@@ -671,7 +825,7 @@
 
 <!-- 20 · EL ARTISTA INVITADO -->
 <section class="frame frame--artist" data-frame="20" data-act="6" data-ground="ink" data-accent="orange">
-  <div class="frame__tag"><b>20</b><span data-en="Building" data-es="La Construcción"></span></div>
+  <div class="frame__tag"><b>20</b><span data-en="Building" data-es="La Construcción"></span><em class="frame__stage" data-en="Stage 06 · Happening" data-es="Etapa 06 · Happening"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="The guest artist" data-es="El artista invitado"></h2>
     <div class="beats">
@@ -702,19 +856,24 @@
 
 <!-- 21 · TREINTA RESULTADOS · etapa 7 -->
 <section class="frame frame--outcomes" data-frame="21" data-act="7" data-ground="bone" data-accent="violet">
-  <div class="frame__tag"><b>21</b><span data-en="The Community" data-es="La Comunidad"></span></div>
+  <div class="frame__tag"><b>21</b><span data-en="The Community" data-es="La Comunidad"></span><em class="frame__stage" data-en="Stage 07 · Repetition" data-es="Etapa 07 · Repetición"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="Same objects. Thirty outcomes." data-es="Los mismos objetos. Treinta resultados."></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
-       data-en="Same library, same physical limits. No two sculptures are alike — and every one of them is already online, collecting votes."
-       data-es="Misma biblioteca, mismos límites físicos. No hay dos esculturas iguales — y todas están ya online, juntando votos."></p>
+       data-en="Same library, same physical limits. No two sculptures are alike — and every one of them is already online, collecting votes. Click any of them to open it."
+       data-es="Misma biblioteca, mismos límites físicos. No hay dos esculturas iguales — y todas están ya online, juntando votos. Clickeá cualquiera para abrirla."></p>
+    <!-- 19/09: "estaria bueno que se pudiera clickear entre varios outcomes y
+         ver las diferencias: parecidas, de la misma logica, pero claramente
+         distintas entre si". Cada tile es una propuesta y se abre. -->
     <div class="outcomes">
       <div class="outcomes__grid">
-        <div class="tiles" data-tiles="30" data-winner="17" data-votes></div>
+        <div class="tiles" data-tiles="30" data-winner="17" data-votes="live" data-pick></div>
       </div>
-      <!-- Gervasio: "a la derecha podria haber un orbit de un objeto, que te
-           explique como es el proceso de que ves la escultura online" -->
       <aside class="outcomes__aside">
+        <p class="tiles__read t-meta reveal" style="--d:.3s">
+          <b data-tiles-n>17</b>
+          <span data-tiles-spec></span>
+        </p>
         <div class="visor reveal" style="--d:.35s" data-visor="escultura">
           <div class="visor__stage" data-visor-stage>
             <div class="orbita visor__poster" data-orbita></div>
@@ -731,44 +890,64 @@
 </section>
 
 <!-- 22 · LA VOTACIÓN · etapa 8 -->
+<!-- 19/09: "deberia mantener practicamente el mismo layout que la 21: que
+     parezca la misma interfaz en dos momentos distintos. Mismas propuestas,
+     pero una tiene claramente muchos mas likes, y se tiene que entender al
+     instante que fue elegida." De ahi el WINNER y los 512 votos. -->
 <section class="frame frame--vote" data-frame="22" data-act="7" data-ground="bone" data-accent="violet">
-  <div class="frame__tag"><b>22</b><span data-en="The Community" data-es="La Comunidad"></span></div>
-  <div class="frame__inner vote">
-    <div class="stack">
-      <h2 class="t-xl split" data-en="The community decides what exists." data-es="La comunidad decide qué existe."></h2>
-      <p class="t-body reveal" style="--d:.2s"
-         data-en="Popular vote, plus a technical check that the piece can actually stand."
-         data-es="Voto popular, más una revisión técnica de que la pieza se pueda parar."></p>
-    </div>
-    <div class="bars reveal" style="--d:.3s">
-      <div class="bar"><span>S-17</span><i style="--v:.94;--d:.35s"></i></div>
-      <div class="bar"><span>S-04</span><i style="--v:.71;--d:.45s"></i></div>
-      <div class="bar"><span>S-23</span><i style="--v:.58;--d:.55s"></i></div>
-      <div class="bar"><span>S-11</span><i style="--v:.4;--d:.65s"></i></div>
-      <figure class="fig" style="margin-top:1.25rem; --ar:21/9">
-        <div class="fig__frame"><img src="media/still-resultado.jpg" alt="A coloured sculpture built by a group, inside the virtual warehouse" loading="lazy" style="object-position:55% 55%"></div>
-        <figcaption><b>Fig. 06</b><span data-en="A group result, still inside the headset — prototype capture" data-es="Un resultado de grupo, todavía dentro del visor — captura del prototipo"></span></figcaption>
-      </figure>
+  <div class="frame__tag"><b>22</b><span data-en="The Community" data-es="La Comunidad"></span><em class="frame__stage" data-en="Stage 08 · Public vote" data-es="Etapa 08 · Votación pública"></em></div>
+  <div class="frame__inner">
+    <h2 class="t-xl split" data-en="The community decides what exists." data-es="La comunidad decide qué existe."></h2>
+    <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
+       data-en="The same thirty proposals, a month later. Popular vote, plus a technical check that the piece can actually stand."
+       data-es="Las mismas treinta propuestas, un mes después. Voto popular, más una revisión técnica de que la pieza se pueda parar."></p>
+    <div class="outcomes">
+      <div class="outcomes__grid">
+        <div class="tiles tiles--final" data-tiles="30" data-winner="17" data-votes="final" data-pick></div>
+      </div>
+      <aside class="outcomes__aside">
+        <p class="tiles__read t-meta reveal" style="--d:.2s">
+          <b data-tiles-n>17</b>
+          <span data-tiles-spec></span>
+        </p>
+        <p class="winner reveal" style="--d:.25s">
+          <b data-en="Winner" data-es="Ganadora"></b>
+          <span data-en="Proposal 17 &middot; 512 votes" data-es="Propuesta 17 &middot; 512 votos"></span>
+        </p>
+        <div class="bars bars--count reveal" style="--d:.3s">
+          <div class="bar"><span>S-17</span><i style="--v:1;--d:.35s"></i><em>512</em></div>
+          <div class="bar"><span>S-04</span><i style="--v:.12;--d:.45s"></i><em>61</em></div>
+          <div class="bar"><span>S-23</span><i style="--v:.095;--d:.55s"></i><em>48</em></div>
+          <div class="bar"><span>S-11</span><i style="--v:.043;--d:.65s"></i><em>22</em></div>
+        </div>
+        <figure class="fig reveal" style="--d:.4s; --ar:16/10">
+          <div class="fig__frame"><img src="media/still-resultado.jpg" alt="A coloured sculpture built by a group, inside the virtual warehouse" loading="lazy" style="object-position:55% 55%"></div>
+          <figcaption><b>Fig. 06</b><span data-en="The one the city chose, still inside the headset — prototype capture" data-es="La que eligió la ciudad, todavía dentro del visor — captura del prototipo"></span></figcaption>
+        </figure>
+      </aside>
     </div>
   </div>
 </section>
 
 <!-- 23 · LA OBRA FÍSICA · etapa 9 -->
 <section class="frame frame--build frame--capture" data-frame="23" data-act="7" data-ground="bone" data-accent="violet">
-  <div class="frame__tag"><b>23</b><span data-en="The Community" data-es="La Comunidad"></span></div>
+  <div class="frame__tag"><b>23</b><span data-en="The Community" data-es="La Comunidad"></span><em class="frame__stage" data-en="Stage 09 · Construction" data-es="Etapa 09 · Construcción"></em></div>
   <div class="capture" data-capture="build" data-capture-img="img/renders/plaza-noche.webp" data-capture-still aria-hidden="true"></div>
   <div class="frame__inner">
-    <p class="build__line build__line--fade split" data-en="The technology disappears." data-es="La tecnología desaparece."></p>
-    <p class="build__line split" style="--d:.3s" data-en="Only the work remains." data-es="Lo único que permanece es la obra."></p>
+    <!-- 19/09: "la intencion no es decir que queda 'the work', sino que el
+         proceso tecnologico desemboca en una pieza de arte fisica". Cierra el
+         arco de la pag. 6: real → virtual → real. -->
+    <p class="build__line build__line--fade split" data-en="Technology disappears." data-es="La tecnología desaparece."></p>
+    <p class="build__line split" style="--d:.3s" data-en="A piece of art remains." data-es="Queda una obra de arte."></p>
     <p class="t-meta reveal" style="--d:.8s; margin-top:clamp(1.5rem,4vh,3rem)"
-       data-en="The digital model becomes a construction blueprint."
-       data-es="El modelo virtual funciona como plano de construcción."></p>
+       data-en="The digital creation becomes a physical work of art. Real → virtual → real."
+       data-es="La creación digital se vuelve una obra física. Real → virtual → real."></p>
   </div>
 </section>
 
 <!-- 24 · LA VISITA · etapa 10 -->
 <section class="frame frame--visit" data-frame="24" data-act="7" data-ground="bone" data-accent="violet">
-  <div class="frame__tag"><b>24</b><span data-en="The Community" data-es="La Comunidad"></span></div>
+  <div class="frame__tag"><b>24</b><span data-en="The Community" data-es="La Comunidad"></span><em class="frame__stage" data-en="Stage 10 · Visit" data-es="Etapa 10 · Visita"></em></div>
   <div class="frame__inner">
     <h2 class="t-xl split" data-en="And then you can go and see it." data-es="Y después se puede ir a verla."></h2>
     <div class="duo duo--wide" style="margin-top:clamp(1.5rem,4vh,2.5rem); align-items:start">
@@ -809,16 +988,25 @@
 <section class="frame frame--cities" data-frame="25" data-act="8" data-ground="bone" data-accent="orange">
   <div class="frame__tag"><b>25</b><span data-en="Scale" data-es="Escala"></span></div>
   <div class="frame__inner">
-    <h2 class="t-xl split" data-en="Every city mutates differently." data-es="Cada ciudad muta distinto."></h2>
+    <!-- 19/09: "cambiar el encabezado por algo mas claro: LOCATIONS / CITIES
+         o WHERE CAN MUTARE HAPPEN? Y aca hablar de distintos paises, ciudades,
+         tipos de espacios y modalidades de implementacion." -->
+    <h2 class="t-xl split" data-en="Where can MUTAR happen?" data-es="¿Dónde puede pasar MUTAR?"></h2>
     <p class="t-body reveal" style="--d:.2s; margin-top:1rem"
-       data-en="Culture, colours and language shape the form and the message."
-       data-es="La cultura, los colores y el lenguaje construyen la forma y el mensaje."></p>
+       data-en="Different countries, different cities, different kinds of space — a museum, a biennial, a square, an empty industrial building. Culture, colours and language shape the form and the message, so every city mutates differently."
+       data-es="Distintos países, distintas ciudades, distintos tipos de espacio — un museo, una bienal, una plaza, un galpón vacío. La cultura, los colores y el lenguaje construyen la forma y el mensaje: por eso cada ciudad muta distinto."></p>
     <div class="cities">
       <div class="city reveal" style="--city:var(--pink);--d:.05s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="28" width="14" height="13" rx="2.5"/><rect x="21" y="28" width="14" height="13" rx="2.5"/><rect x="13.5" y="14" width="14" height="13" rx="2.5"/><rect x="28.5" y="14" width="14" height="13" rx="2.5"/></svg></span><span class="city__name">Montreal</span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
       <div class="city reveal" style="--city:var(--lime);--d:.1s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 42V26l4-7 4 7v16"/><path d="M19 42V16l5-10 5 10v26"/><path d="M34 42V26l4-7 4 7v16"/></svg></span><span class="city__name">Barcelona</span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
       <div class="city reveal" style="--city:var(--orange);--d:.15s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4v7"/><path d="M13 42c2.5-11 6-20 11-31 5 11 8.5 20 11 31"/><path d="M18 26h12"/><path d="M15.5 34h17"/></svg></span><span class="city__name" data-en="Paris" data-es="París"></span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
       <div class="city reveal" style="--city:var(--cyan);--d:.2s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12V4"/><path d="M18 42V12h12v30"/><path d="M17 22h14M17 32h14"/><path d="M14 42h20"/></svg></span><span class="city__name" data-en="Taiwan" data-es="Taiwán"></span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
       <div class="city reveal" style="--city:var(--violet);--d:.25s"><span class="city__id"><span class="city__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13h36"/><path d="M11 20h26"/><path d="M15 13v29M33 13v29"/></svg></span><span class="city__name" data-en="Tokyo" data-es="Tokio"></span></span><span class="city__meta" data-en="local mentor + palette" data-es="mentor local + paleta"></span></div>
+    </div>
+    <!-- las tres modalidades de implementacion -->
+    <div class="chips reveal" style="--d:.35s">
+      <span class="chip"><span data-en="Hosted"   data-es="Con sede"></span><small data-en="one institution, one edition"    data-es="una institución, una edición"></small></span>
+      <span class="chip"><span data-en="Touring"  data-es="Itinerante"></span><small data-en="the same call, city after city"  data-es="la misma convocatoria, ciudad por ciudad"></small></span>
+      <span class="chip"><span data-en="Licensed" data-es="Licenciada"></span><small data-en="a local team runs the edition"   data-es="un equipo local corre la edición"></small></span>
     </div>
   </div>
 </section>
@@ -959,7 +1147,9 @@
     </div>
     <dl class="credits reveal" style="--d:.35s">
       <div><dt data-en="By"      data-es="Por"></dt><dd>Gervasio Canda &middot; Federico Carlini</dd></div>
-      <div><dt data-en="Companies" data-es="Compañías"></dt><dd><a href="https://www.ojoraro.com.ar/en/" target="_blank" rel="noopener">Ojo Raro</a></dd></div>
+      <!-- 19/09: "agregar Triple N Vision. El proyecto no se esta haciendo con
+           Ojo Raro, hay que revisar el bloque de companias." -->
+      <div><dt data-en="Companies" data-es="Compañías"></dt><dd>Triple N Vision</dd></div>
       <div><dt data-en="Contact" data-es="Contacto"></dt><dd class="credits__mail"><a href="mailto:carlinifederico@gmail.com">carlinifederico@gmail.com</a><a href="mailto:candagervasio@gmail.com">candagervasio@gmail.com</a></dd></div>
     </dl>
   </div>

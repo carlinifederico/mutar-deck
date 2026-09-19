@@ -38,10 +38,15 @@
     return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
   }
 
+  // La ficha de cada propuesta sale del mismo dibujo: mismas piezas, otra
+  // pila. Se guarda al dibujar para no re-sortear con otra semilla.
+  var META = {};
+
   function sculpture(i) {
     var r = lcg(i + 7);
     var parts = [];
     var baseY = 86;
+    var sumH = 0;
     // las cinco piezas de la biblioteca, siempre las mismas
     var kit = ['bar', 'box', 'disc', 'ring', 'wedge'];
     // orden de apilado distinto por escultura
@@ -55,6 +60,7 @@
       // rangos acotados para que la pila nunca se salga del recuadro
       var w = 24 + r() * 26;
       var h = 9 + r() * 13;
+      sumH += h;
       var x = 50 + (r() - 0.5) * 20;
       var rot = (r() - 0.5) * 22;
       var g = '<g transform="translate(' + x.toFixed(1) + ' ' + (y - h / 2).toFixed(1) +
@@ -78,6 +84,8 @@
       parts.push(g + '</g>');
       y -= h * 0.78;
     }
+    // 100 unidades de dibujo ~ 6,5 m de escultura real
+    META[i] = { pieces: order.length, h: sumH * 0.78 / 100 * 6.5 };
     return '<svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">' +
            '<path d="M14 92h72" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>' +
            parts.join('') + '</svg>';
@@ -86,11 +94,15 @@
   // Gervasio, 17/09: "que tenga 20 likes o 20 votes, que se note que la gente
   // ya esta votando". Deterministicos, con el mismo lcg que la forma, para que
   // la grilla no cambie en cada carga — y la ganadora siempre gana.
-  function votos(i, winner) {
-    if (i === winner) return 128;
+  // 19/09: la 21 y la 22 son la misma interfaz en dos momentos. En la 21 los
+  // votos recien arrancan y estan parejos; en la 22 ya se voto y la elegida
+  // se despega ("~500 likes contra 20 o 50").
+  function votos(i, winner, modo) {
+    if (modo === 'final' && i === winner) return 512;
     var r = lcg(i * 13 + 5);
     r();
-    return 4 + Math.floor(r() * 61);
+    var base = 4 + Math.floor(r() * 61);
+    return modo === 'final' ? base + 8 : base;
   }
 
   function buildTiles() {
@@ -98,20 +110,71 @@
       if (box.children.length) return;
       var n = parseInt(box.dataset.tiles, 10) || 30;
       var winner = parseInt(box.dataset.winner, 10);
+      var modo = box.dataset.votes;            // '' | 'live' | 'final'
       var conVotos = box.hasAttribute('data-votes');
+      var pick = box.hasAttribute('data-pick');
       var html = '';
       for (var i = 1; i <= n; i++) {
-        html += '<figure class="tile' + (i === winner ? ' is-winner' : '') +
-                '" style="--d:' + (i * 0.022).toFixed(3) + 's">' +
+        var esWin = i === winner;
+        html += '<figure class="tile' + (esWin ? ' is-winner' : '') +
+                '" style="--d:' + (i * 0.022).toFixed(3) + 's" data-i="' + i + '"' +
+                (pick ? ' tabindex="0" role="button"' : '') + '>' +
                 sculpture(i) +
                 '<figcaption>' + String(i).padStart(2, '0') + '</figcaption>' +
                 // sin la palabra "votos": i18n.js corre al cargar y no vuelve a
                 // pasar por lo que construye motion.js. Un numero no se traduce.
-                (conVotos ? '<span class="tile__votes">' + votos(i, winner) + '</span>' : '') +
+                (conVotos ? '<span class="tile__votes">' + votos(i, winner, modo) + '</span>' : '') +
+                // 19/09: "tiene que entenderse instantaneamente que una pieza
+                // fue elegida por la comunidad".
+                (esWin && modo === 'final' ? '<b class="tile__badge" data-en="Winner" data-es="Ganadora">Winner</b>' : '') +
                 '</figure>';
       }
       box.innerHTML = html;
+      if (pick) wireTiles(box, winner, modo);
     });
+  }
+
+  /* ---- Abrir una propuesta ------------------------------------------------
+     19/09: "estaria bueno que se pudiera clickear entre varios outcomes y ver
+     las diferencias". Cada tile se abre grande y escribe su ficha debajo.   */
+  function wireTiles(box, winner, modo) {
+    var scope = box.closest('.frame') || box.parentNode;
+    var nOut = scope.querySelector('[data-tiles-n]');
+    var spec = scope.querySelector('[data-tiles-spec]');
+    var abierto = winner || 1;
+
+    function texto(i) {
+      var m = META[i] || { pieces: 5, h: 3 };
+      var es = (window.MUTAR && window.MUTAR.lang && window.MUTAR.lang()) === 'es';
+      var alto = m.h.toFixed(1);
+      var v = votos(i, winner, modo);
+      return es
+        ? m.pieces + ' objetos · ' + alto.replace('.', ',') + ' m · ' + v + ' votos'
+        : m.pieces + ' objects · ' + alto + ' m · ' + v + ' votes';
+    }
+
+    function abrir(i) {
+      abierto = i;
+      [].forEach.call(box.children, function (t) {
+        t.classList.toggle('is-open', parseInt(t.dataset.i, 10) === i);
+      });
+      if (nOut) nOut.textContent = String(i).padStart(2, '0');
+      if (spec) spec.textContent = texto(i);
+    }
+
+    box.addEventListener('click', function (e) {
+      var t = e.target.closest('.tile');
+      if (t) abrir(parseInt(t.dataset.i, 10));
+    });
+    box.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var t = e.target.closest('.tile');
+      if (!t) return;
+      e.preventDefault();
+      abrir(parseInt(t.dataset.i, 10));
+    });
+    document.addEventListener('mutar:lang', function () { abrir(abierto); });
+    abrir(abierto);
   }
 
   /* ---- 3 · Ticks decorativos -------------------------------------------- */

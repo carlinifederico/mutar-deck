@@ -51,7 +51,9 @@ Lo grande fue esto:
    Créditos: Ojo Raro, y los mails de los dos como contacto.
 2. **El video se ve.** La retícula ya no pasa por encima de las capturas, el
    video entra con su color real (antes era `luminosity`) y el velo cubre sólo
-   el lado del texto. Los loops de video pasaron de cuatro a siete.
+   el lado del texto. Los loops de video pasaron de cuatro a siete; el 19/09
+quedaron en seis: el de la paleta salio del finish y el del espacio se mudo de
+fondo de la 15 a figura de la 14.
 3. **Imagen en cada hueco.** Renders de la obra en sala, en la plaza y en el
    museo virtual (`img/renders/`), la planta del happening dibujada en SVG, y
    un componente `.fig` (imagen enmarcada + epígrafe numerado) para todas.
@@ -60,6 +62,77 @@ Lo grande fue esto:
    escultura base. Ver "Objetos reales" abajo.
 5. **Los creadores.** Retratos grandes, al lado del nombre, y la bio nueva de
    Federico con sus créditos.
+
+---
+
+## El pase del 19/09: el feedback página por página
+
+Gervasio mandó `_mat/Meets/feedback - Notes mutar.pdf` — un audio recorriendo
+el deck página por página, más sus notas ordenadas. Esto es lo que entró:
+
+1. **La portada (01) está lavada.** *"Que toda la imagen esté mucho más lavada,
+   casi blanca: reconocer primero la silueta, pero no poder identificar todos
+   los objetos hasta verla más de cerca."* Es `.capture--wash` en
+   `proto.css`; MUTAR sigue leyéndose bien encima. Sigue en pie no mostrar el
+   resultado final todavía: la imagen termina de tomar forma más adelante.
+2. **Por qué no los tiramos (05).** Faltaba el punto conceptual: no es que no
+   tiramos objetos, es *por qué*. Entraron los cinco valores —material,
+   personal, historia, relación, recuerdos— y una frase sobre el apego. La
+   cita de Cohen se fue (*"no tiene tanto que ver con objetos"*) y la
+   reemplaza una línea propia.
+3. **Qué es MUTAR (06).** Antes se pasaba del titular a los tres textos largos
+   de una. Ahora hay una definición corta —*"MUTAR invites a community to
+   transform and repurpose objects into contemporary art"*— y debajo el arco
+   **real → virtual → real**, que es el que cierra el frame 23.
+4. **Dos historias (07).** Se explicita la tercera: la que el objeto gana
+   adentro del proceso colectivo.
+5. **Siete pasos, no seis (09).** *"Entre el 3 y el 4 falta un paso."* El 3
+   pasó a producir **muchos resultados**, entró un **4 · Go public** (se
+   publican y la comunidad las ve) y el 5 es la elección. La progresión queda
+   inequívoca: crear muchas → publicarlas → verlas → elegir → construir.
+6. **La convocatoria (11) es un formulario.** Pedro carga las fotos y después
+   completa campos concretos: size, weight, condition, location, más material
+   y año. Registrar el objeto es el paso previo a la librería.
+7. **La librería (12) tiene tema y ficha.** La convocatoria de esta edición es
+   *"Lo que la casa guardó · Montreal"*, y al pararse sobre cada objeto
+   aparece quién lo dio, su historia, sus datos y —lo que faltaba— la
+   **relación con el tema**. Las cinco voces del 17/09 no se fueron: cada una
+   vive ahora pegada a su objeto. La ficha la monta `js/play.js` desde los
+   `data-*` del propio botón, así anda sin WebGL y en `file://`.
+8. **El movimiento, primero la mecánica (13).** *"Objects have different sizes
+   and weights. Some require more than one player to move them."* La
+   consecuencia —colaborar— se explica después.
+9. **El video se mudó de la 15 a la 14.** Ahora vive dentro del cuadradito de
+   las esculturas grises, explicando el proceso antes; la 15 quedó limpia, con
+   el plano más grande y siluetas de gente vista desde arriba.
+10. **Acá empieza el trabajo colectivo (16).** Teamwork, comunicación, trabajo
+    manual y decidir juntos qué tiene que tener la escultura.
+11. **Sin video en el finish (19).** *"Revisar si conviene sacarlo para que no
+    compita con el contenido."* El de herramientas (18) se queda.
+12. **Clickear entre resultados (21).** Cada una de las treinta propuestas se
+    abre grande y escribe su ficha —objetos, altura, votos— al lado del visor.
+13. **La votación (22) es la misma interfaz, un mes después.** Mismo layout que
+    la 21, mismas propuestas, y la elegida con **WINNER** y 512 votos contra
+    61 / 48 / 22. Se entiende al instante.
+14. **"Technology disappears. A piece of art remains." (23)** En vez de *"only
+    the work remains"*: lo que queda es una obra de arte física.
+15. **El sistema de etapas.** Desde el frame 11 hasta el 24, arriba a la
+    izquierda va **número + nombre de la etapa**, como sistema recurrente de
+    navegación: *"así, aunque la presentación tenga muchas páginas, el
+    espectador siempre sabe dónde está dentro del proceso"*.
+16. **Dónde puede pasar MUTAR (25).** Nuevo encabezado, y países, ciudades,
+    tipos de espacio y las tres modalidades: con sede, itinerante, licenciada.
+17. **Compañías (30).** Triple N Vision. El proyecto no se está haciendo con
+    Ojo Raro, así que salió del bloque de créditos — sigue en la bio de
+    Gervasio, que es donde corresponde.
+
+**Lo que quedó pendiente, porque depende de Gervasio:** la descripción nueva y
+actualizada de su bio (frame 28) y los links que quiera sumar. Lo que está hoy
+es lo que había.
+
+**Lo otro pendiente:** *"revisar los objetos actuales de la librería porque
+quizás no son los más apropiados"*. Los siete del prototipo ahora encajan con
+el tema de la convocatoria, pero cambiarlos de verdad pide escaneos nuevos.
 
 ---
 
@@ -91,7 +164,7 @@ número seis del journey, está primera. Entonces habría que reordenarla"*.
 | **1 · La pregunta** | 02 · 03 | tinta / lima |
 | | *interludio — el carrete* | |
 | **2 · La idea** | 04 Tesis · 05 Concepto · 06 Qué es MUTAR · 07 Por qué los objetos cargan historia | hueso / amarillo |
-| **3 · El recorrido** | 08 Divisor · 09 Los seis pasos · 10 El ciclo (escalera de diez etapas en tres fases) | tinta / cian |
+| **3 · El recorrido** | 08 Divisor · 09 Los siete pasos · 10 El ciclo (escalera de diez etapas en tres fases) | tinta / cian |
 | **4 · Antes del happening** | 11 La convocatoria · 12 La librería | hueso / cian |
 | **5 · La experiencia** | 13 Happening · 14 Por qué passthrough · 15 El espacio · 16 Cómo empieza | violeta / amarillo |
 | **6 · La construcción** | 17 Tres fases · 18 Herramientas · 19 El finish · 20 Artista invitado | tinta / naranja |
@@ -104,6 +177,11 @@ Las etapas del ciclo que tienen frame propio son la 1 (convocatoria), la 5
 (librería), la 6 (happening), la 7 (repetición → treinta resultados), la 8
 (votación), la 9 (construcción) y la 10 (visita). Las etapas 2 a 4 —
 curaduría, recolección y escaneo — viven sólo en el sumario del frame 10.
+
+Desde el 19/09 cada uno de esos frames lo dice en su propia etiqueta, arriba a
+la izquierda: `<em class="frame__stage">` con número y nombre de la etapa. Los
+frames 13 a 20 repiten "Etapa 06 · Happening" a propósito — el punto es que el
+espectador nunca se pierda dentro del proceso.
 
 Los frames 04, 06, 07 y 12 llevan párrafos y no sólo titulares. Fue un pedido
 explícito: *"siento que no hay ninguna página donde haya una exposición de
@@ -119,6 +197,16 @@ Quedó una, en `js/play.js`, apagada con `prefers-reduced-motion` y en export:
   ahí el 17/09: *"la gente no está acostumbrada a orbitar un objeto online y
   por ahí no se imagina cómo vas a votar"*. Sólo gira mientras el frame está
   a la vista.
+- **Frames 21 y 22 · Las propuestas se abren** — cada tile se clickea, ocupa
+  cuatro celdas y escribe su ficha (objetos, altura, votos) al lado del visor.
+  Lo monta `buildTiles()` / `wireTiles()` en `js/motion.js`; los números
+  son deterministas, así que la grilla no cambia en cada carga y la ganadora
+  siempre gana. En la 21 los votos están parejos, en la 22 la elegida se
+  despega con 512.
+- **Frame 12 · La ficha de cada objeto** — al pasar por un objeto de la lista
+  aparece quién lo dio, su historia, sus datos y su relación con el tema. Los
+  datos viajan en `data-*` sobre el propio botón, así que esto anda igual sin
+  WebGL, en `file://` y en export, a diferencia del visor 3D.
 
 Las otras dos salieron en esa misma reunión: los objetos arrastrables de la
 portada (*"no sirven para nada"*) y el pintar por encima del finish (*"no se
@@ -313,7 +401,7 @@ ffmpeg -i media/capture-x.mp4 -frames:v 1 -q:v 5 media/capture-x.jpg
 `+faststart` no es opcional: sin el, el navegador se queda esperando el moov
 atom y el video nunca arranca.
 
-**Peso y cortesia.** Los siete `.mp4` suman ~12 MB y se piden recien un viewport
+**Peso y cortesia.** Los seis `.mp4` en uso suman ~10 MB y se piden recien un viewport
 antes de verse (`preload="none"` + src diferido). Fuera de pantalla el video se
 pausa. Con `prefers-reduced-motion` o en export no hay video: va el poster
 `.jpg`, quieto y sin HUD.
