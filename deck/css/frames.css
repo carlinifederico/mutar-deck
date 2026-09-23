@@ -780,6 +780,11 @@
   border-left: 2px solid var(--accent);
 }
 .creator__credits b { color: var(--fg); font-family: var(--font-grotesk); font-weight: 800; }
+/* 23/09: el credito que tiene trailer o pagina se linkea desde el titulo */
+.creator__credits a { text-decoration: none; }
+.creator__credits a b { border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); transition: border-color 0.2s, color 0.2s; }
+.creator__credits a::after { content: " \2197"; color: var(--accent-text); font-size: 0.85em; }
+.creator__credits a:hover b { color: var(--accent-text); border-color: var(--accent); }
 
 .creator__name {
   font-family: var(--font-display);
