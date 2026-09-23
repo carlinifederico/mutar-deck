@@ -29,7 +29,16 @@
       return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
     } catch (e) { return false; }
   }
-  if (reduce || isExport || location.protocol === 'file:' || !hasWebGL()) return;
+  if (location.protocol === 'file:' || !hasWebGL()) return;
+  // 23/09: en export (el PDF) el visor no se apaga: renderiza un cuadro y lo
+  // congela como imagen, para que la pagina muestre lo mismo que el sitio.
+  var still = isExport;
+  if (reduce && !still) return;
+  var pending = 0;
+  function settled() {
+    pending--;
+    if (pending <= 0) document.documentElement.setAttribute('data-visors', 'ready');
+  }
 
   function lang() {
     return (window.MUTAR && window.MUTAR.lang && window.MUTAR.lang()) || 'en';
@@ -197,9 +206,25 @@
           pivot.add(holder);
           frameCamera(holder.userData.h || 1);
           box.classList.add('is-3d');
+          if (still) freeze();
         }, function (err) {
           if (window.console) console.warn('[mutar] objeto 3D no disponible:', err && err.message);
+          if (still) settled();
         });
+      }
+
+      // Un cuadro en tres cuartos, pasado a <img>: el PDF no imprime WebGL
+      function freeze() {
+        resize();
+        pivot.rotation.y = -0.55;
+        renderer.render(scene, camera);
+        var img = new Image();
+        img.className = 'visor__still';
+        img.alt = '';
+        img.onload = settled;
+        img.src = canvas.toDataURL('image/png');
+        canvas.replaceWith(img);
+        renderer.dispose();
       }
 
       picks.forEach(function (p) {
@@ -237,6 +262,7 @@
       if (window.ResizeObserver) new ResizeObserver(resize).observe(stage);
       resize();
       show(ids[0]);
+      if (still) return;
 
       (function loop() {
         requestAnimationFrame(loop);
@@ -252,7 +278,14 @@
       })();
     })['catch'](function (err) {
       if (window.console) console.warn('[mutar] visor 3D no disponible:', err && err.message);
+      if (still) settled();
     });
+  }
+
+  if (still) {
+    pending = boxes.length;
+    boxes.forEach(init);
+    return;
   }
 
   var near = new IntersectionObserver(function (entries) {

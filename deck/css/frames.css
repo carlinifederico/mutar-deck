@@ -838,17 +838,22 @@ body.export .track__rail {
   align-self: center;
   transform: none !important;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+  /* 23/09: son siete pasos desde el 19/09 — en cinco columnas el 6 y el 7
+     caian a una segunda fila y se cortaban. Cuatro arriba, tres abajo. */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
   padding: 0 4.5rem;
 }
-/* en export no hay step activo: los cinco valen igual */
+/* en export no hay step activo: los siete valen igual */
 body.export .step          { flex: initial; opacity: 1; transform: none; }
 body.export .step__title   { font-size: 1.3rem; }
 body.export .step__quote,
-body.export .step__desc    { font-size: 0.78rem; }
+body.export .step__desc    { font-size: 0.85rem; }
 body.export .track__head   { padding: 0 4.5rem; }
-body.export .track__progress { display: none; }
+body.export .track__progress,
+body.export .track__count { display: none; }
+/* en papel no se arrastra nada */
+body.export .visor + .t-meta { display: none; }
 
 body.export .tiles { grid-template-columns: repeat(10, 1fr); max-width: none; }
 
@@ -934,10 +939,11 @@ body.export .creator__bio              { font-size: 0.82rem; }
 }
 
 /* Frames que no entran en 720px con la escala de pantalla: se compactan */
-body.export .track__viewport { padding: 2.5rem 0 1.75rem; }
-body.export .step           { min-height: 0; padding: 1rem 1.1rem 1.25rem; }
-body.export .step__icon     { width: 2rem; }
-body.export .step__n        { font-size: 2.6rem; }
+body.export .track__viewport { padding: 4.5rem 0 1.5rem; display: grid; align-content: center; gap: 0.9rem; }
+body.export .step           { min-height: 0; padding: 0.75rem 1rem 0.9rem; gap: 0.3rem; }
+body.export .step__icon     { width: 1.6rem; }
+body.export .step__n        { font-size: 2rem; line-height: 1; }
+body.export .step__title    { font-size: 1.15rem; }
 body.export .ladder__row    { padding-top: 0.12rem; padding-bottom: 0.12rem; }
 body.export .ladder__name   { font-size: 0.95rem; }
 body.export .ladder__note   { font-size: 0.72rem; }
@@ -947,6 +953,14 @@ body.export .creator        { gap: 0.4rem; }
 body.export .creator__bio   { font-size: 0.75rem; }
 body.export .creator__work span { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
 body.export .city__icon { width: 1.9rem; }
+/* 23/09: el 11 (el formulario de Pedro) y el 24 (tres beats + figura) se
+   pasaban de los 720px y el titular del 11 se montaba sobre el numero. */
+body.export .frame--opencall .t-xl      { font-size: 2.4rem; }
+body.export .frame--opencall .t-body    { font-size: 0.92rem; margin-top: 0.6rem !important; }
+body.export .frame--opencall .entry     { margin-top: 0.9rem; }
+body.export .frame--opencall .hero-fact { font-size: 1.15rem; margin-top: 0.9rem; padding: 0.8rem 1.1rem; }
+body.export .frame--visit .beat__text   { font-size: 1.05rem; }
+body.export .frame--visit .t-xl         { font-size: 2.6rem; }
 
 /* ==========================================================================
    PIEZAS INTERACTIVAS
@@ -1513,7 +1527,8 @@ body.export .entry { break-inside: avoid; }
 .shelf__stage { --ar: 16 / 10; background: var(--ink); }
 .visor__stage { position: relative; aspect-ratio: 1; }
 .shelf__stage canvas,
-.visor__stage canvas {
+.visor__stage canvas,
+.visor__still {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   display: block;
@@ -1528,8 +1543,11 @@ body.export .entry { break-inside: avoid; }
 /* frame 21 sin WebGL: la silueta de la propuesta abierta, en grande */
 .visor__silueta { display: grid; place-items: center; padding: 12%; color: var(--ink); }
 .visor__silueta svg { width: 100%; height: 100%; }
-body.export .visor__stage { aspect-ratio: auto; }
+body.export .visor:not(.is-3d) .visor__stage { aspect-ratio: auto; }
 body.export .visor__silueta { height: 11rem; padding: 0.5rem; }
+/* con el cuadro 3D congelado (objects.js, modo still) el stage vuelve a ser
+   cuadrado, pero chico: tiene que entrar al lado de la grilla en 720px */
+body.export .visor.is-3d .visor__stage { width: 16rem; margin: 0 auto; }
 .shelf__now {
   position: absolute;
   left: 1rem; bottom: 0.9rem;
@@ -1630,4 +1648,3 @@ body.export .shelf__now { display: none; }
 .creator__bio { max-width: 60ch; }
 .frame--creators .t-xl { font-size: clamp(2rem, 4.5vw, 4.4rem); }
 .frame--divider .div__word { text-shadow: 0 0.04em 0.4em rgba(0,0,0,.45); }
-body.export .visor__stage { aspect-ratio: auto; }

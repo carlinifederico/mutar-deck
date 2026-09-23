@@ -471,9 +471,30 @@ Los huecos pendientes son `.slot` (imagen) y `.note` (contenido a desarrollar).
 
 ## Exportar a PDF / Google Slides
 
+**El PDF bueno sale del script:**
+
+```
+cd deck/tools && npm i && npm run pdf      # o: node build-pdf.mjs es
+```
+
+Deja `deck/export/MUTAR-deck-en.pdf` y `MUTAR-deck-es.pdf`: 31 páginas de
+1280×720 (los 30 frames + el interludio del carrete), texto seleccionable, y
+verificado en pdf.js (Firefox) y MuPDF además de Chrome. Lo que hace y por qué
+está en la cabecera de `tools/build-pdf.mjs`: tamaño de página explícito
+(si no, Chrome evalúa los media queries contra papel Letter y los layouts de
+dos columnas se caen), el 3D del 12 y del 21 congelado como imagen, y las
+capas que pdf.js no resuelve (filtros, velos con color-mix, gradientes SVG con
+transparencia, mask-image, text-shadow) aplanadas a imagen 2x.
+
+A mano, sin script, también se puede — pero en Firefox y visores web algunas
+capas salen mal:
+
 1. Abrir `deck/index.html?print` (o apretar `P`).
 2. Imprimir → **Guardar como PDF**, horizontal, márgenes en cero.
-3. Salen 20 páginas de 1280×720 (16:9), una por frame.
+3. Salen 30 páginas de 1280×720 (16:9), una por frame.
+
+23/09: el track de siete pasos va en 4 + 3 en export (en 5 columnas el 6 y el
+7 se cortaban), y el 11 y el 24 se compactaron para entrar en 720px.
 
 En export se apagan animaciones, auras, cursor y rail; cada frame pinta su
 propio ground; y la escala tipográfica pasa a medidas fijas — en pantalla los
