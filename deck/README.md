@@ -58,8 +58,8 @@ fondo de la 15 a figura de la 14.
    museo virtual (`img/renders/`), la planta del happening dibujada en SVG, y
    un componente `.fig` (imagen enmarcada + epígrafe numerado) para todas.
 4. **Los objetos reales en 3D.** La librería (frame 12) muestra siete de los
-   modelos del prototipo y se giran a mano; el visor del frame 21 muestra la
-   escultura base. Ver "Objetos reales" abajo.
+   modelos del prototipo y se giran a mano; el visor del frame 21 arma en 3D
+   la propuesta abierta en la grilla (23/09). Ver "Objetos reales" abajo.
 5. **Los creadores.** Retratos grandes, al lado del nombre, y la bio nueva de
    Federico con sus créditos.
 
@@ -196,7 +196,8 @@ Quedó una, en `js/play.js`, apagada con `prefers-reduced-motion` y en export:
   se frena al pasar el mouse y se puede girar arrastrando. Gervasio lo pidió
   ahí el 17/09: *"la gente no está acostumbrada a orbitar un objeto online y
   por ahí no se imagina cómo vas a votar"*. Sólo gira mientras el frame está
-  a la vista.
+  a la vista. **23/09:** el anillo salió del frame; ahora orbita la propuesta
+  abierta (ver "Objetos reales").
 - **Frames 21 y 22 · Las propuestas se abren** — cada tile se clickea, ocupa
   cuatro celdas y escribe su ficha (objetos, altura, votos) al lado del visor.
   Lo monta `buildTiles()` / `wireTiles()` en `js/motion.js`; los números
@@ -237,11 +238,11 @@ se resuelve contra la hoja que la consume (`css/frames.css`), no contra el HTML.
 | 08 Divisor | captura hero: la escultura creciendo |
 | 12 Librería | estantería 3D con los objetos reales |
 | 13 Happening | captura: objetos grandes a escala real |
-| 14 Passthrough | Fig. 03 — la sala con gente (render) |
-| 15 Espacio | captura + Fig. 04, la planta en SVG |
+| 14 Passthrough | Fig. 03 — concepto en SVG: visores puestos, sin controles, objetos holográficos (23/09, reemplaza el video) |
+| 15 Espacio | Fig. 04, la planta en SVG a página completa (23/09) |
 | 16 · 17 · 18 · 19 | capturas: entrada, gizmos, herramientas, paleta |
 | 20 Artista | Fig. 05 (render) |
-| 21 Resultados | visor 3D de la escultura base |
+| 21 Resultados | visor 3D de la propuesta abierta (primitivas desde su silueta) |
 | 22 Votación | Fig. 06 — un resultado de grupo (captura) |
 | 23 Obra física | fondo: la obra en la plaza, de noche (render) |
 | 24 Visita | Fig. 07 — el museo virtual (render) |
@@ -269,6 +270,14 @@ un `.duo` los cuerpos tipográficos bajan un escalón solos.
 arrastra para rotarlo. Con `[data-visor-pick]` se arma una lista para elegir.
 Mismas reglas que el carrete: lazy, sin luces, y cae al contenido
 `.visor__poster` en `file://`, sin WebGL, con reduced-motion o en export.
+
+`data-visor="tiles"` (frame 21) no carga un GLB: escucha `mutar:tile`, que
+dispara `wireTiles()` en `motion.js` al abrir una tile, y arma la propuesta
+con primitivas (caja, cilindro, toro, cuña extruida) a partir de
+`MUTAR.sculpture(i).parts`, las mismas piezas del SVG. De frente coincide con
+la silueta. El poster es esa silueta en grande. Por esto el bundle de three
+suma `BoxGeometry`, `CylinderGeometry`, `TorusGeometry`, `ExtrudeGeometry`,
+`Shape`, `EdgesGeometry`, `LineSegments` y `LineBasicMaterial`.
 
 Para regenerar los `.glb` desde `prototype/pieces/_gameready/glb/`:
 
@@ -348,7 +357,7 @@ esta en el repo: pesa gigas). Los loops son de 12s; los stills, un cuadro.
 | 04 · Tesis | `media/bg-mundo.jpg` | 00:03:18 | still — el plano general, *"el layout del mundo de mutar"* |
 | 08 · Divisor | `media/capture-escultura` | f1 00:01:34 | loop hero — la escultura rosa creciendo |
 | 13 · El happening | `media/capture-happening` | 00:04:22 | loop — objetos grandes moviendose a escala real |
-| 15 · El espacio | `media/capture-espacio` | 00:00:18 | loop — el recorrido por la sala y los estantes |
+| — (sin uso desde el 23/09) | `media/capture-espacio` | 00:00:18 | loop — el recorrido por la sala y los estantes |
 | 16 · Cómo empieza | `media/capture-onboarding` | 00:02:56 | loop — el carrito y los primeros objetos |
 | 17 · Tres fases | `media/capture-gizmo` | f1 00:02:26 | loop — rotando la pieza con el gizmo |
 | 18 · Las herramientas | `media/capture-herramientas` | 00:09:42 | loop — la paleta y el pincel en primera persona |
@@ -491,7 +500,7 @@ js/vendor/         three.js empaquetado, generado por tools/build-three.mjs
 models/            los 20 .glb del carrete + manifest.json
 img/mutar-logo.svg logotipo vectorizado
 img/scan/          poster de fallback del carrete
-js/play.js         el anillo que orbita (frame 21)
+js/play.js         el anillo que orbita (hoy sin uso) y la ficha de la librería
 media/             las capturas del prototipo: loops .mp4 + poster .jpg,
                    y los dos stills de fondo (portada y tesis)
 ```

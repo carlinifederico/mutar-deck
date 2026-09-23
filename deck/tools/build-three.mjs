@@ -18,12 +18,16 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = process.env.MUTAR_REPO ? path.resolve(process.env.MUTAR_REPO) : path.resolve(HERE, '..', '..');
 const OUT = path.join(REPO, 'deck', 'js', 'vendor', 'three-bundle.js');
 
-// Solo lo que scan.js importa. Todo lo que no este aca no entra al bundle.
+// Solo lo que scan.js y objects.js importan. Todo lo que no este aca no entra
+// al bundle. Las geometrias (23/09) son para las propuestas del frame 21, que
+// se arman en 3D con las mismas piezas que su silueta.
 const ENTRY = `
 export {
   WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, InstancedMesh,
   MeshBasicMaterial, Color, Fog, Matrix4, Quaternion, Vector3, Euler, Box3,
-  SRGBColorSpace, DoubleSide, FrontSide
+  SRGBColorSpace, DoubleSide, FrontSide,
+  BoxGeometry, CylinderGeometry, TorusGeometry, ExtrudeGeometry, Shape,
+  EdgesGeometry, LineSegments, LineBasicMaterial
 } from 'three';
 export { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 `;

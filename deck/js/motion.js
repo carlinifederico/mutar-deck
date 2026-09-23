@@ -56,6 +56,8 @@
       var tmp = order[k]; order[k] = order[j]; order[j] = tmp;
     }
     var y = baseY;
+    // las mismas piezas, en numeros: el visor del frame 21 las arma en 3D
+    var piezas = [];
     for (var p = 0; p < order.length; p++) {
       // rangos acotados para que la pila nunca se salga del recuadro
       var w = 24 + r() * 26;
@@ -82,10 +84,11 @@
                ' L0 ' + (-h / 1.6) + ' Z"/>'; break;
       }
       parts.push(g + '</g>');
+      piezas.push({ t: order[p], x: x, y: y - h / 2, w: w, h: h, rot: rot });
       y -= h * 0.78;
     }
     // 100 unidades de dibujo ~ 6,5 m de escultura real
-    META[i] = { pieces: order.length, h: sumH * 0.78 / 100 * 6.5 };
+    META[i] = { pieces: order.length, h: sumH * 0.78 / 100 * 6.5, parts: piezas };
     return '<svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">' +
            '<path d="M14 92h72" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>' +
            parts.join('') + '</svg>';
@@ -142,6 +145,9 @@
     var nOut = scope.querySelector('[data-tiles-n]');
     var spec = scope.querySelector('[data-tiles-spec]');
     var abierto = winner || 1;
+    // 23/09: "aca no cambia la siluetita del objeto que orbita". El poster
+    // (sin WebGL, export) y el visor 3D siguen a la tile abierta.
+    var poster = scope.querySelector('[data-tile-poster]');
 
     function texto(i) {
       var m = META[i] || { pieces: 5, h: 3 };
@@ -160,6 +166,8 @@
       });
       if (nOut) nOut.textContent = String(i).padStart(2, '0');
       if (spec) spec.textContent = texto(i);
+      if (poster) poster.innerHTML = sculpture(i);
+      scope.dispatchEvent(new CustomEvent('mutar:tile', { detail: { i: i } }));
     }
 
     box.addEventListener('click', function (e) {
@@ -357,4 +365,5 @@
   window.MUTAR = window.MUTAR || {};
   window.MUTAR.reduce = reduce;
   window.MUTAR.isExport = isExport;
+  window.MUTAR.sculpture = function (i) { if (!META[i]) sculpture(i); return META[i]; };
 })();
