@@ -16,5 +16,12 @@ trap 'rm -rf "$OUT"' EXIT
 
 cp -r "$DECK/index.html" "$DECK/css" "$DECK/js" "$DECK/img" "$DECK/media" "$DECK/models" "$OUT/"
 
+# Los PDF (tools/build-pdf.mjs) viajan con el deck: /pdf/MUTAR-deck-{en,es}.pdf
+# No estan en git (pesan ~11 MB cada uno): se suben desde la copia local.
+if ls "$DECK"/export/*.pdf >/dev/null 2>&1; then
+  mkdir -p "$OUT/pdf"
+  cp "$DECK"/export/*.pdf "$OUT/pdf/"
+fi
+
 cd "$OUT"
 npx -y wrangler@latest pages deploy . --project-name=mutar-art --branch=main --commit-dirty=true
