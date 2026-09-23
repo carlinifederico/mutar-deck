@@ -952,6 +952,14 @@ body.export .creators       { gap: 1.5rem; }
 body.export .creator        { gap: 0.4rem; }
 body.export .creator__bio   { font-size: 0.75rem; }
 body.export .creator__work span { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
+/* 23/09: con la bio nueva de Gervasio (dos parrafos + ocho creditos) la
+   columna se pasaba ~50px de los 720. Un escalon mas compacto, solo en papel. */
+body.export .frame--creators .t-xl { font-size: 2.4rem; }
+body.export .frame--creators .creators { margin-top: 1rem; }
+body.export .creator > .creator__photo { width: 6rem; }
+body.export .creator__name  { font-size: 1.5rem; }
+body.export .creator__credits { gap: 0.2rem; }
+body.export .creator__credits li { font-size: 0.66rem; }
 body.export .city__icon { width: 1.9rem; }
 /* 23/09: el 11 (el formulario de Pedro) y el 24 (tres beats + figura) se
    pasaban de los 720px y el titular del 11 se montaba sobre el numero. */
