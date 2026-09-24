@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>MUTAR Prototipo v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#f2efe9; --panel:#e8e3d8; --fg:#0d0c0b; --dim:#5e5a53; --line:#d3cdc1;
+  --accent:#c41f66; --pink:#ff2e88; --lime:#8fae00; --cyan:#1f7fe0; --violet:#6a32e6;
+  --ok:#2f7d3a;
+  --f-display:"Bagel Fat One", "Arial Black", system-ui, sans-serif;
+  --f-body:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"DM Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#121110; --panel:#1d1b19; --fg:#f2efe9; --dim:#a39d93; --line:#34302b;
+    --accent:#ff5fa6; --lime:#c8f000; --cyan:#5fb2ff; --violet:#a17aff; --ok:#6cc47a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#121110; --panel:#1d1b19; --fg:#f2efe9; --dim:#a39d93; --line:#34302b;
+  --accent:#ff5fa6; --lime:#c8f000; --cyan:#5fb2ff; --violet:#a17aff; --ok:#6cc47a;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--fg);font:400 16px/1.55 var(--f-body);padding-inline:20px;padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h2{font:700 1.6rem/1.15 var(--f-body);letter-spacing:-.01em}
+h3{font:600 1rem/1.3 var(--f-body)}
+p{margin:0;max-width:65ch}
+.mono,.eyebrow,th,.num{font-family:var(--f-mono)}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--accent)}
+section{display:flex;flex-direction:column;gap:18px}
+.sec-head{display:flex;flex-direction:column;gap:6px;border-top:2px solid var(--fg);padding-top:14px}
+
+/* hero */
+header{padding-top:44px;display:flex;flex-direction:column;gap:20px}
+.brand{font:400 clamp(3rem,11vw,6.2rem)/.9 var(--f-display);color:var(--accent);letter-spacing:-.01em}
+.lede{font-size:1.15rem;max-width:56ch}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.kpi{background:var(--ground);padding:16px;display:flex;flex-direction:column;gap:4px}
+.kpi b{font:500 clamp(1.4rem,3.4vw,2rem)/1.1 var(--f-mono);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.85rem;color:var(--dim)}
+.kpi.hot b{color:var(--accent)}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 28px}
+.facts div{display:flex;flex-direction:column;gap:2px;padding-left:12px;border-left:2px solid var(--line)}
+.facts div.warn{border-left-color:var(--accent)}
+@media (max-width:640px){.facts{grid-template-columns:1fr}}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:500;text-align:left;padding:10px 12px;background:var(--panel)}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+td small{display:block;color:var(--dim);font-size:.82rem}
+tr.total td{border-top:2px solid var(--fg);font-weight:700}
+.tag{display:inline-block;font:500 .66rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 6px;border:1px solid currentColor;border-radius:3px;margin-left:6px;vertical-align:1px}
+.tag.ar{color:var(--violet)}
+.tag.mtl{color:var(--cyan)}
+.bar{height:8px;background:var(--panel);min-width:90px}
+.bar i{display:block;height:100%;background:var(--accent)}
+
+/* rule checks */
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.check{display:flex;gap:10px;align-items:baseline;padding:10px 12px;background:var(--panel)}
+.check .ok{color:var(--ok);font-family:var(--f-mono);font-weight:500}
+.check p{font-size:.92rem}
+@media (max-width:640px){.checks{grid-template-columns:1fr}}
+
+/* gantt */
+.gantt{overflow-x:auto;border:1px solid var(--line)}
+.g{display:grid;grid-template-columns:170px repeat(9,minmax(44px,1fr));min-width:640px}
+.g > div{padding:7px 8px;border-top:1px solid var(--line);font-size:.86rem}
+.g .mh{font:500 .7rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:var(--panel);border-top:0;text-align:center;padding:10px 0}
+.g .mh:first-child{text-align:left;padding-left:8px}
+.g .who{white-space:nowrap}
+.g .cell{padding:7px 2px}
+.g .on{position:relative}
+.g .on::after{content:"";position:absolute;inset:9px 1px;background:var(--c,var(--accent));border-radius:2px}
+.g .ph{font:500 .72rem/1.2 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--fg);background:var(--panel);text-align:center}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.phase{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line)}
+.phase .amt{font:500 1.35rem/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.phase .amt small{font-size:.8rem;color:var(--dim)}
+.phase ul{margin:0;padding-left:18px;font-size:.92rem;display:flex;flex-direction:column;gap:2px}
+@media (max-width:760px){.phases{grid-template-columns:1fr}}
+
+/* calendar */
+.cal{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cal li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--line)}
+.cal li b{font:500 .9rem var(--f-mono)}
+.cal li.now b{color:var(--accent)}
+@media (max-width:520px){.cal li{grid-template-columns:1fr;gap:2px}}
+.todo{columns:2;column-gap:28px;margin:0;padding-left:18px}
+.todo li{break-inside:avoid;margin-bottom:4px}
+@media (max-width:640px){.todo{columns:1}}
+footer{font-size:.82rem;color:var(--dim);display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Plan de producción · CMF Prototyping 2026-27 · convocatoria 27 oct – 10 nov 2026</span>
+  <h1 class="brand">MUTAR · Prototipo v1</h1>
+  <p class="lede">Nueve meses para construir y validar el primer MUTAR funcional: un espacio compartido en passthrough donde un grupo arma una escultura con objetos escaneados a escala real, la guarda, y la traduce a algo fabricable.</p>
+  <div class="kpis">
+    <div class="kpi hot"><b>$250.000</b><span>CAD máximo del CMF</span></div>
+    <div class="kpi"><b>$333.400</b><span>presupuesto total del prototipo</span></div>
+    <div class="kpi"><b>$83.400</b><span>aporte propio (25%)</span></div>
+    <div class="kpi"><b>9 meses</b><span>abril – diciembre 2027</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">01 · Cuánto dan</span><h2>El CMF pone hasta el 75%, con techo de 250 mil</h2></div>
+  <div class="facts">
+    <div><h3>75% de los costos o $250.000 CAD</h3><p>Lo que sea menor. Para cobrar el máximo, el presupuesto tiene que ser de al menos $333.400.</p></div>
+    <div><h3>Techo de $350.000 si hay éxito previo</h3><p>Aplica si un proyecto IDM anterior ya publicado tuvo $500k de facturación o 20.000 usuarios. Revisar si The Chosen One califica.</p></div>
+    <div class="warn"><h3>Es un adelanto reembolsable, no subsidio</h3><p>Sin interés. Si después entra a Innovation (o Commercial), se convierte en inversión dentro de la producción. Si no, se devuelve al arrancar la producción.</p></div>
+    <div class="warn"><h3>Aplica una empresa canadiense</h3><p>Con sede y control en Canadá. Al menos 75% del gasto tiene que ser canadiense. Una sola chance por proyecto.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">02 · Equipo</span><h2>Dos directores y cuatro personas de desarrollo</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Rol</th><th>Quién</th><th class="r">Meses</th><th class="r">CAD</th></tr></thead>
+    <tbody>
+      <tr><td>Dirección creativa + producción<small>Visión, arte, partners, CMF</small></td><td>Gervasio Canda <span class="tag mtl">MTL</span></td><td class="r num">9</td><td class="r num">40.000</td></tr>
+      <tr><td>Dirección de diseño + tecnología<small>Interacción, herramientas, pipeline</small></td><td>Federico Carlini <span class="tag ar">BA</span></td><td class="r num">9</td><td class="r num">36.000</td></tr>
+      <tr><td>Lead dev XR<small>Unity · Quest 3 · hand tracking · passthrough</small></td><td>a contratar <span class="tag mtl">MTL</span></td><td class="r num">9</td><td class="r num">63.000</td></tr>
+      <tr><td>Dev multiusuario<small>Red, espacio compartido, guardado de esculturas</small></td><td>a contratar <span class="tag mtl">MTL</span></td><td class="r num">6</td><td class="r num">39.000</td></tr>
+      <tr><td>Artista 3D + escaneo<small>Biblioteca de objetos, low poly, look scan</small></td><td>a contratar <span class="tag mtl">MTL</span></td><td class="r num">6</td><td class="r num">30.000</td></tr>
+      <tr><td>UX + sonido<small>Playtests, feedback háptico y sonoro</small></td><td>part-time <span class="tag mtl">MTL</span></td><td class="r num">5</td><td class="r num">12.000</td></tr>
+      <tr class="total"><td colspan="3">Total equipo</td><td class="r num">220.000</td></tr>
+    </tbody>
+  </table></div>
+  <p class="mono" style="font-size:.85rem;color:var(--dim)">Federico es el único costo fuera de Canadá (≈11%). El límite es 25%, así que hay margen para subir su parte hasta ~$83k.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">03 · En qué se gasta</span><h2>Dos tercios van a la gente que construye</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Rubro</th><th class="r">CAD</th><th class="r">%</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Equipo (arriba)</td><td class="r num">220.000</td><td class="r num">66,0</td><td><div class="bar"><i style="width:66%"></i></div></td></tr>
+      <tr><td>Fee de productor + overhead<small>Tope CMF: 10% de B+C</small></td><td class="r num">25.000</td><td class="r num">7,5</td><td><div class="bar"><i style="width:7.5%"></i></div></td></tr>
+      <tr><td>Prueba física<small>Un módulo o maqueta fabricada desde una escultura virtual</small></td><td class="r num">20.000</td><td class="r num">6,0</td><td><div class="bar"><i style="width:6%"></i></div></td></tr>
+      <tr><td>Playtests + comunidad<small>Espacio, convocatoria de objetos, participantes</small></td><td class="r num">18.000</td><td class="r num">5,4</td><td><div class="bar"><i style="width:5.4%"></i></div></td></tr>
+      <tr><td>Marketing, video del prototipo, documentación<small>El video es la llave para Innovation</small></td><td class="r num">17.000</td><td class="r num">5,1</td><td><div class="bar"><i style="width:5.1%"></i></div></td></tr>
+      <tr><td>Hardware + software<small>4 Quest 3, PC, escáner, licencias</small></td><td class="r num">15.000</td><td class="r num">4,5</td><td><div class="bar"><i style="width:4.5%"></i></div></td></tr>
+      <tr><td>Legal, contable, auditoría, seguros</td><td class="r num">12.000</td><td class="r num">3,6</td><td><div class="bar"><i style="width:3.6%"></i></div></td></tr>
+      <tr><td>Viajes<small>Federico a Montreal para los testeos</small></td><td class="r num">6.400</td><td class="r num">1,9</td><td><div class="bar"><i style="width:1.9%"></i></div></td></tr>
+      <tr class="total"><td>Total</td><td class="r num">333.400</td><td class="r num">100</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <div class="checks">
+    <div class="check"><span class="ok">✓</span><p><b>Marketing + comunidad entre 10% y 25%.</b> Playtests + marketing = $35.000, cerca del 11%.</p></div>
+    <div class="check"><span class="ok">✓</span><p><b>Lo digital manda.</b> Lo físico es 6%. Desde 2026-27 se acepta construcción si sirve para testear.</p></div>
+    <div class="check"><span class="ok">✓</span><p><b>75% gasto canadiense.</b> Queda ≈89%.</p></div>
+    <div class="check"><span class="ok">✓</span><p><b>Fee + overhead ≤ 10%.</b> $25.000 queda dentro del tope.</p></div>
+  </div>
+  <p><b>El 25% propio ($83.400)</b> se puede armar con aporte en especie (equipos, espacio de un partner tipo SAT o PHI), parte de los honorarios de Gervasio y Federico diferidos, y otros fondos quebequenses. Hay que cerrarlo antes de aplicar.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">04 · En el tiempo</span><h2>Tres fases, con la plata más fuerte en el medio</h2></div>
+  <div class="gantt"><div class="g">
+    <div class="mh">2027</div><div class="mh">Abr</div><div class="mh">May</div><div class="mh">Jun</div><div class="mh">Jul</div><div class="mh">Ago</div><div class="mh">Sep</div><div class="mh">Oct</div><div class="mh">Nov</div><div class="mh">Dic</div>
+    <div class="who">Fase</div><div class="ph" style="grid-column:span 2">Base</div><div class="ph" style="grid-column:span 4">Construcción</div><div class="ph" style="grid-column:span 3">Test + físico</div>
+    <div class="who">Gervasio</div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+    <div class="who">Federico</div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div><div class="cell on" style="--c:var(--violet)"></div>
+    <div class="who">Lead dev XR</div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div>
+    <div class="who">Artista 3D + scan</div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="who">Dev multiusuario</div><div class="cell"></div><div class="cell"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell"></div>
+    <div class="who">UX + sonido</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div><div class="cell on" style="--c:var(--cyan)"></div>
+    <div class="who">Prueba física</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell on" style="--c:var(--lime)"></div><div class="cell on" style="--c:var(--lime)"></div><div class="cell on" style="--c:var(--lime)"></div>
+  </div></div>
+  <div class="phases">
+    <div class="phase"><span class="eyebrow">Abr – May · 2 meses</span><span class="amt">$65.445 <small>20%</small></span><h3>Base</h3><ul><li>Compra de equipos</li><li>Pipeline de escaneo y primeros 10 objetos</li><li>Loop básico: agarrar, mover, pegar con cinta</li></ul></div>
+    <div class="phase"><span class="eyebrow">Jun – Sep · 4 meses</span><span class="amt">$138.889 <small>42%</small></span><h3>Construcción</h3><ul><li>10–15 personas en el mismo espacio</li><li>Objetos grandes que exigen varias manos</li><li>Cinturón de herramientas, firma y guardado</li><li>Primer playtest con público</li></ul></div>
+    <div class="phase"><span class="eyebrow">Oct – Dic · 3 meses</span><span class="amt">$129.066 <small>39%</small></span><h3>Test + físico</h3><ul><li>Los 5 tests: interacción, colaboración, creatividad, técnica, traducción física</li><li>Galería y votación básica</li><li>Fabricar un módulo desde una escultura</li><li>Video del prototipo</li></ul></div>
+  </div>
+  <p style="font-size:.92rem;color:var(--dim)">El CMF paga por tramos y retiene una parte hasta el informe de costos final. Conviene tener una caja puente de ~15% del aporte CMF para el cierre. Confirmar el cronograma exacto en el contrato.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">05 · Calendario</span><h2>De la aplicación a Innovation</h2></div>
+  <ul class="cal">
+    <li class="now"><b>Ahora – 27 oct 2026</b><span>Consulta previa con el CMF (obligatoria si la empresa es nueva en IDM). Preguntar si The Chosen One habilita el techo de $350k.</span></li>
+    <li><b>27 oct – 10 nov 2026</b><span>Ventana para aplicar a Prototyping.</span></li>
+    <li><b>~ mar 2027</b><span>Respuesta (estimada). Contratos y firma.</span></li>
+    <li><b>abr – dic 2027</b><span>Producción del Prototipo v1.</span></li>
+    <li><b>ene – mar 2028</b><span>Informe final, costos finales y video.</span></li>
+    <li><b>abr 2028</b><span>Aplicar a Innovation &amp; Experimentation con el video del prototipo. El adelanto pasa a ser inversión en la producción.</span></li>
+  </ul>
+  <h3 style="margin-top:6px">Para entregar el 10 de noviembre</h3>
+  <ul class="todo">
+    <li>Resumen + descripción del proyecto</li>
+    <li>Alcance del prototipo y plan de testeo</li>
+    <li>Material visual (deck, renders, diagrama)</li>
+    <li>Presupuesto y cashflow en el template CMF</li>
+    <li>Cartas de financiamiento del 25% propio</li>
+    <li>Estudio de mercado corto</li>
+    <li>Plan de comunidad</li>
+    <li>Plan de sustentabilidad</li>
+    <li>Equipo + CVs</li>
+    <li>Narrative Positioning Statement</li>
+    <li>PERSONA-ID de accionistas</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Montos en dólares canadienses. Honorarios del equipo contratado son estimados de mercado en Montreal para ajustar con cotizaciones reales.</span>
+  <span>Fuentes: <a href="https://cmf-fmc.ca/document/prototyping-guidelines/">Prototyping Guidelines 2026-27</a> · <a href="https://cmf-fmc.ca/document/idm-core-guidelines/">IDM Core Guidelines</a> · <a href="https://cmf-fmc.ca/document/appendix-b-business-policies/">Appendix B (PFCO)</a> · <a href="https://cmf-fmc.ca/program/prototyping-program/">Programa</a></span>
+</footer>
+
+</div>
+</body>
+</html>
