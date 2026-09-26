@@ -122,7 +122,7 @@ el deck página por página, más sus notas ordenadas. Esto es lo que entró:
     espectador siempre sabe dónde está dentro del proceso"*.
 16. **Dónde puede pasar MUTAR (25).** Nuevo encabezado, y países, ciudades,
     tipos de espacio y las tres modalidades: con sede, itinerante, licenciada.
-17. **Compañías (30).** Triple N Vision. El proyecto no se está haciendo con
+17. **Compañías (30).** NNN Vision. El proyecto no se está haciendo con
     Ojo Raro, así que salió del bloque de créditos — sigue en la bio de
     Gervasio, que es donde corresponde.
 
